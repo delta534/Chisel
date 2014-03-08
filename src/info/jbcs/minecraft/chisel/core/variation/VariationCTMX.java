@@ -2,7 +2,7 @@ package info.jbcs.minecraft.chisel.core.variation;
 
 
 import cpw.mods.fml.common.FMLLog;
-import info.jbcs.minecraft.utilities.Subdivider;
+import info.jbcs.minecraft.chisel.util.Subdivider;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
@@ -16,10 +16,9 @@ import codechicken.lib.vec.Vector3;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
 import info.jbcs.minecraft.chisel.render.CTM;
 import info.jbcs.minecraft.chisel.render.RenderBlocksCTM;
-import info.jbcs.minecraft.chisel.util.QuadDivider;
 
 public class VariationCTMX extends CarvableVariation {
-    private final QuadDivider subDivider = new QuadDivider();
+
     int [] regionRemap={2,3,0,1};
     public RenderBlocksCTM temp = new RenderBlocksCTM();
 
@@ -83,7 +82,6 @@ public class VariationCTMX extends CarvableVariation {
     @Override
     public void setup(Vertex5[] verts, int side, Vector3 pos,
                       IBlockAccess world) {
-        this.subDivider.setup(verts, side);
         Subdivider.setup(verts,side);
         w = world;
         loc = pos;
