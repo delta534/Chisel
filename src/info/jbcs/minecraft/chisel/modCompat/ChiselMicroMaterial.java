@@ -33,7 +33,6 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
     public ChiselMicroMaterial(Block arg0, int arg1) {
         super(arg0, arg1);
 
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -79,13 +78,13 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
 
     @Override
     public int getBlockId() {
-        // TODO Auto-generated method stub
+
         return icontr.getBlockId();
     }
 
     @Override
     public BlockCoord getPos() {
-        // TODO Auto-generated method stub
+
         return icontr.getPos();
     }
     static class microMaterialCheck implements  IConnectionCheck
@@ -133,6 +132,7 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
         public boolean continueCheck() {
             return !isMultipart;
         }
+
 
 
     }

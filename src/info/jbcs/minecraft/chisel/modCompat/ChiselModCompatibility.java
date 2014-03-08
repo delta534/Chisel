@@ -121,13 +121,10 @@ public class ChiselModCompatibility {
 			try {
 				id=((Block)(carpentersHackGet.invoke(null,world, 6,x,y,z))).blockID;
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

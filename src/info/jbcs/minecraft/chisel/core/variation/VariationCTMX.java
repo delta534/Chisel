@@ -43,9 +43,7 @@ public class VariationCTMX extends CarvableVariation {
             FMLLog.info("Data end");
         }
         int j=CTM.getTexture(w, (int) loc.x, (int) loc.y, (int) loc.z,side,index,midpoint);
-       // j=CTM.mappings[3][index];
         return  j >= 16 ? submapSmall.icons[j-16] : submap.icons[j];
-        //return submap.icons[15];
 
     }
 
