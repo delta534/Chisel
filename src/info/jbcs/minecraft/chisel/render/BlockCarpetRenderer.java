@@ -5,17 +5,17 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 
 public class BlockCarpetRenderer extends BlockAdvancedMarbleRenderer {
-	
-	public BlockCarpetRenderer(){
-		super();
-		
-		Chisel.RenderCarpetId = RenderingRegistry.getNextAvailableRenderId();
 
-		rendererCTM=new RenderBlocksCTMCarpet();
-	}
+    public BlockCarpetRenderer() {
+        super();
 
-	@Override
-	public int getRenderId() {
-		return Chisel.RenderCarpetId;
-	}
+        Chisel.RenderCarpetId = RenderingRegistry.getNextAvailableRenderId();
+
+        rendererCTM = new RenderBlocksCTMCarpet();
+    }
+
+    @Override
+    public int getRenderId() {
+        return Chisel.RenderCarpetId;
+    }
 }

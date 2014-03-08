@@ -19,7 +19,6 @@ import info.jbcs.minecraft.chisel.render.RenderBlocksCTM;
 
 public class VariationCTMX extends CarvableVariation {
 
-    int [] regionRemap={2,3,0,1};
     public RenderBlocksCTM temp = new RenderBlocksCTM();
 
 
