@@ -36,7 +36,7 @@ public class BlockGlassCarvable extends BlockGlass implements Carvable {
 	
 	@Override
 	public Icon getIcon(int side, int metadata) {
-		return carverHelper.getIcon(side, metadata);
+		return carverHelper.getVariation(metadata).getIcon(side);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.variation.VariationCTMV;
 import info.jbcs.minecraft.chisel.core.variation.VariationCTMX;
 import info.jbcs.minecraft.utilities.Drawing;
 import net.minecraft.block.Block;
@@ -63,19 +64,19 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
 		CarvableVariation var=((Carvable) block).getVariation(meta);
 		Vector3 pos=new Vector3(x, y, z);
 		lightmatrix.setPos(world, x, y, z);
-		switch(var==null?0:var.useCTM?var.kind:0){
+		switch(var==null?0:var.kind){
 		case CarvableHelper.CTMX:
 			rendererCTM.blockAccess=world;
 			rendererCTM.renderMaxX=1.0;
 			rendererCTM.renderMaxY=1.0;
 			rendererCTM.renderMaxZ=1.0;
 
-			test.submap=var.submap;
-			test.submapSmall=var.submapSmall;
-            test.useCTM=var.useCTM;
-            test.icon=var.icon;
-			rendererCTM.rendererOld=rendererOld;
-			test.temp=rendererCTM;
+//			test.submap=var.submap;
+//			test.submapSmall=var.submapSmall;
+//            test.useCTM=var.useCTM;
+//            test.icon=var.icon;
+//			rendererCTM.rendererOld=rendererOld;
+//			test.temp=rendererCTM;
 
 			
 			model.generateBlock(0,blockBounds);
@@ -87,21 +88,22 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
 				{
                     verts[j]=model.verts[j+i*4];
 				}
-				test.setup(verts, i, pos, world);
-				test.renderSide(verts, i, pos, lightmatrix.lightMatrix(), block.colorMultiplier(world,x,y,z));
+				var.setup(verts, i, pos, world);
+				var.renderSide(verts, i, pos, lightmatrix.lightMatrix(), block.colorMultiplier(world,x,y,z));
 
 				
 
 			}
 			return true;
 		case CarvableHelper.CTMV:
+            VariationCTMV temp=(VariationCTMV)var;
 			rendererColumn.blockAccess=world;
 			rendererColumn.renderMaxX=1.0;
 			rendererColumn.renderMaxY=1.0;
 			rendererColumn.renderMaxZ=1.0;
 
-			rendererColumn.submap=var.seamsCtmVert;        	
-			rendererColumn.iconTop=var.iconTop;   
+			rendererColumn.submap=temp.seamsCtmVert;
+			rendererColumn.iconTop=temp.icon;
 
 			return rendererColumn.renderStandardBlock(block,x,y,z);        	
 		default:

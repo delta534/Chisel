@@ -51,8 +51,8 @@ CarvableVariation var=((Carvable) block).getVariation(meta);
             grassRenderer.renderMaxY=1.0;
             grassRenderer.renderMaxZ=1.0;
             
-            grassRenderer.submap=var.submap;
-    		grassRenderer.submapSmall=var.submapSmall;
+            //grassRenderer.submap=var.submap;
+    		//grassRenderer.submapSmall=var.submapSmall;
     		
             return grassRenderer.renderStandardBlock(block,x,y,z);
         case CarvableHelper.CTMV:
@@ -62,8 +62,8 @@ CarvableVariation var=((Carvable) block).getVariation(meta);
         	grassRenderer.renderMaxY=1.0;
             grassRenderer.renderMaxZ=1.0;
             
-            grassRenderer.submap=var.seamsCtmVert;        	
-            grassRenderer.iconTop=var.iconTop;   
+            //grassRenderer.submap=var.seamsCtmVert;
+            //grassRenderer.iconTop=var.iconTop;
  
            return grassRenderer.renderStandardBlock(block,x,y,z);        	
     	default:

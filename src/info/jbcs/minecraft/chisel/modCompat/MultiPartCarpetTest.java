@@ -3,6 +3,7 @@ package info.jbcs.minecraft.chisel.modCompat;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.blocks.BlockMarbleCarpet;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.variation.VariationCTMX;
 import info.jbcs.minecraft.chisel.render.RenderBlocksCTMCarpet;
 import info.jbcs.minecraft.chisel.util.IChiselCheck;
 
@@ -172,7 +173,7 @@ public class MultiPartCarpetTest extends McSidedMetaPart implements IChiselCheck
     {
 
     	IBlockAccess access=new PartMetaAccess(this) ;
-    	CarvableVariation var=base.getVariation(meta);
+    	VariationCTMX var=(VariationCTMX)base.getVariation(meta);
     	renderer.blockAccess=access;
         renderer.renderMaxX=1.0;
         renderer.renderMaxY=1.0;

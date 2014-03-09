@@ -34,7 +34,7 @@ public class BlockMarbleStairs extends BlockStairs implements Carvable {
 
 	@Override
 	public Icon getIcon(int side, int metadata) {
-		return carverHelper.getIcon(side, blockMeta+metadata/8);
+        return carverHelper.getVariation(blockMeta+metadata/8).getIcon(side);
 	}
 
 	@Override

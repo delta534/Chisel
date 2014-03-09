@@ -92,7 +92,7 @@ public class ItemChisel extends ItemTool {
 				match=true;
 
 			if(!match) return false;
-			if(resultId==blockId && targetMeta == blockMeta) return false;
+			//if(resultId==blockId && targetMeta == blockMeta) return false;
 
 			if(! world.isRemote || chiselHasBlockInside) 
 				ChiselModCompatibility.setBlockID(world,x, y, z, resultId, chiselTarget.getItemDamage());

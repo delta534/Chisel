@@ -57,12 +57,13 @@ public class BlockProxy extends Block {
 
 	@Override
 	public Icon getIcon(int side, int metadata) {
-		return carverHelper.getIcon(side, metadata);
+        return carverHelper.getVariation(metadata).getIcon(side);
 	}
 
     @Override
 	public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side){
-    	return carverHelper.getBlockTexture(world, x, y, z, side);
+        int meta= world.getBlockMetadata(x,y,z);
+        return carverHelper.getVariation(meta).getBlockTexture(world, x, y, z, side);
     }
 
 	@Override

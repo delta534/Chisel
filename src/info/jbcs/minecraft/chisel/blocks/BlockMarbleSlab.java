@@ -94,7 +94,7 @@ public class BlockMarbleSlab extends BlockMarble {
 	
 	@Override
 	public Icon getIcon(int side, int metadata) {
-		return carverHelper.getIcon(side, metadata);
+        return carverHelper.getVariation(metadata).getIcon(side);
 //		return master.getIcon(side, metadata);
 	}
 

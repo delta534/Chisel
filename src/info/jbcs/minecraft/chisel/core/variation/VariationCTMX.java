@@ -2,8 +2,11 @@ package info.jbcs.minecraft.chisel.core.variation;
 
 
 import cpw.mods.fml.common.FMLLog;
+import info.jbcs.minecraft.chisel.render.TextureSubmap;
 import info.jbcs.minecraft.chisel.util.Subdivider;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 
@@ -22,6 +25,8 @@ public class VariationCTMX extends CarvableVariation {
     public RenderBlocksCTM temp = new RenderBlocksCTM();
 
 
+    public TextureSubmap submap;
+    public TextureSubmap			submapSmall;
     private int m_side;
     private Vector3 loc;
     private IBlockAccess w;
@@ -50,7 +55,7 @@ public class VariationCTMX extends CarvableVariation {
                          CCRenderState.useModelColours(false);
             CCRenderState.useNormals(false);
             Tessellator.instance.setColorOpaque(255, 255, 255);
-            setRegion(res.iconIndex);
+            region=res.iconIndex;
             midpoint=res.offset;
             data=res.verts_;
             if (data != null) {
@@ -65,7 +70,6 @@ public class VariationCTMX extends CarvableVariation {
         region = i;
     }
 
-
     @Override
     public void setup(Vertex5[] verts, int side, Vector3 pos,
                       IBlockAccess world) {
@@ -76,9 +80,6 @@ public class VariationCTMX extends CarvableVariation {
 
 
     }
-
-
-
 
     @Override
     public void transform(UV uv) {
@@ -93,5 +94,15 @@ public class VariationCTMX extends CarvableVariation {
     @Override
     public String toString() {
         return this.blockName+":"+Integer.toString(this.blockMeta);
+    }
+
+    @Override
+    public void registerIcon(String modName, Block block, IconRegister register) {
+        icon = getIconResource(modName + ":"
+                + texture,register);
+        submap = new TextureSubmap(getIconResource(modName
+                + ":" + texture + "-ctm",register), 4, 4);
+
+        submapSmall = new TextureSubmap(icon, 2, 2);
     }
 }

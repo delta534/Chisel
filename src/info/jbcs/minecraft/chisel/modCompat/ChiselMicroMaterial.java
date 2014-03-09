@@ -52,10 +52,10 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
         CarvableVariation var=((Carvable)block()).getVariation(meta());
         if(var.kind==CarvableHelper.CTMX&&part.world()!=null)
         {
-            test.submap=var.submap;
-            test.submapSmall=var.submapSmall;
-            test.setup(verts, side, pos,new proxyWorld(part.world(),pos,icontr.getBlockId(),icontr.getMetadata()));
-            test.renderSide(verts, side, pos, lightMatrix, getColour(part));
+           // test.submap=var.submap;
+            //test.submapSmall=var.submapSmall;
+            var.setup(verts, side, pos,new proxyWorld(part.world(),pos,icontr.getBlockId(),icontr.getMetadata()));
+            var.renderSide(verts, side, pos, lightMatrix, getColour(part));
         }
         else
         {

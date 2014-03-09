@@ -12,6 +12,7 @@ import codechicken.lib.vec.Vector3;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 
@@ -27,19 +28,11 @@ public class CarvableVariation implements IUVTransformation {
 	public String					texture;
 
 	public Icon					icon;
-	public Icon					iconTop;
-	public Icon					iconBot;
 	public Icon					overlay;
-	public CarvableVariationCTM	ctm;
-	public TextureSubmap			seamsCtmVert;
-	public TextureSubmap			variations9;
 
-	public TextureSubmap			submap;
-	public TextureSubmap			submapSmall;
+
 	public boolean					useCTM;
-	public static class CarvableVariationCTM {
-		TextureSubmap	seams[]	= new TextureSubmap[3];
-	}	
+
 	public void setup(Vertex5[] verts, int side, Vector3 pos,IBlockAccess world)
 	{
 	}
@@ -86,7 +79,27 @@ public class CarvableVariation implements IUVTransformation {
 		}
 		return true;
 	}
-	
+	public Icon getBlockTexture(IBlockAccess world,int x,int y,int z, int side)
+    {
+        return  getIcon(side);
+    }
+
+
+     public void registerIcon(String modName, Block block_,
+                              IconRegister register)
+     {
+         if(block!=null)
+         {
+            icon=block.getIcon(2,blockMeta);
+         }
+         else
+         icon = getIconResource(modName + ":"
+                 + texture,register);
+     }
+    public Icon getIconResource(String resource,IconRegister registry)
+    {
+        return registry.registerIcon(resource);
+    }
 
 }
 

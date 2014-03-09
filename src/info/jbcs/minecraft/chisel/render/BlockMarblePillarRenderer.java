@@ -104,12 +104,8 @@ public class BlockMarblePillarRenderer implements ISimpleBlockRenderingHandler {
 		boolean flag = block.carverHelper.variations.get(metadata).kind != CarvableHelper.CTMV
 				|| !(block.carverHelper.variations.get(metadata).useCTM);
 		if (flag) {
-			Icons[0] = block.carverHelper.getIcon(0, metadata);
-			Icons[1] = block.carverHelper.getIcon(1, metadata);
-			Icons[2] = block.carverHelper.getIcon(2, metadata);
-			Icons[3] = block.carverHelper.getIcon(3, metadata);
-			Icons[4] = block.carverHelper.getIcon(4, metadata);
-			Icons[5] = block.carverHelper.getIcon(5, metadata);
+			for(int i=0;i<6;i++)
+                Icons[i] = block.carverHelper.getVariation(metadata).getIcon(i);
 		} else {
 
 
