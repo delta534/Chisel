@@ -178,9 +178,9 @@ public class ChiselModCompatibility {
 						for(ItemStack is:list)
 						{
 							String s=bl.getUnlocalizedName()+Integer.toString(is.getItemDamage());
-							if(bl instanceof BlockMarblePillar)
-								m.invoke(null,new ChiselPillarMicroMaterial(bl, is.getItemDamage()),s);
-							else
+//							if(bl instanceof BlockMarblePillar)
+//								m.invoke(null,new ChiselPillarMicroMaterial(bl, is.getItemDamage()),s);
+//							else
 								m.invoke(null,new ChiselMicroMaterial(bl, is.getItemDamage()),s);
 						}
 					}

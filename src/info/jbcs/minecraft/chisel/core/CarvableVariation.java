@@ -10,6 +10,7 @@ import codechicken.lib.vec.Rotation;
 import codechicken.lib.vec.Translation;
 import codechicken.lib.vec.Vector3;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
+import info.jbcs.minecraft.chisel.util.proxyWorld;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -29,12 +30,18 @@ public class CarvableVariation implements IUVTransformation {
 
 	public Icon					icon;
 	public Icon					overlay;
-
+    public Icon                 boundIcon;
 
 	public boolean					useCTM;
 
 	public void setup(Vertex5[] verts, int side, Vector3 pos,IBlockAccess world)
 	{
+        if(world!=null)
+        {
+            boundIcon=getBlockTexture(world,(int)pos.x,(int)pos.y,(int)pos.z,side);
+        }
+        else
+            boundIcon=getIcon(side);
 	}
 	public Icon getIcon(int side)
 	{
@@ -42,8 +49,8 @@ public class CarvableVariation implements IUVTransformation {
 	}
 	public void transform(UV uv)
 	{
-		uv.u=icon.getInterpolatedU(uv.u%2*16);
-		uv.v=icon.getInterpolatedU(uv.v%2*16);
+		uv.u=boundIcon.getInterpolatedU(uv.u%2*16);
+		uv.v=boundIcon.getInterpolatedV(uv.v%2*16);
 	}
 	public boolean renderSide(Vertex5[] verts, int side, Vector3 pos,
 			LightMatrix lightMatrix,int color)
@@ -74,8 +81,6 @@ public class CarvableVariation implements IUVTransformation {
 			
 			transform(uv.set(vert.uv));
 			t.addVertexWithUV(vert.vec.x+pos.x, vert.vec.y+pos.y, vert.vec.z+pos.z, uv.u, uv.v);
-
-
 		}
 		return true;
 	}
@@ -100,6 +105,11 @@ public class CarvableVariation implements IUVTransformation {
     {
         return registry.registerIcon(resource);
     }
+    public Icon getIndexedIcon(int index)
+    {
+         return  icon;
+    }
+
 
 }
 

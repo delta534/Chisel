@@ -65,61 +65,45 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
 		Vector3 pos=new Vector3(x, y, z);
 		lightmatrix.setPos(world, x, y, z);
 		switch(var==null?0:var.kind){
-		case CarvableHelper.CTMX:
+		case 0:
+            return rendererOld.renderStandardBlock(block,x,y,z);
+        default:
 			rendererCTM.blockAccess=world;
 			rendererCTM.renderMaxX=1.0;
 			rendererCTM.renderMaxY=1.0;
-			rendererCTM.renderMaxZ=1.0;
+        rendererCTM.renderMaxZ=1.0;
 
-//			test.submap=var.submap;
-//			test.submapSmall=var.submapSmall;
-//            test.useCTM=var.useCTM;
-//            test.icon=var.icon;
-//			rendererCTM.rendererOld=rendererOld;
-//			test.temp=rendererCTM;
 
-			
-			model.generateBlock(0,blockBounds);
-			for(int i=0;i<6;i++)
-			{
+        CCRenderState.useModelColours(false );
+        model.generateBlock(0,blockBounds);
+        Tessellator.instance.setColorOpaque(255,255,255);
+        for(int i=0;i<6;i++)
+        {
 
-				
-				for(int j=0;j<4;j++)
-				{
-                    verts[j]=model.verts[j+i*4];
-				}
-				var.setup(verts, i, pos, world);
-				var.renderSide(verts, i, pos, lightmatrix.lightMatrix(), block.colorMultiplier(world,x,y,z));
 
-				
+        for(int j=0;j<4;j++)
+        {
+        verts[j]=model.verts[j+i*4];
+        }
+        var.setup(verts, i, pos, world);
+        var.renderSide(verts, i, pos, lightmatrix.lightMatrix(), 0xFFFFFFF);
 
-			}
-			return true;
-		case CarvableHelper.CTMV:
-            VariationCTMV temp=(VariationCTMV)var;
-			rendererColumn.blockAccess=world;
-			rendererColumn.renderMaxX=1.0;
-			rendererColumn.renderMaxY=1.0;
-			rendererColumn.renderMaxZ=1.0;
 
-			rendererColumn.submap=temp.seamsCtmVert;
-			rendererColumn.iconTop=temp.icon;
 
-			return rendererColumn.renderStandardBlock(block,x,y,z);        	
-		default:
-			return rendererOld.renderStandardBlock(block,x,y,z);
-		}
-	}
+        }
+        return true;
+        }
+        }
 
-	@Override
-	public boolean shouldRender3DInInventory() {
+@Override
+public boolean shouldRender3DInInventory() {
 
-		return true;
-	}
+        return true;
+        }
 
-	@Override
-	public int getRenderId() {
-		return Chisel.RenderCTMId;
-	}
+@Override
+public int getRenderId() {
+        return Chisel.RenderCTMId;
+        }
 
-}
+        }

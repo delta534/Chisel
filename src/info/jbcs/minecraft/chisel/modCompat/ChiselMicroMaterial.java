@@ -50,18 +50,13 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
                                 LightMatrix lightMatrix, IMicroMaterialRender part) {
         icontr.bindPart(part);
         CarvableVariation var=((Carvable)block()).getVariation(meta());
-        if(var.kind==CarvableHelper.CTMX&&part.world()!=null)
-        {
            // test.submap=var.submap;
             //test.submapSmall=var.submapSmall;
-            var.setup(verts, side, pos,new proxyWorld(part.world(),pos,icontr.getBlockId(),icontr.getMetadata()));
+            proxyWorld world=null;
+            if(part.world()!=null)
+                world=new proxyWorld(part.world(),pos,icontr.getBlockId(),icontr.getMetadata());
+            var.setup(verts, side, pos,world);
             var.renderSide(verts, side, pos, lightMatrix, getColour(part));
-        }
-        else
-        {
-
-            this.renderMicroFace(verts, side, pos, lightMatrix, getColour(part), icontr);
-        }
 
     }
     @Override

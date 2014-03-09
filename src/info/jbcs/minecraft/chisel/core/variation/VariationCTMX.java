@@ -26,21 +26,23 @@ public class VariationCTMX extends CarvableVariation {
 
 
     public TextureSubmap submap;
-    public TextureSubmap			submapSmall;
-    private int m_side;
+    public TextureSubmap submapSmall;
     private Vector3 loc;
     private IBlockAccess w;
-    private int region;
     private Vector3 midpoint;
-
-    Icon getIcon(int side, int index) {
+    private int side;
+    int region;
+    void bindIcon(int side, int index) {
 
         if(useCTM)
         {
             int j=CTM.getTexture(w, (int) loc.x, (int) loc.y, (int) loc.z,side,index,midpoint);
-            return  j >= 16 ? submapSmall.icons[j-16] : submap.icons[j];
+            boundIcon=  j >= 16 ? submapSmall.icons[j-16] : submap.icons[j];
         }
-        return icon;
+        else
+        {
+            boundIcon= icon;
+        }
 
     }
 
@@ -49,26 +51,30 @@ public class VariationCTMX extends CarvableVariation {
                               LightMatrix lightMatrix, int color) {
 
         Vertex5 []data = null;
-        for (int j = 0; j < Subdivider.numResults; j++) {
+        if(useCTM&&w!=null)
+        {
+            for (int j = 0; j < Subdivider.numResults; j++) {
 
-            Subdivider.Result res=Subdivider.getResult(j);
-                         CCRenderState.useModelColours(false);
-            CCRenderState.useNormals(false);
-            Tessellator.instance.setColorOpaque(255, 255, 255);
-            region=res.iconIndex;
-            midpoint=res.offset;
-            data=res.verts_;
-            if (data != null) {
-                super.renderSide(data, side % 6, pos, lightMatrix, color);
+                Subdivider.Result res=Subdivider.getResult(j);
+                CCRenderState.useModelColours(false);
+                CCRenderState.useNormals(false);
+                Tessellator.instance.setColorOpaque(255, 255, 255);
+                midpoint=res.offset;
+                //bindIcon(side%6,res.iconIndex);
+                region=res.iconIndex;
+                data=res.verts_;
+                if (data != null) {
+                    super.renderSide(data, side % 6, pos, lightMatrix, color);
+                }
+
             }
-
         }
+        else
+            super.renderSide(verts, side, pos, lightMatrix, color);
         return true;
 
     }
-    void setRegion(int i) {
-        region = i;
-    }
+
 
     @Override
     public void setup(Vertex5[] verts, int side, Vector3 pos,
@@ -76,19 +82,18 @@ public class VariationCTMX extends CarvableVariation {
         Subdivider.setup(verts,side);
         w = world;
         loc = pos;
-        m_side = side % 6;
-
+        this.side=side;
 
     }
 
     @Override
     public void transform(UV uv) {
-        Icon i = getIcon(m_side, region);
+        bindIcon(side,region);
+        Icon i = boundIcon;
         double diffu = i.getMaxU() - i.getMinU();
         double diffv = i.getMaxV() - i.getMinV();
         uv.u = i.getMinU()+diffu*uv.u;
         uv.v = i.getMinV()+diffv*uv.v;
-
     }
 
     @Override
@@ -102,7 +107,6 @@ public class VariationCTMX extends CarvableVariation {
                 + texture,register);
         submap = new TextureSubmap(getIconResource(modName
                 + ":" + texture + "-ctm",register), 4, 4);
-
         submapSmall = new TextureSubmap(icon, 2, 2);
     }
 }

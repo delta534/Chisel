@@ -12,6 +12,7 @@ import info.jbcs.minecraft.chisel.util.IChiselCheck;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
+import org.bouncycastle.asn1.cmp.CertOrEncCert;
 
 public class CTM {
     public static final int left=0;
@@ -81,8 +82,14 @@ public class CTM {
             return 0;
 
 
-        offset.set(offset_).add(x, y, z);
-;
+        offset.set(offset_);
+        if(x<0)
+            offset.x=(offset.x+0.5)%1;
+        if(y<0)
+            offset.y=(offset.y  +0.5)%1;
+        if(z<0)
+            offset.z=(offset.z+0.5)%1;
+        offset.add(x, y, z);
         int blockId = world.getBlockId(x, y, z);
         int blockMetadata = world.getBlockMetadata(x, y, z);
         boolean b[] = new boolean[4];
@@ -91,13 +98,14 @@ public class CTM {
         switch (side)
         {
             case 0:
-                b[left]=isConnected(world, offset.x -0.5, offset.y, offset.z, side, blockId,
+
+                b[left]=isConnected(world, offset.x -(0.5), offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x +0.5, offset.y, offset.z, side, blockId,
+                b[right]=isConnected(world, offset.x +(0.5), offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y, offset.z +0.5, side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y, offset.z +(0.5), side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y, offset.z -0.5, side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y, offset.z -(0.5), side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -106,13 +114,14 @@ public class CTM {
                 }
                 break  ;
             case 1:
-                b[left]=isConnected(world, offset.x-0.5, offset.y, offset.z, side, blockId,
+
+                b[left]=isConnected(world, offset.x-(0.5), offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x +0.5, offset.y, offset.z, side, blockId,
+                b[right]=isConnected(world, offset.x +(0.5), offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y, offset.z +0.5, side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y, offset.z +(0.5), side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y, offset.z -0.5, side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y, offset.z -(0.5), side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -121,13 +130,14 @@ public class CTM {
             }
                 break  ;
             case 2:
-                b[left]=isConnected(world, offset.x +0.5, offset.y, offset.z, side, blockId,
+
+                b[left]=isConnected(world, offset.x +(0.5), offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x -0.5, offset.y, offset.z, side, blockId,
+                b[right]=isConnected(world, offset.x -(0.5), offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y-0.5, offset.z , side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y-(0.5), offset.z , side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y +0.5, offset.z , side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y +(0.5), offset.z , side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -136,13 +146,14 @@ public class CTM {
                 }
                 break;
             case 3:
-                b[left]=isConnected(world, offset.x-0.5, offset.y, offset.z, side, blockId,
+
+                b[left]=isConnected(world, offset.x-(0.5), offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x +0.5, offset.y, offset.z, side, blockId,
+                b[right]=isConnected(world, offset.x +(0.5), offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y-0.5, offset.z , side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y-(0.5), offset.z , side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y +0.5, offset.z , side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y +(0.5), offset.z , side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -151,13 +162,14 @@ public class CTM {
                 }
                 break;
             case 4:
-                b[left]=isConnected(world, offset.x , offset.y, offset.z -0.5, side, blockId,
+
+                b[left]=isConnected(world, offset.x , offset.y, offset.z -(0.5), side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x , offset.y, offset.z +0.5, side, blockId,
+                b[right]=isConnected(world, offset.x , offset.y, offset.z +(0.5), side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y-0.5, offset.z, side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y-(0.5), offset.z, side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y+0.5, offset.z, side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y+(0.5), offset.z, side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -167,13 +179,13 @@ public class CTM {
                 break;
             case 5:
 
-                b[left]=isConnected(world, offset.x , offset.y, offset.z +0.5, side, blockId,
+                b[left]=isConnected(world, offset.x , offset.y, offset.z +(0.5), side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x , offset.y, offset.z -0.5, side, blockId,
+                b[right]=isConnected(world, offset.x , offset.y, offset.z -(0.5), side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y-0.5, offset.z, side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y-(0.5), offset.z, side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y +0.5, offset.z, side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y +(0.5), offset.z, side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -498,6 +510,7 @@ public class CTM {
 
     private static boolean isConnected(IBlockAccess world, double dx, double dy, double dz,
                                        int side, int id, int meta) {
+ // I need to figure out reason for the second check.
         int x=(int)dx,y=(int)dy,z=(int)dz;
         int x2 = x, y2 = y, z2 = z;
         switch (side) {
@@ -520,14 +533,9 @@ public class CTM {
                 x2++;
                 break;
         }
-        boolean cres=(ConnectionCheckManager.checkConnection(world, dx, dy, dz, id, meta));
-        if(cres||ConnectionCheckManager.earlystop)
-            return  cres;
-        TileEntity te = world.getBlockTileEntity(x, y, z);
-        if( CarvableHelper.isSame(world, x, y, z, id, meta))
-            return true;
-        if (te instanceof IChiselCheck)
-            return ((IChiselCheck) te).ContainsEquivalentBlock(id, meta);
+        boolean check1=(ConnectionCheckManager.checkConnection(world, dx, dy, dz, id, meta));
+        if(ConnectionCheckManager.earlystop)
+            return check1;
         if (Block.blocksList[id] instanceof BlockMarbleCarpet)
             return world.getBlockId(x, y, z) == id
                     && world.getBlockMetadata(x, y, z) == meta;

@@ -19,9 +19,7 @@ public class BlockPillarUVTransform extends DelayedIcons {
 
     Icon []icons;
     int side;
-    byte rotation;
-    static final double uc = 0.5;
-    static final double vc = -0.5;
+    int rotation;
     static Util.RotationData dummy = new Util.RotationData();
 
     public BlockPillarUVTransform(Block bl, int m) {
@@ -47,22 +45,22 @@ public class BlockPillarUVTransform extends DelayedIcons {
                     part.world(), part.x(), part.y(), part.z());
             switch (side % 6) {
             case 0:
-                rotation = (byte) dummy.rotateYNeg;// good
+                rotation =dummy.rotateYNeg;// good
                 break;
             case 1:
-                rotation = (byte) dummy.rotateYPos;// good
+                rotation =dummy.rotateYPos;// good
                 break;
             case 2:
-                rotation = (byte) dummy.rotateZNeg;// good
+                rotation =dummy.rotateZNeg;// good
                 break;
             case 3:
-                rotation = (byte) dummy.rotateZPos;// good
+                rotation =dummy.rotateZPos;// good
                 break;
             case 4:
-                rotation = (byte) dummy.rotateXNeg;// good
+                rotation =dummy.rotateXNeg;// good
                 break;
             case 5:
-                rotation = (byte) dummy.rotateXPos;// good
+                rotation =dummy.rotateXPos;// good
                 break;
 
             }

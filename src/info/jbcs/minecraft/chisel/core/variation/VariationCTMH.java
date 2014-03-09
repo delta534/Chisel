@@ -61,4 +61,10 @@ public class VariationCTMH extends CarvableVariation {
         icon = getIconResource(modName + ":"
                 + texture + "-top",register);
     }
+    @Override
+    public Icon getIndexedIcon(int index) {
+        if(index>=4) return icon;
+
+        return seamsCtmVert.icons[index];
+    }
 }
