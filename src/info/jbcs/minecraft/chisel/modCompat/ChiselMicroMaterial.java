@@ -1,7 +1,10 @@
 package info.jbcs.minecraft.chisel.modCompat;
 
 import codechicken.lib.vec.Cuboid6;
+import codechicken.lib.vec.Rotation;
 import codechicken.multipart.minecraft.PartMetaAccess;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLLog;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
@@ -24,6 +27,7 @@ import codechicken.microblock.Microblock;
 import codechicken.multipart.TMultiPart;
 import codechicken.multipart.TileMultipart;
 import codechicken.multipart.minecraft.IPartMeta;
+import scala.sys.process.processInternal;
 
 public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta {
 
@@ -87,9 +91,11 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
 
         return icontr.getPos();
     }
+    final static Vector3 axis=new Vector3(0,0.5,0);
     static class microMaterialCheck implements  IConnectionCheck
     {
         static Vector3 point=new Vector3();
+        static Vector3 enclosurePoint=new Vector3(0.5,0.5,0.5);
         boolean isMultipart;
         @Override
         public boolean checkConnection(IBlockAccess world,double dx,double dy,double dz,int id,int meta)
@@ -100,15 +106,20 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
             {
                 isMultipart=true;
                 point.set(dx%1,dy%1,dz%1);
+                //point.rotate(Math.PI,axis);
                 TileMultipart tmp=(TileMultipart)te;
                 for(TMultiPart npart: tmp.jPartList())
                 {
-                    Cuboid6 bounds=npart.getRenderBounds();
-
+                    Cuboid6 bounds=npart.getRenderBounds().copy().enclose(enclosurePoint);
+//                    FMLLog.info("start");
+//                    FMLLog.info(point.toString());
+//                    FMLLog.info(bounds.toString());
+//                    FMLLog.info("end");
                     if(npart instanceof Microblock)
                     {
                         if(point.equalsT(Vector3.zero)||checkBounds(bounds,point))
                         {
+                           // FMLLog.info("Is in");
                             Microblock mb=(Microblock)npart;
                             IMicroMaterial m=MicroMaterialRegistry.getMaterial(mb.getMaterial());
                             return id==m.getItem().itemID&&meta==m.getItem().getItemDamage();
@@ -116,7 +127,10 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
                         }
                     }
                 }
+
             }
+            //FMLLog.info("END test=======================");
+
             return false;
         }
         public boolean checkBounds(Cuboid6 bound,Vector3 point)

@@ -177,16 +177,16 @@ public class MultiPartCarpetTest extends McSidedMetaPart implements IChiselCheck
         renderer.renderMaxX=1.0;
         renderer.renderMaxY=1.0;
         renderer.renderMaxZ=1.0;
-        
+
 		renderer.submap=var.submap;
 		renderer.submapSmall=var.submapSmall;
-		
+
 		renderer.rendererOld=new RenderBlocks(access);
 		if(var.useCTM)
 			renderer.renderStandardBlock(base,x(),y(),z());
 		else
 			renderer.rendererOld.renderStandardBlock(base, x(), y(), z());
-    	
+
     }
     
     @Override

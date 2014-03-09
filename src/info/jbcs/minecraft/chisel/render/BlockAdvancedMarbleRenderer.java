@@ -34,8 +34,11 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
 	VariationCTMX test;
 	LazyLightMatrix lightmatrix=new LazyLightMatrix();
 	CCModel model;
-	Vertex5 sideVerts[][]=new Vertex5[6][4];
+    Cuboid6 blockBounds;
 	public BlockAdvancedMarbleRenderer() {
+        blockBounds=new Cuboid6(
+                0,0,0,
+                1,1,1);
 		if(Chisel.RenderCTMId==0){
 			Chisel.RenderCTMId = RenderingRegistry.getNextAvailableRenderId();
 		}
@@ -52,7 +55,6 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
 		Drawing.drawBlock(block, metadata, renderer);	
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 	}
-	static boolean texdump=true;
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks rendererOld) {
 
@@ -69,20 +71,12 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
 			rendererCTM.renderMaxZ=1.0;
 
 			test.submap=var.submap;
-            if(texdump)
-            {
-                for(Icon ic:var.submap.icons)
-                {
-                    FMLLog.info(ic.getIconName());
-                }
-                texdump=false;
-            }
 			test.submapSmall=var.submapSmall;
+            test.useCTM=var.useCTM;
+            test.icon=var.icon;
 			rendererCTM.rendererOld=rendererOld;
 			test.temp=rendererCTM;
-			Cuboid6 blockBounds=new Cuboid6(
-					block.getBlockBoundsMinX(),block.getBlockBoundsMinX(),block.getBlockBoundsMinX(),
-					block.getBlockBoundsMaxX(),	block.getBlockBoundsMaxY(),block.getBlockBoundsMaxZ());
+
 			
 			model.generateBlock(0,blockBounds);
 			for(int i=0;i<6;i++)
@@ -117,6 +111,7 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
 
 	@Override
 	public boolean shouldRender3DInInventory() {
+
 		return true;
 	}
 

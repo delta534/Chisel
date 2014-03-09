@@ -22,28 +22,20 @@ public class VariationCTMX extends CarvableVariation {
     public RenderBlocksCTM temp = new RenderBlocksCTM();
 
 
-
-    public int ti=0;
     private int m_side;
     private Vector3 loc;
     private IBlockAccess w;
     private int region;
     private Vector3 midpoint;
-    private  boolean runTest=true;
+
     Icon getIcon(int side, int index) {
 
-//        int j = CTM.getSubmapIndices(w, (int) loc.x, (int) loc.y, (int) loc.z,
-//              side)[index];
-
-        if(runTest)
+        if(useCTM)
         {
-            runTest=false;
-            FMLLog.info("Data start");
-            FMLLog.info(midpoint.toString());
-            FMLLog.info("Data end");
+            int j=CTM.getTexture(w, (int) loc.x, (int) loc.y, (int) loc.z,side,index,midpoint);
+            return  j >= 16 ? submapSmall.icons[j-16] : submap.icons[j];
         }
-        int j=CTM.getTexture(w, (int) loc.x, (int) loc.y, (int) loc.z,side,index,midpoint);
-        return  j >= 16 ? submapSmall.icons[j-16] : submap.icons[j];
+        return icon;
 
     }
 
@@ -69,8 +61,6 @@ public class VariationCTMX extends CarvableVariation {
         return true;
 
     }
-    int octRegion;
-    void setOctRegion(int i){octRegion=i;}
     void setRegion(int i) {
         region = i;
     }

@@ -32,13 +32,7 @@ public class CTM {
             {16,17,18,19}    //flipped lower right
 
     };
-    static final int[][] texMappings={
-            {16,18,19,17}
 
-    };
-    static final int [][] offsetVecs= {
-            {            }
-    };
     static int [][]submaps = { { 16, 17, 18, 19 }, { 16, 9, 18, 13 },
             { 8, 9, 12, 13 }, { 8, 17, 12, 19 }, { 16, 9, 6, 15 },
             { 8, 17, 14, 7 }, { 2, 11, 6, 15 }, { 8, 9, 14, 15 },
@@ -86,11 +80,14 @@ public class CTM {
         if (world == null)
             return 0;
 
-        offset.set(offset_).add(x,y,z);
+
+        offset.set(offset_).add(x, y, z);
+;
         int blockId = world.getBlockId(x, y, z);
         int blockMetadata = world.getBlockMetadata(x, y, z);
         boolean b[] = new boolean[4];
         boolean b2[] =new boolean[4];
+
         switch (side)
         {
             case 0:
@@ -323,7 +320,7 @@ public class CTM {
         boolean b[] = new boolean[6];
         if (side <= 1) {
             b[0] = isConnected(world, x - 1, y, z, side, blockId, blockMetadata);
-            b[right] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
+            b[1] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
             b[2] = isConnected(world, x, y, z + 1, side, blockId, blockMetadata);
             b[3] = isConnected(world, x, y, z - 1, side, blockId, blockMetadata);
         } else if (side == 2) {
@@ -333,7 +330,7 @@ public class CTM {
             b[3] = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
         } else if (side == 3) {
             b[0] = isConnected(world, x - 1, y, z, side, blockId, blockMetadata);
-            b[right] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
+            b[1] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
             b[2] = isConnected(world, x, y - 1, z, side, blockId, blockMetadata);
             b[3] = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
         } else if (side == 4) {
