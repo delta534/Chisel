@@ -80,15 +80,20 @@ public class CTM {
         int texture=0;
         if (world == null)
             return 0;
-
-
+      //  double dxn=-0.5;
+     //   double dyn=-0.5;
+      //  double dzn=-0.5;
+      //  double dxp=0.5;
+       // double dyp=0.5;
+       // double dzp=0.5;
         offset.set(offset_);
         if(x<0)
-            offset.x=(offset.x+0.5)%1;
+        offset.x=-1*(offset.x+0.5)%1;
         if(y<0)
-            offset.y=(offset.y  +0.5)%1;
+            offset.y=(offset.y+0.5)%1;
         if(z<0)
-            offset.z=(offset.z+0.5)%1;
+            offset.z=-1*(offset.z+0.5)%1;
+
         offset.add(x, y, z);
         int blockId = world.getBlockId(x, y, z);
         int blockMetadata = world.getBlockMetadata(x, y, z);
