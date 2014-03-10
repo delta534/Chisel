@@ -132,9 +132,6 @@ public class CarvableHelper {
         variation.description = description;
         variation.metadata = metadata;
         variation.blockName = blockName;
-        int i = 0;
-        if (variation.kind > 2)
-            i++;
         variations.add(variation);
         map[metadata] = variation;
     }
@@ -212,16 +209,22 @@ public class CarvableHelper {
 
     public void registerIcons(String modName, Block block, IconRegister register) {
         for (CarvableVariation variation : variations) {
-                variation.registerIcon(modName, block, register);
+            if(variation.block!=null)
+                variation.block.registerIcons(register);
+            variation.registerIcon(modName, block, register);
         }
     }
 
     public void registerSubBlocks(Block block, CreativeTabs tabs, List list) {
-        for (CarvableVariation variation : variations) {
-            if ((!Chisel.overrideVanillaBlocks) && variation.block != null)
+        registerSubBlocks(block, tabs, list,!Chisel.overrideVanillaBlocks);
+    }
+    public void registerSubBlocks(Block block, CreativeTabs tabs, List list,boolean override)
+    {
+        for (CarvableVariation var:variations)
+        {
+            if(var.block!=null&&override)
                 continue;
-
-            list.add(new ItemStack(block.blockID, 1, variation.metadata));
+            list.add(new ItemStack(block.blockID,1,var.metadata));
         }
     }
 

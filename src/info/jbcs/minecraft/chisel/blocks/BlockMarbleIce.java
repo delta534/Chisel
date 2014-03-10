@@ -46,11 +46,11 @@ public class BlockMarbleIce extends BlockIce implements Carvable  {
 
 	@Override
 	public void getSubBlocks(int blockId, CreativeTabs tabs, List list) {
-		carverHelper.registerSubBlocks(this, tabs, list);
+		carverHelper.registerSubBlocks(this, tabs, list,Chisel.disableOverriding);
 	}
 
 	/**
-	 * Called when the player destroys a block with an item that can harvest it.
+	 * Called when  the player destroys a block with an item that can harvest it.
 	 * (i, j, k) are the coordinates of the block and l is the block's
 	 * subtype/damage.
 	 */

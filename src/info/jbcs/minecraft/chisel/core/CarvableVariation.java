@@ -43,6 +43,22 @@ public class CarvableVariation implements IUVTransformation {
         else
             boundIcon=getIcon(side);
 	}
+
+    public boolean isTop(int side)
+    {
+        return side==1;
+    }
+
+    public boolean isSide(int side)
+    {
+        return side>1;
+    }
+    public boolean isBottom(int side)
+    {
+        return side==0;
+    }
+
+
 	public Icon getIcon(int side)
 	{
 		return icon;

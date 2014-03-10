@@ -19,10 +19,10 @@ public class VariationCTM3 extends CarvableVariation {
     public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
         int tex = CTM.getTexture(world, x, y, z, side);
 
-        int row = tex / 16;
-        int col = tex % 16;
+        int row = (tex & 48)>>2;
+        int col = (tex & 15);
 
-        return seams[col / 4].icons[col % 4 + row * 4];
+        return seams[(col & 12)>>2].icons[(col & 3) + row];
     }
 
     @Override

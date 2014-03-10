@@ -15,6 +15,8 @@ public class VariationCTMV extends VariationCTMH {
     int rotation;
     int side;
     IBlockAccess world_;
+    int topIndex=1;
+    int bottomIndex=0;
     public VariationCTMV()
     {
         rotations=new RotationData();
@@ -27,6 +29,19 @@ public class VariationCTMV extends VariationCTMH {
         if(side <2)
             return icon;
         return seamsCtmVert.icons[0];
+    }
+
+    @Override
+    public boolean isTop(int side) {
+        return side==topIndex;
+    }
+    @Override
+    public boolean isBottom(int side) {
+        return side==bottomIndex;
+    }
+    @Override
+    public boolean isSide(int side) {
+        return side!=topIndex&&side!=bottomIndex;
     }
 
     @Override
@@ -91,7 +106,8 @@ public class VariationCTMV extends VariationCTMH {
                         rotations.rotateYPos=1;
                         Icons[4] = getIndexedIcon(4);
                         Icons[5] = getIndexedIcon(4);
-
+                        bottomIndex=4;
+                        topIndex=5;
                         if (xp && xn)
                             Icons[0] = getIndexedIcon(2);
                         else if (xp)
@@ -124,7 +140,8 @@ public class VariationCTMV extends VariationCTMH {
                             rotations.rotateXNeg = 2;
                             Icons[2] = getIndexedIcon(4);
                             Icons[3] = getIndexedIcon(4);
-
+                            bottomIndex=2;
+                            topIndex=3;
                             if (zp && zn)
                                 Icons[0] = getIndexedIcon(2);
                             else if (zp)

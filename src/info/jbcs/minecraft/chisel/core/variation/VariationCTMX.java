@@ -34,7 +34,7 @@ public class VariationCTMX extends CarvableVariation {
     int region;
     void bindIcon(int side, int index) {
 
-        if(useCTM)
+        if(useCTM&&w!=null)
         {
             int j=CTM.getTexture(w, (int) loc.x, (int) loc.y, (int) loc.z,side,index,midpoint);
             boundIcon=  j >= 16 ? submapSmall.icons[j-16] : submap.icons[j];
