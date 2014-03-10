@@ -80,21 +80,26 @@ public class CTM {
         int texture=0;
         if (world == null)
             return 0;
-      //  double dxn=-0.5;
-     //   double dyn=-0.5;
-      //  double dzn=-0.5;
-      //  double dxp=0.5;
-       // double dyp=0.5;
-       // double dzp=0.5;
+        double xneg=-0.5;
+        double yneg=-0.5;
+        double zneg=-0.5;
+        double xpos=0.5;
+       double ypos=0.5;
+       double zpos=0.5;
         offset.set(offset_);
+        if(x==0&offset_.x<=0.25)
+            xneg=-1.25;
+        if(z==0&offset_.z<=0.25)
+            yneg=-1.25;
+        if(z==0&offset_.z<=0.25)
+            zneg=-1.25;
         if(x<0)
         offset.x=-1*(offset.x+0.5)%1;
         if(y<0)
             offset.y=(offset.y+0.5)%1;
         if(z<0)
             offset.z=-1*(offset.z+0.5)%1;
-
-        offset.add(x, y, z);
+         offset.add(x,y,z);
         int blockId = world.getBlockId(x, y, z);
         int blockMetadata = world.getBlockMetadata(x, y, z);
         boolean b[] = new boolean[4];
@@ -104,13 +109,13 @@ public class CTM {
         {
             case 0:
 
-                b[left]=isConnected(world, offset.x -(0.5), offset.y, offset.z, side, blockId,
+                b[left]=isConnected(world, offset.x +xneg, offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x +(0.5), offset.y, offset.z, side, blockId,
+                b[right]=isConnected(world, offset.x +xpos, offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y, offset.z +(0.5), side, blockId,
+                b[below]=isConnected(world, offset.x, offset.y, offset.z +zpos, side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y, offset.z -(0.5), side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y, offset.z +zneg, side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -120,13 +125,13 @@ public class CTM {
                 break  ;
             case 1:
 
-                b[left]=isConnected(world, offset.x-(0.5), offset.y, offset.z, side, blockId,
+                b[left]=isConnected(world, offset.x +xneg, offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x +(0.5), offset.y, offset.z, side, blockId,
+                b[right]=isConnected(world, offset.x +xpos, offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y, offset.z +(0.5), side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y, offset.z +zpos, side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y, offset.z -(0.5), side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y, offset.z +zneg, side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -136,13 +141,13 @@ public class CTM {
                 break  ;
             case 2:
 
-                b[left]=isConnected(world, offset.x +(0.5), offset.y, offset.z, side, blockId,
+                b[left]=isConnected(world, offset.x +xpos, offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x -(0.5), offset.y, offset.z, side, blockId,
+                b[right]=isConnected(world, offset.x +xneg, offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y-(0.5), offset.z , side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y +yneg, offset.z , side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y +(0.5), offset.z , side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y +ypos, offset.z , side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -152,13 +157,13 @@ public class CTM {
                 break;
             case 3:
 
-                b[left]=isConnected(world, offset.x-(0.5), offset.y, offset.z, side, blockId,
+                b[left]=isConnected(world, offset.x +xneg, offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x +(0.5), offset.y, offset.z, side, blockId,
+                b[right]=isConnected(world, offset.x +xpos, offset.y, offset.z, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y-(0.5), offset.z , side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y +yneg, offset.z , side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y +(0.5), offset.z , side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y +ypos, offset.z , side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -168,13 +173,13 @@ public class CTM {
                 break;
             case 4:
 
-                b[left]=isConnected(world, offset.x , offset.y, offset.z -(0.5), side, blockId,
+                b[left]=isConnected(world, offset.x , offset.y, offset.z +zneg, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x , offset.y, offset.z +(0.5), side, blockId,
+                b[right]=isConnected(world, offset.x , offset.y, offset.z +zpos, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y-(0.5), offset.z, side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y +yneg, offset.z, side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y+(0.5), offset.z, side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y+ypos, offset.z, side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
@@ -184,13 +189,13 @@ public class CTM {
                 break;
             case 5:
 
-                b[left]=isConnected(world, offset.x , offset.y, offset.z +(0.5), side, blockId,
+                b[left]=isConnected(world, offset.x , offset.y, offset.z +zpos, side, blockId,
                         blockMetadata);
-                b[right]=isConnected(world, offset.x , offset.y, offset.z -(0.5), side, blockId,
+                b[right]=isConnected(world, offset.x , offset.y, offset.z +zneg, side, blockId,
                         blockMetadata);
-                b[below]=isConnected(world, offset.x , offset.y-(0.5), offset.z, side, blockId,
+                b[below]=isConnected(world, offset.x , offset.y +yneg, offset.z, side, blockId,
                         blockMetadata);
-                b[above]=isConnected(world, offset.x , offset.y +(0.5), offset.z, side, blockId,
+                b[above]=isConnected(world, offset.x , offset.y +ypos, offset.z, side, blockId,
                         blockMetadata);
                 for(int i=0;i<4;i++)
                 {
