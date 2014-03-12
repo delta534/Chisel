@@ -1626,7 +1626,7 @@ public class Chisel {
 		Carving.chisel.registerOre("blockDirt", "blockDirt");
 		
 
-		blockGrass = (BlockChiselGrass) new BlockChiselGrass("ChiselBlockGrass", 2850).setHardness(0.5F).setStepSound(
+		blockGrass = (BlockChiselGrass) new BlockChiselGrass(getBlock(Block.grass, 2850)).setHardness(0.5F).setStepSound(
 						Block.soundGravelFootstep);
 		blockGrass.carverHelper.addVariation("Grassy Dirt", 0, Block.grass);
 		blockGrass.carverHelper.addVariation("Grassy Dirt bricks in disarray", 1,

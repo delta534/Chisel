@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 public class BlockChiselGrass extends BlockGrass implements Carvable{
 	public CarvableHelper carverHelper;
     public static BlockMarble chiselDirt= Chisel.blockDirt;
-
+    public static BlockGrass grass=Block.grass;
     public BlockChiselGrass(int i) {
 		super(i);
         carverHelper=new GrassCarvableHelper();
@@ -76,7 +76,7 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
 		boolean checked=(world.getBlockId(i, j, k) == chiselDirt.blockID);
 		if(chiselDirt.blockID==Block.dirt.blockID)
 		{
-			super.updateTick(world, x, y, z, rand);
+			grass.updateTick(world, x, y, z, rand);
 			return;
 		}
 		if (!world.isRemote)
@@ -116,4 +116,18 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
 		return Chisel.RenderCTMId;
 	}
 
+    @Override
+    public int getBlockColor() {
+        return grass.getBlockColor();
+    }
+
+    @Override
+    public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
+        return grass.colorMultiplier(par1IBlockAccess, par2, par3, par4);
+    }
+
+    @Override
+    public int getRenderColor(int par1) {
+        return grass.getRenderColor(par1);
+    }
 }

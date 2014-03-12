@@ -53,11 +53,10 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
            // test.submap=var.submap;
             //test.submapSmall=var.submapSmall;
             proxyWorld world=null;
-            var.setBounds(part.getRenderBounds());
             if(part.world()!=null)
                 world=new proxyWorld(part.world(),pos,icontr.getBlockId(),icontr.getMetadata());
             var.setup(verts, side%6, pos,world);
-            var.renderSide(verts, side%6, pos, lightMatrix, getColour(part));
+            var.renderSide(verts, side%6, pos, lightMatrix, getColour(part),part.getRenderBounds());
 
     }
     @Override
@@ -113,7 +112,7 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
                 TileMultipart tmp=(TileMultipart)te;
                 for(TMultiPart npart: tmp.jPartList())
                 {
-                    Cuboid6 bounds=npart.getRenderBounds().copy().enclose(enclosurePoint);
+                    Cuboid6 bounds=npart.getRenderBounds();
                     if(npart instanceof Microblock)
                     {
                         if(point.equalsT(Vector3.zero)||checkBounds(bounds,point))

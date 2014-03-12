@@ -312,8 +312,7 @@ public class Subdivider {
                     temp.mul(0.25);
                     calcUVOffset(temp,offset);
                     result.iconIndex=getUVRegion(temp);
-                    calcVecOffset(vecStore,side,result.offset);
-
+                    result.offset.set(vecStore);
                     for(Vertex5 vert:result.verts_)
                     {
                         correctUV(vert.uv,offset);
@@ -335,7 +334,7 @@ public class Subdivider {
                     correctUV(results[0].verts_[i].uv, offset);
                     results[0].verts_[i].vec.set(vert.vec);
                 }
-                results[0].offset.set(vecStore);
+                results[0].offset.set(midpoint);
                 break;
 
         }

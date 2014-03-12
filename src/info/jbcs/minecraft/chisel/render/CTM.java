@@ -279,7 +279,6 @@ public class CTM {
         }
         else if(b[left]&&b[right]&&b[below]&&b[above])  //11
         {
-
             texture=cornerCheck(b2,index,texture);
             if(cornerCount==0)
             {
@@ -289,47 +288,35 @@ public class CTM {
         else if(!b[left]&&b[right]&&b[below]&&b[above])  //12
         {
 
-            texture=cornerCheck(b2,index,texture);
-            if(cornerCount>=1)
-            {
+
                 int i=(index&2);
 
                 texture=mappings[upperright][i];
-            }
+
         }
 
         else if(b[left]&&!b[right]&&b[below]&&b[above])  //13
         {
 
-            texture=cornerCheck(b2,index,texture);
-            if(cornerCount>=1)
-            {
+
                 int i=(index&2)+1;
 
                 texture=mappings[upperright][i];
-            }
+
         }
 
         else if(b[left]&&b[right]&&!b[below]&&b[above])  //14
         {
 
-            texture=cornerCheck(b2,index,texture);
-            if(cornerCount>=1)
-            {
 
                 texture=mappings[lowerleft][index%2+2];
-            }
+
         }
 
         else if(b[left]&&b[right]&&b[below]&&!b[above])  //15
         {
 
-            texture=cornerCheck(b2,index,texture);
-            if(cornerCount>=1)
-            {
-
                 texture=mappings[lowerleft][index%2];
-            }
         }
         return texture;
     }

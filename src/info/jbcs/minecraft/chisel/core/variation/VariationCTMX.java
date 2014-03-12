@@ -1,6 +1,7 @@
 package info.jbcs.minecraft.chisel.core.variation;
 
 
+import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Rotation;
 import cpw.mods.fml.common.FMLLog;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
@@ -21,6 +22,8 @@ import codechicken.lib.vec.Vector3;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
 import info.jbcs.minecraft.chisel.render.CTM;
 import info.jbcs.minecraft.chisel.render.RenderBlocksCTM;
+
+import java.util.Vector;
 
 public class VariationCTMX extends CarvableVariation {
 
@@ -45,36 +48,37 @@ public class VariationCTMX extends CarvableVariation {
         }
 
     }
-
+    final static Vector3[] filters={new Vector3(1,0,1),new Vector3(1,1,0),new Vector3(0,1,1)};
+    final static Vector3[] filters2={new Vector3(0,1,0),new Vector3(0,0,1),new Vector3(1,0,0)};
     @Override
     public boolean renderSide(Vertex5[] verts, int side, Vector3 pos,
-                              LightMatrix lightMatrix, int color) {
+                              LightMatrix lightMatrix,int color,Cuboid6 bounds) {
 
         Vertex5 []data = null;
+        Vector3 vec=bounds.center();
         if(useCTM&&w!=null)
         {
             for (int j = 0; j < Subdivider.numResults; j++) {
 
                 Subdivider.Result res=Subdivider.getResult(j);
                 CCRenderState.useNormals(false);
-                midpoint.set(res.offset);
+                midpoint.set(vec).multiply(filters2[side/2]).add(res.offset.multiply(filters[side/2]));
                 region=res.iconIndex;
                 data=res.verts_;
-                axis.set(Rotation.axes[side%6]).multiply(0.5);
+                axis.set(Rotation.axes[side % 6]).multiply(vec).multiply(2);
+                axis.add(vec);
                 axis.add(pos);
-                axis.add(midpoint);
                 int meta=w.getBlockMetadata((int)pos.x,(int)pos.y,(int)pos.z);
                 int id=w.getBlockId((int)pos.x,(int)pos.y,(int)pos.z);
-                Block b=Block.blocksList[w.getBlockId((int)pos.x,(int)pos.y,(int)pos.z)];
-                if (data != null&&!b.isOpaqueCube()&& !ConnectionCheckManager.checkConnection(w,axis.x,axis.y,axis.z,id,meta)) {
-                    super.renderSide(data, side % 6, pos, lightMatrix, color);
+                if (data != null){
+                   boolean x= !ConnectionCheckManager.checkConnection(w,axis.x,axis.y,axis.z,id,meta);
+                    super.renderSide(data, side % 6, pos, lightMatrix, color,bounds);
                 }
-
             }
         }
         else
         {
-                super.renderSide(verts, side, pos, lightMatrix, color);
+                super.renderSide(verts, side, pos, lightMatrix, color,bounds);
         }
         return true;
 

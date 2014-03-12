@@ -200,7 +200,7 @@ public class MultiPartCarpetTest extends McSidedMetaPart implements IChiselCheck
                 verts[j]=carpetModel.verts[j+i*4];
             }
             var.setup(verts, i, pos, access);
-            var.renderSide(verts, i, pos, lm.lightMatrix(), 0xFFFFFFF);
+            var.renderSide(verts, i, pos, lm.lightMatrix(), 0xFFFFFFF,bounds);
         }
     }
 

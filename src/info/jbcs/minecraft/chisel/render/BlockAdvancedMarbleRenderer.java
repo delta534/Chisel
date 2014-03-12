@@ -1,5 +1,6 @@
 package info.jbcs.minecraft.chisel.render;
 
+import codechicken.lib.render.*;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import info.jbcs.minecraft.chisel.Chisel;
@@ -20,10 +21,6 @@ import org.lwjgl.opengl.GL11;
 
 import codechicken.lib.lighting.LazyLightMatrix;
 import codechicken.lib.lighting.LightMatrix;
-import codechicken.lib.render.CCModel;
-import codechicken.lib.render.CCModelLibrary;
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.Vertex5;
 import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Vector3;
 
@@ -50,33 +47,39 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
         test.temp=rendererCTM;
         test.temp.resetVertices();
         model=CCModel.quadModel(24);
+        model.generateBlock(0,blockBounds);
+
     }
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
     {
+        //GL11.glPushMatrix();
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-        Tessellator t=Tessellator.instance;
-            t.setColorOpaque(255, 255, 255);
         CarvableVariation var=((Carvable) block).getVariation(metadata);
         pos.set(0,0,0);
-        model.generateBlock(0,blockBounds);
+        CCRenderState.reset();
+        TextureUtils.bindAtlas(0);
+        CCRenderState.useNormals(true);
+        CCRenderState.useModelColours(true);
+        CCRenderState.pullLightmap();
 
         for(int i=0;i<6;i++)
         {
 
-            t.startDrawingQuads();
+            CCRenderState.startDrawing(7);
             for(int j=0;j<4;j++)
             {
                 verts[j]=model.verts[j+i*4];
             }
             var.setup(verts,i,pos,null);
-            var.renderSide(verts, i, pos, null, block.getRenderColor(i) << 8 | 0xFF);
-            t.draw();
+            var.renderSide(verts, i, pos, null, block.getRenderColor(i) << 8 | 0xFF,blockBounds);
+            CCRenderState.draw();
 
 
         }
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+        //GL11.glPopMatrix();
     }
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks rendererOld) {
@@ -96,7 +99,6 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
                 rendererCTM.renderMaxZ=1.0;
 
 
-                model.generateBlock(0, blockBounds); 
                 Tessellator.instance.setColorOpaque(255,255,255);
 
                 for(int i=0;i<6;i++)
@@ -108,7 +110,7 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
                         verts[j]=model.verts[j+i*4];
                     }
                     var.setup(verts, i, pos, world);
-                    var.renderSide(verts, i, pos, lightmatrix.lightMatrix(), block.colorMultiplier(world,x,y,z)<<8|0xFF);
+                    var.renderSide(verts, i, pos, lightmatrix.lightMatrix(), block.colorMultiplier(world,x,y,z)<<8|0xFF,blockBounds);
 
 
 

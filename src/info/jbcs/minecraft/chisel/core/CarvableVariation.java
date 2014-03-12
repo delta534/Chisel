@@ -35,14 +35,8 @@ public class CarvableVariation implements IUVTransformation {
 
 	public Icon					icon;
 	public Icon					overlay;
-    public Cuboid6 bounds;
     public Icon getBoundIcon() {
         return boundIcon;
-    }
-
-    public void setBounds(Cuboid6 bound)
-    {
-        bounds=bound;
     }
 
     public void setBoundIcon(Icon boundIcon) {
@@ -90,7 +84,7 @@ public class CarvableVariation implements IUVTransformation {
 		uv.v=boundIcon.getInterpolatedV(uv.v%2*16);
 	}
 	public boolean renderSide(Vertex5[] verts, int side, Vector3 pos,
-			LightMatrix lightMatrix,int color)
+			LightMatrix lightMatrix,int color,Cuboid6 bounds)
 	{
 		UV uv=new UV();
 		Tessellator t=Tessellator.instance;
