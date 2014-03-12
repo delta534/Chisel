@@ -27,8 +27,9 @@ public class ContainerChisel extends Container {
 
 		int[] leftOffsets = { 8, 26, 134, 152, 44, 116 };
 		int[] topOffsets = { 8, 26, 44, 62 };
+        chisel=inventoryplayer.getCurrentItem();
 
-		int index = 0;
+        int index = 0;
 		for (int i = 0; i < 2; i++) {
 			for (int y = 0; y < 4; y++) {
 				for (int x = 0; x < 2; x++) {
@@ -58,7 +59,6 @@ public class ContainerChisel extends Container {
 			);
 		}
 		
-		chisel=inventoryplayer.getCurrentItem();
 		if(chisel.stackTagCompound!=null){
 			ItemStack stack=ItemStack.loadItemStackFromNBT(chisel.stackTagCompound.getCompoundTag("chiselTarget"));
 			inventory.setInventorySlotContents(InventoryChiselSelection.normalSlots, stack);

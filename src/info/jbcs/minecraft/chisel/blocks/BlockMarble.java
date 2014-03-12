@@ -13,8 +13,6 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 
 public class BlockMarble extends Block implements Carvable {
 	public CarvableHelper carverHelper;
@@ -79,9 +77,6 @@ public class BlockMarble extends Block implements Carvable {
 	{
 		return "Chisel"+carverHelper.blockName;
 	}
-    public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side)
-    {
-        return true;
-    }
+
 	
 }

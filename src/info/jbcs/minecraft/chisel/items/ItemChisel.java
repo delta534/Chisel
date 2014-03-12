@@ -34,14 +34,21 @@ public class ItemChisel extends ItemTool {
 		super(id,1,EnumToolMaterial.IRON,CarvableHelper.chiselBlocks.toArray(new Block[CarvableHelper.chiselBlocks.size()]));
 
 		maxStackSize = 1;
-		if(Chisel.damageChisel)
+		if(Chisel.hardMode)
+        {
 			setMaxDamage(500);
+            efficiencyOnProperMaterial=1f;
+        }
 		else
+        {
 			setMaxDamage(-1);
-		efficiencyOnProperMaterial=100f;
+            efficiencyOnProperMaterial=100f;
+        }
+
 
 		carving=c;
 		MinecraftForge.setToolClass(this,"chisel",1);
+        ItemChisel.chisels.add(id);
 	}
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world,final int x,final int y,final int z, int w, float par8, float par9, float par10) 

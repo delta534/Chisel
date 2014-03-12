@@ -66,6 +66,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Property;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.Mod;
@@ -91,7 +92,7 @@ public class Chisel {
 	public static Item itemIceshard;
 	public static ItemCloudInABottle itemCloudInABottle;
 	public static ItemBallOMoss itemBallOMoss;
-	public static boolean damageChisel;
+	public static boolean hardMode;
 	public static BlockMarble blockMarble;
 	public static BlockMarble blockMarblePillar;
 	public static BlockMarble blockLimestone;
@@ -232,8 +233,9 @@ public class Chisel {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		damageChisel = config.get("General", "Chisel takes damage", true)
-				.getBoolean(true);
+		Property hmProp = config.get("General", "Hardmode", true);
+         hmProp.comment="If true,chisels now have limited uses and no longer instantly break chisel blocks";
+        hardMode=hmProp.getBoolean(false);
 		chisel = (ItemChisel) new ItemChisel(config.getItem("chisel", 7811)
 				.getInt(), Carving.chisel).setTextureName("chisel:chisel")
 				.setUnlocalizedName("chisel")

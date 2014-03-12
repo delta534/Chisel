@@ -1,5 +1,6 @@
 package info.jbcs.minecraft.chisel.gui;
 
+import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.utilities.General;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -45,11 +46,13 @@ public class SlotChiselSelection extends Slot {
 
 			player.inventory.setItemStack(new ItemStack(itemstack.itemID, selInventory.items[InventoryChiselSelection.normalSlots].stackSize, itemstack.getItemDamage()));
 			selInventory.setInventorySlotContents(InventoryChiselSelection.normalSlots,null);
-		}
+            if(Chisel.hardMode)
+            container.chisel.damageItem(selInventory.items[InventoryChiselSelection.normalSlots].stackSize,player);
+
+        }
 		
 
 		selInventory.updateItems();
-
 		String sound=container.carving.getVariationSound(itemstack.itemID, itemstack.getItemDamage());
 		player.worldObj.playSoundAtEntity(player, sound, 0.3f + 0.7f * General.rand.nextFloat(), 0.6f + 0.4f * General.rand.nextFloat());
 
