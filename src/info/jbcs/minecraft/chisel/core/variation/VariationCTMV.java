@@ -22,6 +22,7 @@ public class VariationCTMV extends VariationCTMH {
         rotations=new RotationData();
         Icons=new Icon[6];
         extention="-ctmv";
+        boundIcon=icon;
     }
 
     @Override
@@ -84,7 +85,8 @@ public class VariationCTMV extends VariationCTMH {
                 {
                     Icons[0] = getIndexedIcon(4);
                     Icons[1] = getIndexedIcon(4);
-
+                    bottomIndex=0;
+                    topIndex=1;
                     if (yp && yn)
                         Icons[2] = getIndexedIcon(2);
                     else if (yp)
@@ -140,8 +142,8 @@ public class VariationCTMV extends VariationCTMH {
                             rotations.rotateXNeg = 2;
                             Icons[2] = getIndexedIcon(4);
                             Icons[3] = getIndexedIcon(4);
-                            bottomIndex=2;
-                            topIndex=3;
+                            bottomIndex=3;
+                            topIndex=2;
                             if (zp && zn)
                                 Icons[0] = getIndexedIcon(2);
                             else if (zp)
@@ -151,6 +153,8 @@ public class VariationCTMV extends VariationCTMH {
 
                             Icons[1] = Icons[4] = Icons[5] = Icons[0];
                         } else {
+                            bottomIndex=0;
+                            topIndex=1;
                             Icons[0] = Icons[1] = getIndexedIcon(4);
                             Icons[2] = Icons[3] = Icons[4] = Icons[5] = getIndexedIcon(0);
                         }
@@ -179,23 +183,21 @@ public class VariationCTMV extends VariationCTMH {
                         rotation =rotations.rotateXPos;// good
                         break;
                 }
+                setBoundIcon(Icons[side%6]);
             }
+            else
+                setBoundIcon(getIcon(side));
         }
     }
     @Override
     public void transform(UV texcoord) {
-        Icon icon_;
-        //int i = (int) texcoord.u >> 1;
+            //int i = (int) texcoord.u >> 1;
         if (useCTM&&world_!=null) {
             Util.rotateUV(texcoord, side%6, rotation);
-            icon_ = Icons[side % 6];
-
-        } else {
-
-            icon_ = getIcon(side % 6);
-
         }
-        texcoord.u = icon_.getInterpolatedU(texcoord.u % 2 * 16);
-        texcoord.v = icon_.getInterpolatedV(texcoord.v % 2 * 16);
+        if(boundIcon==null)
+            boundIcon=icon;
+        texcoord.u = boundIcon.getInterpolatedU(texcoord.u % 2 * 16);
+        texcoord.v = boundIcon.getInterpolatedV(texcoord.v % 2 * 16);
     }
 }

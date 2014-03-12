@@ -1,6 +1,7 @@
 package info.jbcs.minecraft.chisel.render;
 
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
+import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.Icon;
@@ -16,7 +17,7 @@ public class RenderBlocksColumn extends RenderBlocks {
 	}
 
 	boolean connected(IBlockAccess world, int x,int y,int z,int id,int meta){
-		return CarvableHelper.isSame(world, x, y, z, id, meta);
+		return ConnectionCheckManager.checkConnection(world, x, y, z, id, meta);
 		
 	}
 	

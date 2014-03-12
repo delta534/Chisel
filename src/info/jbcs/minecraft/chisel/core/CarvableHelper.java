@@ -235,14 +235,7 @@ public class CarvableHelper {
         }
     }
 
-    public static boolean isSame(IBlockAccess world, int x, int y, int z, int id,
-            int meta) {
-//        ConnectionCheckManager.checkConnection(world, x, y, z, id, meta);
-        if(BlockChiselGrass.DirtGrassCheck(world, x, y, z, id, meta))
-            return true;
-        return world.getBlockId(x, y, z) == id
-                && world.getBlockMetadata(x, y, z) == meta;
-    }
+
 
     public void setBlockName(String name) {
         blockName = name;

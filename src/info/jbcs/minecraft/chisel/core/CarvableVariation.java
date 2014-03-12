@@ -6,6 +6,7 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.IUVTransformation;
 import codechicken.lib.render.UV;
 import codechicken.lib.render.Vertex5;
+import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Rotation;
 import codechicken.lib.vec.Translation;
 import codechicken.lib.vec.Vector3;
@@ -30,6 +31,20 @@ public class CarvableVariation implements IUVTransformation {
 
 	public Icon					icon;
 	public Icon					overlay;
+    public Cuboid6 bounds;
+    public Icon getBoundIcon() {
+        return boundIcon;
+    }
+
+    public void setBounds(Cuboid6 bound)
+    {
+        bounds=bound;
+    }
+
+    public void setBoundIcon(Icon boundIcon) {
+        this.boundIcon = boundIcon;
+    }
+
     public Icon                 boundIcon;
 
 	public boolean					useCTM;

@@ -1,5 +1,6 @@
 package info.jbcs.minecraft.chisel.util;
 
+import codechicken.lib.math.MathHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
@@ -15,27 +16,9 @@ public class ConnectionCheckManager {
             boolean stop;
             @Override
             public boolean checkConnection(IBlockAccess world, double dx, double dy, double dz, int id, int meta) {
-                int x=(int)dx;
-                int y=(int)dy;
-                int z=(int)dz;
-                int id_=world.getBlockId(x,y,z);
-                int meta_=world.getBlockMetadata(x,y,z);
-                stop=id==id_&&meta==meta_;
-                return stop;
-            }
-
-            @Override
-            public boolean continueCheck() {
-                return !stop;
-            }
-        });
-        addCheck(new IConnectionCheck() {
-            boolean stop;
-            @Override
-            public boolean checkConnection(IBlockAccess world, double dx, double dy, double dz, int id, int meta) {
-                int x=(int)dx;
-                int y=(int)dy;
-                int z=(int)dz;
+                int x= MathHelper.floor_double(dx);
+                int y=MathHelper.floor_double(dy);
+                int z=MathHelper.floor_double(dz);
                 TileEntity t=world.getBlockTileEntity(x, y, z);
                 if(t instanceof IChiselCheck)
                 {
@@ -43,6 +26,7 @@ public class ConnectionCheckManager {
                     return stop;
 
                 }
+
                 return  false;
             }
 
@@ -59,6 +43,7 @@ public class ConnectionCheckManager {
     public  static boolean earlystop;
     public static boolean checkConnection(IBlockAccess world,double dx,double dy,double dz,int id,int meta)
     {
+
         earlystop=false;
         for(IConnectionCheck check:checks)
         {
@@ -69,8 +54,13 @@ public class ConnectionCheckManager {
                 return res;
             }
         }
+        int x=MathHelper.floor_double(dx);
+        int y=MathHelper.floor_double(dy);
+        int z=MathHelper.floor_double(dz);
+        int id_=world.getBlockId(x,y,z);
+        int meta_=world.getBlockMetadata(x,y,z);
 
-        return false;
+        return id==id_&&meta==meta_;
     }
 
 

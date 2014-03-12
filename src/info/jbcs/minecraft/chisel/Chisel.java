@@ -1623,7 +1623,7 @@ public class Chisel {
 		OreDictionary.registerOre("blockDirt", blockDirt);
 		Carving.chisel.registerOre("blockDirt", "blockDirt");
 		
-		/*
+
 		blockGrass = (BlockChiselGrass) new BlockChiselGrass(getBlock(Block.grass, 2850)).setHardness(0.5F).setStepSound(
 						Block.soundGravelFootstep);
 		blockGrass.carverHelper.addVariation("Grassy Dirt", 0, Block.grass);
@@ -1652,7 +1652,7 @@ public class Chisel {
 		MinecraftForge.setBlockHarvestLevel(blockGrass, "shovel", 0);
 		OreDictionary.registerOre("blockGrass", blockGrass);
 		Carving.chisel.registerOre("blockGrass", "blockDirt");
-		*/
+
 		blockTemple = (BlockMarble) new BlockEldritch("temple", 2840)
 		.setHardness(2.0F).setResistance(10F)
 		.setStepSound(soundTempleFootstep);

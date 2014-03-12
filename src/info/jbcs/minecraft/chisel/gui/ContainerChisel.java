@@ -96,7 +96,7 @@ public class ContainerChisel extends Container {
 
 	public void onChiselSlotChanged() {
 		ItemStack stack=playerInventory.mainInventory[currentIndex];
-		if(!stack.isItemEqual(chisel)) finished=true;
+		if(!ItemChisel.isChiselItem(stack.itemID)) finished=true;
 		
 		if(finished) return;
 		

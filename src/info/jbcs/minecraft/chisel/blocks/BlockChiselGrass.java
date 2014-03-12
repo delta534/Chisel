@@ -12,6 +12,7 @@ import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
 import info.jbcs.minecraft.chisel.core.CarvingVariation;
+import info.jbcs.minecraft.chisel.core.variation.GrassCarvableHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.material.Material;
@@ -23,21 +24,13 @@ import net.minecraft.world.World;
 
 public class BlockChiselGrass extends BlockGrass implements Carvable{
 	public CarvableHelper carverHelper;
-	public static BlockMarble chiselDirt=Chisel.blockDirt;
-	public static CarvableVariation[] snowVar=new CarvableVariation[16];
-	public BlockChiselGrass(int i) {
-		this(null, i);
+    public static BlockMarble chiselDirt= Chisel.blockDirt;
+
+    public BlockChiselGrass(int i) {
+		super(i);
+        carverHelper=new GrassCarvableHelper();
 	}
-	public static boolean DirtGrassCheck(IBlockAccess world, int x,int y,int z,int id,int meta)
-	{
-		int blockMeta=world.getBlockMetadata(x, y, z);
-		int blockID=world.getBlockId(x, y, z);
-		/*if(meta==blockMeta&&
-				(blockID==Chisel.blockDirt.blockID||id==Chisel.blockDirt.blockID)&&
-				(blockID==Chisel.blockGrass.blockID||id==Chisel.blockGrass.blockID))
-			return true;*/
-		return false;
-	}
+
 	public BlockChiselGrass(String name,int i) {
 		super(name==null?i:Chisel.config.getBlock(name, i).getInt(i));
 
@@ -104,7 +97,7 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
 					{
 						int meta=world.getBlockMetadata(i, j, k);
 
-							world.setBlock(i, j, k, blockID);
+							world.setBlock(i, j, k, chiselDirt.blockID);
 							world.setBlockMetadataWithNotify(i, j, k, meta, 3);
 						
 					}
@@ -117,33 +110,11 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
 	{
         int meta= world.getBlockMetadata(x,y,z);
 		return carverHelper.getVariation(meta).getBlockTexture(world, x, y, z, side);
-	/*
-		int meta=world.getBlockMetadata(x, y, z);
-		if (side == 1)
-		{
-			return this.carverHelper.getBlockTexture(world, x, y, z, side);
-		}
-		else if (side == 0)
-		{
-			return chiselDirt.getBlockTexture(world, x, y, z, side);
-		}
-		else
-		{
-			Material material = world.getBlockMaterial(x, y + 1, z);
-			/*return material != Material.snow && material != Material.craftedSnow ? 
-					carverHelper.getBlockTexture(world, x, y, z, side) : 
-						CarvableHelper.getBlockTexture(world, x, y, z, side,snowVar[meta]);//I will get custom snow icons working later but for now lets just return the dirt
-
-			return chiselDirt.getBlockTexture(world, x, y, z, side);
-
-		}
-	 */
 	}
 	@SideOnly(Side.CLIENT)
 	public Icon getIconSideOverlay(int meta)
 	{
 		return BlockGrass.getIconSideOverlay();
-		//return carverHelper.getVariation(meta).overlay; get this working once I figure out how to map the side icon;
 	}
 	public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
@@ -166,7 +137,7 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
     }
 	@Override
 	public int getRenderType() {
-		return Chisel.RenderGrassID;
+		return Chisel.RenderCTMId;
 	}
 
 }

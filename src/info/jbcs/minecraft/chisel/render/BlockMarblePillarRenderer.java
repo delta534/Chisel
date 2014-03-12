@@ -4,6 +4,7 @@ import info.jbcs.minecraft.chisel.blocks.BlockMarblePillar;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
 import info.jbcs.minecraft.chisel.modCompat.ChiselMicroMaterial;
 import info.jbcs.minecraft.chisel.render.Util.RotationData;
+import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
 import info.jbcs.minecraft.utilities.Drawing;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -40,7 +41,7 @@ public class BlockMarblePillarRenderer implements ISimpleBlockRenderingHandler {
 
 	static boolean connected(IBlockAccess world, int x, int y, int z, int id,
 			int meta) {
-		return CarvableHelper.isSame(world, x, y, z, id, meta);
+		return ConnectionCheckManager.checkConnection(world, x, y, z, id, meta);
 	}
 
 	public static boolean setupRotation(BlockMarblePillar block, int id, int metadata,RotationData rotations,int x,int y,int z,IBlockAccess world)

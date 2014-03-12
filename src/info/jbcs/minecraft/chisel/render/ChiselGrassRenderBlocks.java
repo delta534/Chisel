@@ -1,5 +1,6 @@
 package info.jbcs.minecraft.chisel.render;
 
+import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
 import org.lwjgl.opengl.GL11;
 
 import info.jbcs.minecraft.chisel.blocks.BlockChiselGrass;
@@ -26,7 +27,7 @@ public class ChiselGrassRenderBlocks extends RenderBlocksCTM {
 	RenderBlocks renderer;
 	 public Icon sides[]=new Icon[6];
 	 boolean connected(IBlockAccess world, int x,int y,int z,int id,int meta){
-			return CarvableHelper.isSame(world, x, y, z, id, meta);
+			return ConnectionCheckManager.checkConnection(world, x, y, z, id, meta);
 			
 		}
 	@Override

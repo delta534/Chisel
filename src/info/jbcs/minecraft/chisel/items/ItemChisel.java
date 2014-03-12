@@ -9,6 +9,7 @@ import info.jbcs.minecraft.chisel.core.CarvingVariation;
 import info.jbcs.minecraft.chisel.util.GeneralChiselClient;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -24,7 +25,11 @@ import cpw.mods.fml.common.FMLCommonHandler;
 public class ItemChisel extends ItemTool {
 	Random random=new Random();
 	public Carving carving;
-
+    static HashSet<Integer> chisels=new HashSet<Integer>(16);
+    public static boolean isChiselItem(int id)
+    {
+        return  chisels.contains(id);
+    }
 	public ItemChisel(int id,Carving c) {
 		super(id,1,EnumToolMaterial.IRON,CarvableHelper.chiselBlocks.toArray(new Block[CarvableHelper.chiselBlocks.size()]));
 
