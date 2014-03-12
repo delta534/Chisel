@@ -92,8 +92,6 @@ public class CarvableVariation implements IUVTransformation {
 	public boolean renderSide(Vertex5[] verts, int side, Vector3 pos,
 			LightMatrix lightMatrix,int color)
 	{
-
-		Vector3 vec=new Vector3();
 		UV uv=new UV();
 		Tessellator t=Tessellator.instance;
 		for(int i=0;i<4;i++)

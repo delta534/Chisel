@@ -6,6 +6,7 @@ import codechicken.lib.vec.Vector3;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
 
 import net.minecraft.block.BlockGrass;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 
@@ -52,14 +53,18 @@ public class GrassVariation extends CarvableVariation {
 
         if(grass.isTop(side))
         {
+            Tessellator.instance.setColorOpaque_I(color>>8);
             grass.renderSide(verts, side, pos, lightMatrix, color);
         }
         else
         {
+            Tessellator.instance.setColorOpaque_I(0xFFFFFFFF>>8);
             dirt.renderSide(verts, side, pos, lightMatrix, 0xFFFFFFFF);
             if(dirt.isSide(side))
             {
                 //dummy.renderSide(verts, side, pos, lightMatrix, color);
+                Tessellator.instance.setColorOpaque_I(color>>8);
+
                 Icon temp=grass.getBoundIcon();
                 grass.setBoundIcon(BlockGrass.getIconSideOverlay());
                 if(bounds!=null)

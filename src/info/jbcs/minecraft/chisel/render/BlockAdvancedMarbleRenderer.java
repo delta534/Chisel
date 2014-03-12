@@ -96,8 +96,9 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
                 rendererCTM.renderMaxZ=1.0;
 
 
-                model.generateBlock(0,blockBounds);
+                model.generateBlock(0, blockBounds); 
                 Tessellator.instance.setColorOpaque(255,255,255);
+
                 for(int i=0;i<6;i++)
                 {
 

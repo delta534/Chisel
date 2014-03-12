@@ -56,9 +56,7 @@ public class VariationCTMX extends CarvableVariation {
             for (int j = 0; j < Subdivider.numResults; j++) {
 
                 Subdivider.Result res=Subdivider.getResult(j);
-                CCRenderState.useModelColours(false);
                 CCRenderState.useNormals(false);
-                Tessellator.instance.setColorOpaque(255, 255, 255);
                 midpoint.set(res.offset);
                 region=res.iconIndex;
                 data=res.verts_;
@@ -68,7 +66,7 @@ public class VariationCTMX extends CarvableVariation {
                 int meta=w.getBlockMetadata((int)pos.x,(int)pos.y,(int)pos.z);
                 int id=w.getBlockId((int)pos.x,(int)pos.y,(int)pos.z);
                 Block b=Block.blocksList[w.getBlockId((int)pos.x,(int)pos.y,(int)pos.z)];
-                if (data != null&& !ConnectionCheckManager.checkConnection(w,axis.x,axis.y,axis.z,id,meta)) {
+                if (data != null&&!b.isOpaqueCube()&& !ConnectionCheckManager.checkConnection(w,axis.x,axis.y,axis.z,id,meta)) {
                     super.renderSide(data, side % 6, pos, lightMatrix, color);
                 }
 

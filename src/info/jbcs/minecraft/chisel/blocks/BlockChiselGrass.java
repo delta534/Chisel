@@ -34,7 +34,7 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
 	public BlockChiselGrass(String name,int i) {
 		super(name==null?i:Chisel.config.getBlock(name, i).getInt(i));
 
-		carverHelper = new CarvableHelper();
+		carverHelper = new GrassCarvableHelper();
 
 		setCreativeTab(Chisel.tabChisel);
 	}
@@ -111,30 +111,6 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
         int meta= world.getBlockMetadata(x,y,z);
 		return carverHelper.getVariation(meta).getBlockTexture(world, x, y, z, side);
 	}
-	@SideOnly(Side.CLIENT)
-	public Icon getIconSideOverlay(int meta)
-	{
-		return BlockGrass.getIconSideOverlay();
-	}
-	public int colorMultiplier(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
-    {
-        int l = 0;
-        int i1 = 0;
-        int j1 = 0;
-
-        for (int k1 = -1; k1 <= 1; ++k1)
-        {
-            for (int l1 = -1; l1 <= 1; ++l1)
-            {
-                int i2 = par1IBlockAccess.getBiomeGenForCoords(par2 + l1, par4 + k1).getBiomeGrassColor();
-                l += (i2 & 16711680) >> 16;
-                i1 += (i2 & 65280) >> 8;
-                j1 += i2 & 255;
-            }
-        }
-
-        return (l / 9 & 255) << 16 | (i1 / 9 & 255) << 8 | j1 / 9 & 255;
-    }
 	@Override
 	public int getRenderType() {
 		return Chisel.RenderCTMId;
