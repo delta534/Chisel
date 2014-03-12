@@ -7,5 +7,7 @@ import net.minecraft.world.IBlockAccess;
  */
 public interface IConnectionCheck {
     boolean checkConnection(IBlockAccess world,double dx,double dy,double dz,int id,int meta);
+    boolean opacityCheck(IBlockAccess world,double dx,double dy,double dz);
     boolean continueCheck();
+    boolean contineOpaqueCheck();
 }

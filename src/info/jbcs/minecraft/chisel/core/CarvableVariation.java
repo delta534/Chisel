@@ -11,12 +11,16 @@ import codechicken.lib.vec.Rotation;
 import codechicken.lib.vec.Translation;
 import codechicken.lib.vec.Vector3;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
+import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
 import info.jbcs.minecraft.chisel.util.proxyWorld;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.MinecraftForgeClient;
+
+import java.util.Vector;
 
 public class CarvableVariation implements IUVTransformation {
 	public String					blockName;
@@ -48,7 +52,9 @@ public class CarvableVariation implements IUVTransformation {
     public Icon                 boundIcon;
 
 	public boolean					useCTM;
-
+    boolean []adj=new boolean[6];
+    final public Vector3 axis=new Vector3();
+    final public Vector3 midpoint=new Vector3();
 	public void setup(Vertex5[] verts, int side, Vector3 pos,IBlockAccess world)
 	{
         if(world!=null)
@@ -86,6 +92,7 @@ public class CarvableVariation implements IUVTransformation {
 	public boolean renderSide(Vertex5[] verts, int side, Vector3 pos,
 			LightMatrix lightMatrix,int color)
 	{
+
 		Vector3 vec=new Vector3();
 		UV uv=new UV();
 		Tessellator t=Tessellator.instance;

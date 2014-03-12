@@ -1,6 +1,7 @@
 package info.jbcs.minecraft.chisel.util;
 
 import codechicken.lib.math.MathHelper;
+import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
@@ -34,6 +35,16 @@ public class ConnectionCheckManager {
             public boolean continueCheck() {
                 return !stop;
             }
+            boolean stopOpac;
+            @Override
+            public boolean opacityCheck(IBlockAccess world, double dx, double dy, double dz) {
+                return false;
+            }
+
+            @Override
+            public boolean contineOpaqueCheck() {
+                return true;
+            }
         });
     }
     public static void addCheck(IConnectionCheck check)
@@ -62,6 +73,26 @@ public class ConnectionCheckManager {
 
         return id==id_&&meta==meta_;
     }
+    public static boolean checkOpacity(IBlockAccess world,double dx,double dy,double dz)
+    {
+        for(IConnectionCheck check:checks)
+        {
+            boolean res=check.opacityCheck(world, dx, dy, dz);
+            if(!check.contineOpaqueCheck())
+            {
+                return res;
+            }
+        }
+        int x=MathHelper.floor_double(dx);
+        int y=MathHelper.floor_double(dy);
+        int z=MathHelper.floor_double(dz);
+        int id_=world.getBlockId(x,y,z);
+        if(Block.blocksList[id_]!=null)
+            return Block.blocksList[id_].isOpaqueCube();
+        else
+            return false;
+    }
+
 
 
 }

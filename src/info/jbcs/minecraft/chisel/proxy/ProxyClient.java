@@ -6,7 +6,6 @@ import info.jbcs.minecraft.chisel.entity.EntityCloudInABottle;
 import info.jbcs.minecraft.chisel.render.BlockAdvancedMarbleRenderer;
 import info.jbcs.minecraft.chisel.render.BlockCarpetRenderer;
 import info.jbcs.minecraft.chisel.render.BlockEldritchRenderer;
-import info.jbcs.minecraft.chisel.render.BlockGrassRenderer;
 import info.jbcs.minecraft.chisel.render.BlockMarblePaneRenderer;
 import info.jbcs.minecraft.chisel.render.BlockMarblePillarRenderer;
 import info.jbcs.minecraft.chisel.render.BlockMarbleStairsRenderer;
@@ -81,7 +80,6 @@ public class ProxyClient extends Proxy {
 		RenderingRegistry.registerBlockHandler(new BlockEldritchRenderer());
 		RenderingRegistry.registerBlockHandler(new BlockAdvancedMarbleRenderer());
 		RenderingRegistry.registerBlockHandler(new BlockCarpetRenderer());
-		RenderingRegistry.registerBlockHandler(new BlockGrassRenderer());
 		
 		RenderingRegistry.registerBlockHandler(new BlockTexturedOreRenderer());
 		RenderingRegistry.registerEntityRenderingHandler(EntityCloudInABottle.class, new RenderSnowball(Chisel.itemCloudInABottle));

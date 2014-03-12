@@ -45,9 +45,10 @@ public class SlotChiselSelection extends Slot {
 			if(selInventory.items[InventoryChiselSelection.normalSlots]==null) return;
 
 			player.inventory.setItemStack(new ItemStack(itemstack.itemID, selInventory.items[InventoryChiselSelection.normalSlots].stackSize, itemstack.getItemDamage()));
-			selInventory.setInventorySlotContents(InventoryChiselSelection.normalSlots,null);
             if(Chisel.hardMode)
-            container.chisel.damageItem(selInventory.items[InventoryChiselSelection.normalSlots].stackSize,player);
+                container.chisel.damageItem(selInventory.items[InventoryChiselSelection.normalSlots].stackSize,player);
+
+            selInventory.setInventorySlotContents(InventoryChiselSelection.normalSlots,null);
 
         }
 		

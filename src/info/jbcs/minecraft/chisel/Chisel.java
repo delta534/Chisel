@@ -233,7 +233,7 @@ public class Chisel {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		Property hmProp = config.get("General", "Hardmode", true);
+		Property hmProp = config.get("General", "Hardmode", false);
          hmProp.comment="If true,chisels now have limited uses and no longer instantly break chisel blocks";
         hardMode=hmProp.getBoolean(false);
 		chisel = (ItemChisel) new ItemChisel(config.getItem("chisel", 7811)

@@ -34,7 +34,6 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
 
 
     protected DelayedIcons icontr;
-
     public ChiselMicroMaterial(Block arg0, int arg1) {
         super(arg0, arg1);
 
@@ -94,6 +93,43 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
         static Vector3 point=new Vector3();
         static Vector3 enclosurePoint=new Vector3(0.5,0.5,0.5);
         boolean isMultipart;
+        boolean isMultipartOpaque;
+
+
+        @Override
+        public boolean opacityCheck(IBlockAccess world, double dx, double dy, double dz) {
+            int x=MathHelper.floor_double(dx);
+            int y=MathHelper.floor_double(dy);
+            int z=MathHelper.floor_double(dz);
+            dx=dx-x;
+            dy=dy-y;
+            dz=dz-z;
+            TileEntity te=world.getBlockTileEntity(x, y, z);
+            isMultipartOpaque=false;
+            if(te instanceof TileMultipart)
+            {
+                isMultipartOpaque=true;
+                point.set(Math.abs(dx%1),Math.abs(dy%1),Math.abs(dz%1));
+                TileMultipart tmp=(TileMultipart)te;
+                for(TMultiPart npart: tmp.jPartList())
+                {
+                    Cuboid6 bounds=npart.getRenderBounds().copy().enclose(enclosurePoint);
+                    if(npart instanceof Microblock)
+                    {
+                        if(point.equalsT(Vector3.zero)||checkBounds(bounds,point))
+                        {
+                            // FMLLog.info("Is in");
+                            Microblock mb=(Microblock)npart;
+                            return mb.isTransparent();
+                        }
+                    }
+                }
+
+            }
+
+            return false;
+        }
+
         @Override
         public boolean checkConnection(IBlockAccess world,double dx,double dy,double dz,int id,int meta)
         {   int x=MathHelper.floor_double(dx);
@@ -144,8 +180,10 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
             return !isMultipart;
         }
 
-
-
+        @Override
+        public boolean contineOpaqueCheck() {
+            return !isMultipartOpaque;
+        }
     }
 
 }

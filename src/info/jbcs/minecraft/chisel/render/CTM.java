@@ -185,13 +185,13 @@ public class CTM {
                         blockMetadata);
                 b[above]=isConnected(world, offset.x , offset.y+ypos, offset.z, side, blockId,
                         blockMetadata);
-                b2[upperleft]=isConnected(world, offset.x+xpos , offset.y+ypos, offset.z +zneg, side, blockId,
+                b2[upperleft]=isConnected(world, offset.x , offset.y+ypos, offset.z +zneg, side, blockId,
                         blockMetadata);
-                b2[upperright]=isConnected(world, offset.x+xneg , offset.y+ypos , offset.z +zpos, side, blockId,
+                b2[upperright]=isConnected(world, offset.x, offset.y+ypos , offset.z +zpos, side, blockId,
                         blockMetadata);
-                b2[lowerleft]=isConnected(world, offset.x+xpos , offset.y+yneg , offset.z +zneg, side, blockId,
+                b2[lowerleft]=isConnected(world, offset.x , offset.y+yneg , offset.z +zneg, side, blockId,
                         blockMetadata);
-                b2[lowerright]=isConnected(world, offset.x+xneg, offset.y+yneg , offset.z +zpos, side, blockId,
+                b2[lowerright]=isConnected(world, offset.x, offset.y+yneg , offset.z +zpos, side, blockId,
                         blockMetadata);
                 break;
             case 5:
@@ -362,60 +362,60 @@ public class CTM {
         int blockMetadata = world.getBlockMetadata(x, y, z);
         boolean b[] = new boolean[6];
         if (side <= 1) {
-            b[0] = isConnected(world, x - 1, y, z, side, blockId, blockMetadata);
-            b[1] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
-            b[2] = isConnected(world, x, y, z + 1, side, blockId, blockMetadata);
-            b[3] = isConnected(world, x, y, z - 1, side, blockId, blockMetadata);
+            b[left] = isConnected(world, x - 1, y, z, side, blockId, blockMetadata);
+            b[right] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
+            b[below]  = isConnected(world, x, y, z + 1, side, blockId, blockMetadata);
+            b[above]  = isConnected(world, x, y, z - 1, side, blockId, blockMetadata);
         } else if (side == 2) {
-            b[0] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
-            b[1] = isConnected(world, x - 1, y, z, side, blockId, blockMetadata);
-            b[2] = isConnected(world, x, y - 1, z, side, blockId, blockMetadata);
-            b[3] = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
+            b[left] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
+            b[right] = isConnected(world, x - 1, y, z, side, blockId, blockMetadata);
+            b[below]  = isConnected(world, x, y - 1, z, side, blockId, blockMetadata);
+            b[above]  = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
         } else if (side == 3) {
-            b[0] = isConnected(world, x - 1, y, z, side, blockId, blockMetadata);
-            b[1] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
-            b[2] = isConnected(world, x, y - 1, z, side, blockId, blockMetadata);
-            b[3] = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
+            b[left] = isConnected(world, x - 1, y, z, side, blockId, blockMetadata);
+            b[right] = isConnected(world, x + 1, y, z, side, blockId, blockMetadata);
+            b[below]  = isConnected(world, x, y - 1, z, side, blockId, blockMetadata);
+            b[above]  = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
         } else if (side == 4) {
-            b[0] = isConnected(world, x, y, z - 1, side, blockId, blockMetadata);
-            b[1] = isConnected(world, x, y, z + 1, side, blockId, blockMetadata);
-            b[2] = isConnected(world, x, y - 1, z, side, blockId, blockMetadata);
-            b[3] = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
+            b[left] = isConnected(world, x, y, z - 1, side, blockId, blockMetadata);
+            b[right] = isConnected(world, x, y, z + 1, side, blockId, blockMetadata);
+            b[below]  = isConnected(world, x, y - 1, z, side, blockId, blockMetadata);
+            b[above]  = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
         } else if (side == 5) {
-            b[0] = isConnected(world, x, y, z + 1, side, blockId, blockMetadata);
-            b[1] = isConnected(world, x, y, z - 1, side, blockId, blockMetadata);
-            b[2] = isConnected(world, x, y - 1, z, side, blockId, blockMetadata);
-            b[3] = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
+            b[left] = isConnected(world, x, y, z + 1, side, blockId, blockMetadata);
+            b[right] = isConnected(world, x, y, z - 1, side, blockId, blockMetadata);
+            b[below]  = isConnected(world, x, y - 1, z, side, blockId, blockMetadata);
+            b[above]  = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
         }
-        if (b[0] & !b[1] & !b[2] & !b[3])
+        if (b[left] & !b[right] & !b[below]  & !b[above] )
             texture = 3;
-        else if (!b[0] & b[1] & !b[2] & !b[3])
+        else if (!b[left] & b[right] & !b[below]  & !b[above] )
             texture = 1;
-        else if (!b[0] & !b[1] & b[2] & !b[3])
+        else if (!b[left] & !b[right] & b[below]  & !b[above] )
             texture = 16;
-        else if (!b[0] & !b[1] & !b[2] & b[3])
+        else if (!b[left] & !b[right] & !b[below]  & b[above] )
             texture = 48;
-        else if (b[0] & b[1] & !b[2] & !b[3])
+        else if (b[left] & b[right] & !b[below]  & !b[above] )
             texture = 2;
-        else if (!b[0] & !b[1] & b[2] & b[3])
+        else if (!b[left] & !b[right] & b[below]  & b[above] )
             texture = 32;
-        else if (b[0] & !b[1] & b[2] & !b[3])
+        else if (b[left] & !b[right] & b[below]  & !b[above] )
             texture = 19;
-        else if (b[0] & !b[1] & !b[2] & b[3])
+        else if (b[left] & !b[right] & !b[below]  & b[above] )
             texture = 51;
-        else if (!b[0] & b[1] & b[2] & !b[3])
+        else if (!b[left] & b[right] & b[below]  & !b[above] )
             texture = 17;
-        else if (!b[0] & b[1] & !b[2] & b[3])
+        else if (!b[left] & b[right] & !b[below]  & b[above] )
             texture = 49;
-        else if (!b[0] & b[1] & b[2] & b[3])
+        else if (!b[left] & b[right] & b[below]  & b[above] )
             texture = 33;
-        else if (b[0] & !b[1] & b[2] & b[3])
+        else if (b[left] & !b[right] & b[below]  & b[above] )
             texture = 35;
-        else if (b[0] & b[1] & !b[2] & b[3])
+        else if (b[left] & b[right] & !b[below]  & b[above] )
             texture = 50;
-        else if (b[0] & b[1] & b[2] & !b[3])
+        else if (b[left] & b[right] & b[below]  & !b[above] )
             texture = 18;
-        else if (b[0] & b[1] & b[2] & b[3])
+        else if (b[left] & b[right] & b[below] & b[above] )
             texture = 34;
 
         boolean b2[] = new boolean[6];

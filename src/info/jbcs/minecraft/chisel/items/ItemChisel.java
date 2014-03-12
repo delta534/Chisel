@@ -28,7 +28,8 @@ public class ItemChisel extends ItemTool {
     static HashSet<Integer> chisels=new HashSet<Integer>(16);
     public static boolean isChiselItem(int id)
     {
-        return  chisels.contains(id);
+        boolean bl=chisels.contains(id);
+        return bl;
     }
 	public ItemChisel(int id,Carving c) {
 		super(id,1,EnumToolMaterial.IRON,CarvableHelper.chiselBlocks.toArray(new Block[CarvableHelper.chiselBlocks.size()]));
@@ -48,7 +49,7 @@ public class ItemChisel extends ItemTool {
 
 		carving=c;
 		MinecraftForge.setToolClass(this,"chisel",1);
-        ItemChisel.chisels.add(id);
+        ItemChisel.chisels.add(id+256);
 	}
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world,final int x,final int y,final int z, int w, float par8, float par9, float par10) 

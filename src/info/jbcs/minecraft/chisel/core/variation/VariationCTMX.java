@@ -1,8 +1,10 @@
 package info.jbcs.minecraft.chisel.core.variation;
 
 
+import codechicken.lib.vec.Rotation;
 import cpw.mods.fml.common.FMLLog;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
+import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
 import info.jbcs.minecraft.chisel.util.Subdivider;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.Tessellator;
@@ -28,9 +30,7 @@ public class VariationCTMX extends CarvableVariation {
     public TextureSubmap submap;
     public TextureSubmap submapSmall;
     private Vector3 loc;
-    private IBlockAccess w;
-    private Vector3 midpoint;
-    private int side;
+    private IBlockAccess w;    private int side;
     int region;
     void bindIcon(int side, int index) {
 
@@ -59,18 +59,25 @@ public class VariationCTMX extends CarvableVariation {
                 CCRenderState.useModelColours(false);
                 CCRenderState.useNormals(false);
                 Tessellator.instance.setColorOpaque(255, 255, 255);
-                midpoint=res.offset;
-                //bindIcon(side%6,res.iconIndex);
+                midpoint.set(res.offset);
                 region=res.iconIndex;
                 data=res.verts_;
-                if (data != null) {
+                axis.set(Rotation.axes[side%6]).multiply(0.5);
+                axis.add(pos);
+                axis.add(midpoint);
+                int meta=w.getBlockMetadata((int)pos.x,(int)pos.y,(int)pos.z);
+                int id=w.getBlockId((int)pos.x,(int)pos.y,(int)pos.z);
+                Block b=Block.blocksList[w.getBlockId((int)pos.x,(int)pos.y,(int)pos.z)];
+                if (data != null&& !ConnectionCheckManager.checkConnection(w,axis.x,axis.y,axis.z,id,meta)) {
                     super.renderSide(data, side % 6, pos, lightMatrix, color);
                 }
 
             }
         }
         else
-            super.renderSide(verts, side, pos, lightMatrix, color);
+        {
+                super.renderSide(verts, side, pos, lightMatrix, color);
+        }
         return true;
 
     }
