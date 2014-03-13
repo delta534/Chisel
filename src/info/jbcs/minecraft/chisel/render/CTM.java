@@ -375,154 +375,154 @@ public class CTM {
             b[above]  = isConnected(world, x, y + 1, z, side, blockId, blockMetadata);
         }
         if (b[left] & !b[right] & !b[below]  & !b[above] )
-            texture = 3;
+            texture = 3;//(1,4)
         else if (!b[left] & b[right] & !b[below]  & !b[above] )
-            texture = 1;
+            texture = 1;//(1,2)
         else if (!b[left] & !b[right] & b[below]  & !b[above] )
-            texture = 16;
+            texture = 4;//(1,5)
         else if (!b[left] & !b[right] & !b[below]  & b[above] )
-            texture = 48;
+            texture = 12;//(1,13)
         else if (b[left] & b[right] & !b[below]  & !b[above] )
-            texture = 2;
+            texture = 2; //(1,3)
         else if (!b[left] & !b[right] & b[below]  & b[above] )
-            texture = 32;
+            texture = 8; //(1,9)
         else if (b[left] & !b[right] & b[below]  & !b[above] )
-            texture = 19;
+            texture = 7; //(1,8)
         else if (b[left] & !b[right] & !b[below]  & b[above] )
-            texture = 51;
+            texture = 15; //(1,16)
         else if (!b[left] & b[right] & b[below]  & !b[above] )
-            texture = 17;
+            texture = 5; //(1,6)
         else if (!b[left] & b[right] & !b[below]  & b[above] )
-            texture = 49;
+            texture = 13; //(1,14)
         else if (!b[left] & b[right] & b[below]  & b[above] )
-            texture = 33;
+            texture = 9; //(1,10)
         else if (b[left] & !b[right] & b[below]  & b[above] )
-            texture = 35;
+            texture = 11; //(1,12)
         else if (b[left] & b[right] & !b[below]  & b[above] )
-            texture = 50;
+            texture = 14; //(1,15)
         else if (b[left] & b[right] & b[below]  & !b[above] )
-            texture = 18;
+            texture = 6; //(1,7)
         else if (b[left] & b[right] & b[below] & b[above] )
-            texture = 34;
+            texture = 10;  //(1,11)
 
         boolean b2[] = new boolean[6];
         if (side <= 1) {
-            b2[0] = !isConnected(world, x + 1, y, z + 1, side, blockId,
+            b2[upperleft] = !isConnected(world, x + 1, y, z + 1, side, blockId,
                     blockMetadata);
-            b2[1] = !isConnected(world, x - 1, y, z + 1, side, blockId,
+            b2[upperright] = !isConnected(world, x - 1, y, z + 1, side, blockId,
                     blockMetadata);
-            b2[2] = !isConnected(world, x + 1, y, z - 1, side, blockId,
+            b2[lowerleft] = !isConnected(world, x + 1, y, z - 1, side, blockId,
                     blockMetadata);
-            b2[3] = !isConnected(world, x - 1, y, z - 1, side, blockId,
+            b2[lowerright] = !isConnected(world, x - 1, y, z - 1, side, blockId,
                     blockMetadata);
         } else if (side == 2) {
-            b2[0] = !isConnected(world, x - 1, y - 1, z, side, blockId,
+            b2[upperleft] = !isConnected(world, x - 1, y - 1, z, side, blockId,
                     blockMetadata);
-            b2[1] = !isConnected(world, x + 1, y - 1, z, side, blockId,
+            b2[upperright] = !isConnected(world, x + 1, y - 1, z, side, blockId,
                     blockMetadata);
-            b2[2] = !isConnected(world, x - 1, y + 1, z, side, blockId,
+            b2[lowerleft] = !isConnected(world, x - 1, y + 1, z, side, blockId,
                     blockMetadata);
-            b2[3] = !isConnected(world, x + 1, y + 1, z, side, blockId,
+            b2[lowerright] = !isConnected(world, x + 1, y + 1, z, side, blockId,
                     blockMetadata);
         } else if (side == 3) {
-            b2[0] = !isConnected(world, x + 1, y - 1, z, side, blockId,
+            b2[upperleft] = !isConnected(world, x + 1, y - 1, z, side, blockId,
                     blockMetadata);
-            b2[1] = !isConnected(world, x - 1, y - 1, z, side, blockId,
+            b2[upperright] = !isConnected(world, x - 1, y - 1, z, side, blockId,
                     blockMetadata);
-            b2[2] = !isConnected(world, x + 1, y + 1, z, side, blockId,
+            b2[lowerleft] = !isConnected(world, x + 1, y + 1, z, side, blockId,
                     blockMetadata);
-            b2[3] = !isConnected(world, x - 1, y + 1, z, side, blockId,
+            b2[lowerright] = !isConnected(world, x - 1, y + 1, z, side, blockId,
                     blockMetadata);
         } else if (side == 4) {
-            b2[0] = !isConnected(world, x, y - 1, z + 1, side, blockId,
+            b2[upperleft] = !isConnected(world, x, y - 1, z + 1, side, blockId,
                     blockMetadata);
-            b2[1] = !isConnected(world, x, y - 1, z - 1, side, blockId,
+            b2[upperright] = !isConnected(world, x, y - 1, z - 1, side, blockId,
                     blockMetadata);
-            b2[2] = !isConnected(world, x, y + 1, z + 1, side, blockId,
+            b2[lowerleft] = !isConnected(world, x, y + 1, z + 1, side, blockId,
                     blockMetadata);
-            b2[3] = !isConnected(world, x, y + 1, z - 1, side, blockId,
+            b2[lowerright] = !isConnected(world, x, y + 1, z - 1, side, blockId,
                     blockMetadata);
         } else if (side == 5) {
-            b2[0] = !isConnected(world, x, y - 1, z - 1, side, blockId,
+            b2[upperleft] = !isConnected(world, x, y - 1, z - 1, side, blockId,
                     blockMetadata);
-            b2[1] = !isConnected(world, x, y - 1, z + 1, side, blockId,
+            b2[upperright] = !isConnected(world, x, y - 1, z + 1, side, blockId,
                     blockMetadata);
-            b2[2] = !isConnected(world, x, y + 1, z - 1, side, blockId,
+            b2[lowerleft] = !isConnected(world, x, y + 1, z - 1, side, blockId,
                     blockMetadata);
-            b2[3] = !isConnected(world, x, y + 1, z + 1, side, blockId,
+            b2[lowerright] = !isConnected(world, x, y + 1, z + 1, side, blockId,
                     blockMetadata);
         }
 
-        if (texture == 17 && b2[0])
-            texture = 4;
-        if (texture == 19 && b2[1])
-            texture = 5;
-        if (texture == 49 && b2[2])
-            texture = 20;
-        if (texture == 51 && b2[3])
-            texture = 21;
+        if (texture == 5 && b2[upperleft])
+            texture = 16; //(2,1)
+        if (texture == 7 && b2[upperright])
+            texture = 17;  //(2,2)
+        if (texture == 13 && b2[lowerleft])
+            texture = 20;  //(2,5)
+        if (texture == 15 && b2[lowerright])
+            texture = 21;  //(2,6)
 
-        if (texture == 18 && b2[0] && b2[1])
-            texture = 7;
-        if (texture == 33 && b2[0] && b2[2])
-            texture = 6;
-        if (texture == 35 && b2[3] && b2[1])
-            texture = 23;
-        if (texture == 50 && b2[3] && b2[2])
-            texture = 22;
+        if (texture == 6 && b2[upperleft] && b2[upperright])
+            texture = 19;       //(2,4)
+        if (texture == 9 && b2[upperleft] && b2[lowerleft])
+            texture = 18;   //(2,3)
+        if (texture == 11 && b2[lowerright] && b2[upperright])
+            texture = 23;  //(2,8)
+        if (texture == 14 && b2[lowerright] && b2[lowerleft])
+            texture = 22;  //(2,7)
 
-        if (texture == 18 && !b2[0] && b2[1])
-            texture = 39;
-        if (texture == 33 && b2[0] && !b2[2])
-            texture = 38;
-        if (texture == 35 && !b2[3] && b2[1])
-            texture = 53;
-        if (texture == 50 && b2[3] && !b2[2])
-            texture = 52;
+        if (texture == 6 && !b2[upperleft] && b2[upperright])
+            texture = 27;  //(2,12)
+        if (texture == 9 && b2[upperleft] && !b2[lowerleft])
+            texture = 26;  //(2,11)
+        if (texture == 11 && !b2[lowerright] && b2[upperright])
+            texture = 29;  //(2,14)
+        if (texture == 14 && b2[lowerright] && !b2[lowerleft])
+            texture = 28;  //(2,13)
 
-        if (texture == 18 && b2[0] && !b2[1])
-            texture = 37;
-        if (texture == 33 && !b2[0] && b2[2])
-            texture = 36;
-        if (texture == 35 && b2[3] && !b2[1])
-            texture = 55;
-        if (texture == 50 && !b2[3] && b2[2])
-            texture = 54;
+        if (texture == 6 && b2[upperleft] && !b2[upperright])
+            texture = 25;  //(2,10)
+        if (texture == 9 && !b2[upperleft] && b2[lowerleft])
+            texture = 24; //(2,9)
+        if (texture == 11 && b2[lowerright] && !b2[upperright])
+            texture = 31; //(2,16)
+        if (texture == 14 && !b2[lowerright] && b2[lowerleft])
+            texture = 30; //(2,15)
 
-        if (texture == 34 && b2[0] && b2[1] && b2[2] && b2[3])
-            texture = 58;
+        if (texture == 10 && b2[upperleft] && b2[upperright] && b2[lowerleft] && b2[lowerright])
+            texture = 47; //(3,15)
 
-        if (texture == 34 && !b2[0] && b2[1] && b2[2] && b2[3])
-            texture = 9;
-        if (texture == 34 && b2[0] && !b2[1] && b2[2] && b2[3])
-            texture = 25;
-        if (texture == 34 && b2[0] && b2[1] && !b2[2] && b2[3])
-            texture = 8;
-        if (texture == 34 && b2[0] && b2[1] && b2[2] && !b2[3])
-            texture = 24;
+        if (texture == 10 && !b2[upperleft] && b2[upperright] && b2[lowerleft] && b2[lowerright])
+            texture = 33;  //(3,2)
+        if (texture == 10 && b2[upperleft] && !b2[upperright] && b2[lowerleft] && b2[lowerright])
+            texture = 37; //(3,6)
+        if (texture == 10 && b2[upperleft] && b2[upperright] && !b2[lowerleft] && b2[lowerright])
+            texture = 32;     //(3,1)
+        if (texture == 10 && b2[upperleft] && b2[upperright] && b2[lowerleft] && !b2[lowerright])
+            texture = 36;    //(3,5)
 
-        if (texture == 34 && b2[0] && b2[1] && !b2[2] && !b2[3])
-            texture = 11;
-        if (texture == 34 && !b2[0] && !b2[1] && b2[2] && b2[3])
-            texture = 26;
-        if (texture == 34 && !b2[0] && b2[1] && !b2[2] && b2[3])
-            texture = 27;
-        if (texture == 34 && b2[0] && !b2[1] && b2[2] && !b2[3])
-            texture = 10;
+        if (texture == 10 && b2[upperleft] && b2[upperright] && !b2[lowerleft] && !b2[lowerright])
+            texture = 35;    //(3,4)
+        if (texture == 10 && !b2[upperleft] && !b2[upperright] && b2[lowerleft] && b2[lowerright])
+            texture = 38;    //(3,7)
+        if (texture == 10 && !b2[upperleft] && b2[upperright] && !b2[lowerleft] && b2[lowerright])
+            texture = 39;    //(3,8)
+        if (texture == 10 && b2[upperleft] && !b2[upperright] && b2[lowerleft] && !b2[lowerright])
+            texture = 34;    //(3,3)
 
-        if (texture == 34 && b2[0] && !b2[1] && !b2[2] && b2[3])
-            texture = 42;
-        if (texture == 34 && !b2[0] && b2[1] && b2[2] && !b2[3])
-            texture = 43;
+        if (texture == 10 && b2[upperleft] && !b2[upperright] && !b2[lowerleft] && b2[lowerright])
+            texture = 42; //(3,11)
+        if (texture == 10 && !b2[upperleft] && b2[upperright] && b2[lowerleft] && !b2[lowerright])
+            texture = 43; //(3,12)
 
-        if (texture == 34 && b2[0] && !b2[1] && !b2[2] && !b2[3])
-            texture = 40;
-        if (texture == 34 && !b2[0] && b2[1] && !b2[2] && !b2[3])
-            texture = 41;
-        if (texture == 34 && !b2[0] && !b2[1] && b2[2] && !b2[3])
-            texture = 56;
-        if (texture == 34 && !b2[0] && !b2[1] && !b2[2] && b2[3])
-            texture = 57;
+        if (texture == 10 && b2[upperleft] && !b2[upperright] && !b2[lowerleft] && !b2[lowerright])
+            texture = 40; //(3,9)
+        if (texture == 10 && !b2[upperleft] && b2[upperright] && !b2[lowerleft] && !b2[lowerright])
+            texture = 41; //(3,10)
+        if (texture == 10 && !b2[upperleft] && !b2[upperright] && b2[lowerleft] && !b2[lowerright])
+            texture = 44; //(3,13)
+        if (texture == 10 && !b2[upperleft] && !b2[upperright] && !b2[lowerleft] && b2[lowerright])
+            texture = 45; //(3,14)
         return texture;
     }
 

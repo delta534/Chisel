@@ -70,10 +70,7 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
 	
 	public void updateTick(World world, int x, int y, int z, Random rand)
 	{
-		int i = x + rand.nextInt(3) - 1;
-		int j = y + rand.nextInt(5) - 3;
-		int k = z + rand.nextInt(3) - 1;
-		boolean checked=(world.getBlockId(i, j, k) == chiselDirt.blockID);
+
 		if(chiselDirt.blockID==Block.dirt.blockID)
 		{
 			grass.updateTick(world, x, y, z, rand);
@@ -92,12 +89,15 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
 			{
 				for (int l = 0; l < 4; ++l)
 				{
-
-					if (checked && world.getBlockLightValue(i, j + 1, k) >= 4 && world.getBlockLightOpacity(i, j + 1, k) <= 2)
+                    int i = x + rand.nextInt(3) - 1;
+                    int j = y + rand.nextInt(5) - 3;
+                    int k = z + rand.nextInt(3) - 1;
+                    boolean checked=(world.getBlockId(i, j, k) == chiselDirt.blockID);
+                    if (checked && world.getBlockLightValue(i, j + 1, k) >= 4 && world.getBlockLightOpacity(i, j + 1, k) <= 2)
 					{
 						int meta=world.getBlockMetadata(i, j, k);
 
-							world.setBlock(i, j, k, chiselDirt.blockID);
+							world.setBlock(i, j, k, blockID);
 							world.setBlockMetadataWithNotify(i, j, k, meta, 3);
 						
 					}
