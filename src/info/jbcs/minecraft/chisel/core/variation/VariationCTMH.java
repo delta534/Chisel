@@ -1,5 +1,10 @@
 package info.jbcs.minecraft.chisel.core.variation;
 
+import codechicken.lib.render.UV;
+import codechicken.lib.render.Vertex5;
+import codechicken.lib.vec.Cuboid6;
+import codechicken.lib.vec.Vector3;
+import com.sun.swing.internal.plaf.metal.resources.metal_it;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
 import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
@@ -26,30 +31,76 @@ public class VariationCTMH extends CarvableVariation {
     }
 
     @Override
+    public void setup(Vertex5[] verts, int side, Vector3 pos, IBlockAccess world, Cuboid6 bounds) {
+        super.setup(verts, side, pos, world, bounds);
+        midpoint.set(bounds.center());
+
+    }
+    double ucoor=0;
+    @Override
     public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
+        ucoor=0;
         if (side < 2)
             return icon;
 
-        int id = world.getBlockId(x, y, z);
+        double xneg=-1;
+        double zneg=-1;
+        double xpos=1;
+        double zpos=1;
 
-        boolean p;
-        boolean n;
+        if(midpoint.x!=0.5)
+        {
+            xneg=-.5;
+            xpos=0.5;
+        }
+        if(midpoint.z!=0.5)
+        {
+            zneg=-.5;
+            zpos=0.5;
+        }
+
+
+        double dx=x + midpoint.x;
+        double dy=y+ midpoint.y;
+        double dz=z + midpoint.z;
+
+
+        int id=world.getBlockId(x,y,z);
+
+
+        boolean left;
+        boolean right;
+        boolean lt;
+        boolean gt;
         boolean reverse = side == 2 || side == 4;
 
         if (side < 4) {
-            p = ConnectionCheckManager.checkConnection(world, x - 1, y, z, id, metadata);
-            n = ConnectionCheckManager.checkConnection(world, x + 1, y, z, id, metadata);
+            left = ConnectionCheckManager.checkConnection(world, dx +xneg, dy, dz, id, metadata);
+            right = ConnectionCheckManager.checkConnection(world, dx +xpos, dy, dz, id, metadata);
+            lt= midpoint.x>.5;
+            gt=midpoint.x<0.5;
         } else {
-            p = ConnectionCheckManager.checkConnection(world, x, y, z + 1, id, metadata);
-            n = ConnectionCheckManager.checkConnection(world, x, y, z - 1, id, metadata);
+            left = ConnectionCheckManager.checkConnection(world, dx, dy, dz+zpos, id, metadata);
+            right = ConnectionCheckManager.checkConnection(world, dx, dy, dz+zneg, id, metadata);
+            lt= midpoint.z<.5;
+            gt=midpoint.z>0.5;
         }
 
-        if (p && n)
+        if (left && right)
             return seamsCtmVert.icons[1];
-        else if (p)
+        else if (left)
+        {
+            if(gt)
+                 ucoor=reverse?-0.5:0.5;
             return seamsCtmVert.icons[reverse ? 2 : 3];
-        else if (n)
+
+        }
+        else if (right)
+        {
+            if(lt)
+                ucoor=reverse?0.5:-0.5;
             return seamsCtmVert.icons[reverse ? 3 : 2];
+        }
         return seamsCtmVert.icons[0];
     }
 
@@ -66,5 +117,11 @@ public class VariationCTMH extends CarvableVariation {
         if(index>=4) return icon;
 
         return seamsCtmVert.icons[index];
+    }
+
+    @Override
+    public void transform(UV uv) {
+        uv.u+=ucoor;
+        super.transform(uv);
     }
 }

@@ -490,7 +490,7 @@ public class CTM {
             texture = 30; //(2,15)
 
         if (texture == 10 && b2[upperleft] && b2[upperright] && b2[lowerleft] && b2[lowerright])
-            texture = 47; //(3,15)
+            texture = 46; //(3,15)
 
         if (texture == 10 && !b2[upperleft] && b2[upperright] && b2[lowerleft] && b2[lowerright])
             texture = 33;  //(3,2)

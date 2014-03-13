@@ -55,7 +55,7 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
             proxyWorld world=null;
             if(part.world()!=null)
                 world=new proxyWorld(part.world(),pos,icontr.getBlockId(),icontr.getMetadata());
-            var.setup(verts, side%6, pos,world);
+            var.setup(verts, side%6, pos,world,part.getRenderBounds());
             var.renderSide(verts, side%6, pos, lightMatrix, getColour(part),part.getRenderBounds());
 
     }
@@ -144,8 +144,9 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
                 isMultipart=true;
                 point.set(Math.abs(dx%1),Math.abs(dy%1),Math.abs(dz%1));
                 TileMultipart tmp=(TileMultipart)te;
-                for(TMultiPart npart: tmp.jPartList())
+                for(int i=0;i<tmp.jPartList().size();i++)
                 {
+                    TMultiPart npart=tmp.jPartList().get(i);
                     Cuboid6 bounds=npart.getRenderBounds().copy().enclose(enclosurePoint);
                     if(npart instanceof Microblock)
                     {
@@ -154,7 +155,9 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
                            // FMLLog.info("Is in");
                             Microblock mb=(Microblock)npart;
                             IMicroMaterial m=MicroMaterialRegistry.getMaterial(mb.getMaterial());
-                            return id==m.getItem().itemID&&meta==m.getItem().getItemDamage();
+                            boolean temp= id==m.getItem().itemID&&meta==m.getItem().getItemDamage();
+                            if(temp)
+                                return temp;
 
                         }
                     }

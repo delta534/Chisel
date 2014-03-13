@@ -72,7 +72,7 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
             {
                 verts[j]=model.verts[j+i*4];
             }
-            var.setup(verts,i,pos,null);
+            var.setup(verts,i,pos,null,blockBounds);
             var.renderSide(verts, i, pos, null, block.getRenderColor(i) << 8 | 0xFF,blockBounds);
             CCRenderState.draw();
 
@@ -109,7 +109,7 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
                     {
                         verts[j]=model.verts[j+i*4];
                     }
-                    var.setup(verts, i, pos, world);
+                    var.setup(verts, i, pos, world,blockBounds);
                     var.renderSide(verts, i, pos, lightmatrix.lightMatrix(), block.colorMultiplier(world,x,y,z)<<8|0xFF,blockBounds);
 
 

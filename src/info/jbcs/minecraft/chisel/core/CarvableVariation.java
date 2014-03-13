@@ -49,7 +49,7 @@ public class CarvableVariation implements IUVTransformation {
     boolean []adj=new boolean[6];
     final public Vector3 axis=new Vector3();
     final public Vector3 midpoint=new Vector3();
-	public void setup(Vertex5[] verts, int side, Vector3 pos,IBlockAccess world)
+	public void setup(Vertex5[] verts, int side, Vector3 pos,IBlockAccess world,Cuboid6 bounds)
 	{
         if(world!=null)
         {

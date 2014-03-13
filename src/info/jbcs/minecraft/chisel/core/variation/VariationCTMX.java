@@ -62,7 +62,7 @@ public class VariationCTMX extends CarvableVariation {
 
                 Subdivider.Result res=Subdivider.getResult(j);
                 CCRenderState.useNormals(false);
-                midpoint.set(vec).multiply(filters2[side/2]).add(res.offset.multiply(filters[side/2]));
+                midpoint.set(res.offset);
                 region=res.iconIndex;
                 data=res.verts_;
                 axis.set(Rotation.axes[side % 6]).multiply(vec).multiply(2);
@@ -87,7 +87,7 @@ public class VariationCTMX extends CarvableVariation {
 
     @Override
     public void setup(Vertex5[] verts, int side, Vector3 pos,
-                      IBlockAccess world) {
+                      IBlockAccess world,Cuboid6 bounds) {
         Subdivider.setup(verts,side);
         w = world;
         loc = pos;

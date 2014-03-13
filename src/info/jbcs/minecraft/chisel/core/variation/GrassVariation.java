@@ -44,9 +44,9 @@ public class GrassVariation extends CarvableVariation {
     }
 
     @Override
-    public void setup(Vertex5[] verts, int side, Vector3 pos, IBlockAccess world) {
-        grass.setup(verts, side, pos, world);
-        dirt.setup(verts, side, pos, world);
+    public void setup(Vertex5[] verts, int side, Vector3 pos, IBlockAccess world,Cuboid6 bounds) {
+        grass.setup(verts, side, pos, world,bounds);
+        dirt.setup(verts, side, pos, world,bounds);
     }
 
     @Override
@@ -77,9 +77,7 @@ public class GrassVariation extends CarvableVariation {
                     }
                 }
                 grass.renderSide(verts, side, pos, lightMatrix, color,bounds);
-                bounds=null;
                 grass.setBoundIcon(temp);
-
             }
         }
         return  true;

@@ -115,16 +115,16 @@ public class Subdivider {
         store.set(0.25,0.25,0.25);
         if(vec.x>0.5)
             store.x+=0.5;
-        else if (vec.x==0.5)
-            store.x+=.25;
+//        else if (vec.x==0.5)
+//            store.x+=.25;
         if(vec.y>0.5)
             store.y+=0.5;
-        else if (vec.y==0.5)
-            store.y+=.25;
+//        else if (vec.y==0.5)
+//            store.y+=.25;
         if(vec.z>0.5)
             store.z+=0.5;
-        else if (vec.z==0.5)
-            store.z+=.25;
+//        else if (vec.z==0.5)
+//            store.z+=.25;
 
     }
     static void calcUVOffset(UV uv,UV store)
@@ -312,7 +312,7 @@ public class Subdivider {
                     temp.mul(0.25);
                     calcUVOffset(temp,offset);
                     result.iconIndex=getUVRegion(temp);
-                    result.offset.set(vecStore);
+                    calcVecOffset(vecStore,side,result.offset);
                     for(Vertex5 vert:result.verts_)
                     {
                         correctUV(vert.uv,offset);
@@ -334,7 +334,7 @@ public class Subdivider {
                     correctUV(results[0].verts_[i].uv, offset);
                     results[0].verts_[i].vec.set(vert.vec);
                 }
-                results[0].offset.set(midpoint);
+                results[0].offset.set(vecStore);
                 break;
 
         }
