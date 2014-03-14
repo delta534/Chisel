@@ -202,8 +202,9 @@ public class ChiselModCompatibility {
 				MinecraftForge.setBlockHarvestLevel(block,0,"chisel",0);
 			}
 		};				
-		new ClassBlockCompat("mrtjp.projectred.ProjectRedExploration","blockStones"){
-			@Override void action(){
+		new ClassCompat("mrtjp.projectred.ProjectRedExploration"){
+			@Override void action() throws Exception{
+                Block block=(Block)cl.getDeclaredMethod("blockStones").invoke(null);
 				Carving.chisel.addVariation("marble",block.blockID,0,99);
 				MinecraftForge.setBlockHarvestLevel(block,0,"chisel",0);
 			}

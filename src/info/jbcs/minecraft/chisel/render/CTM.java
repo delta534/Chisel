@@ -81,7 +81,7 @@ public class CTM {
     static UV []cornerOffsets= {new UV(-0.5,-0.5), new UV(0.5,-0.5),new UV(.5,.5),new UV(-0.5,0.5)};
     static Vector3 offset=new Vector3();
     public static int getTexture(IBlockAccess world, int x, int y, int z,
-                                 int side,int index,Vector3 offset_)
+                                 int side,final int index,Vector3 offset_)
     {
         int texture=0;
         if (world == null)
@@ -96,7 +96,7 @@ public class CTM {
         int blockMetadata = world.getBlockMetadata(x, y, z);
         boolean b[] = new boolean[4];
         boolean b2[] =new boolean[4];
-
+        int res=index;
         switch (side)
         {
             case 0:
@@ -219,28 +219,50 @@ public class CTM {
         else if(b[left]&&!b[right]&&!b[below]&&!b[above])//1
         {
 
-            if(index==lowerleft||index==lowerright)
+            if(b2[res&2])
+            {
+                res^=2;
+            }
+            if(res==lowerleft||res==lowerright)
+            {
                 texture=mappings[defaultIcon][lowerright];
+            }
             else
+            {
+
                 texture=mappings[defaultIcon][upperright];
+            }
         }
         else if(!b[left]&&b[right]&&!b[below]&&!b[above])//2
         {
-            if(index==lowerleft||index==lowerright)
+            if(b2[res|1])
+            {
+                res^=2;
+            }
+            if(res==lowerleft||res==lowerright)
                 texture=mappings[defaultIcon][lowerleft];
             else
                 texture=mappings[defaultIcon][upperleft];
         }
         else if(!b[left]&&!b[right]&&b[below]&&!b[above])//3
         {
-            if(index==upperleft||index==lowerleft)
+            if (b2[res|2])
+
+                res^=1;
+            if(res==upperleft||res==lowerleft)
+            {
                 texture=mappings[defaultIcon][upperleft];
+            }
             else
+            {
                 texture=mappings[defaultIcon][upperright];
+            }
         }
         else if(!b[left]&&!b[right]&&!b[below]&&b[above])//4
         {
-            if(index==upperleft||index==lowerleft)
+            if(b2[res^2])
+                res^=1;
+            if(res==upperleft||res==lowerleft)
                 texture=mappings[defaultIcon][lowerleft];
             else
                 texture=mappings[defaultIcon][lowerright];
@@ -324,16 +346,61 @@ public class CTM {
     public static int cornerCheck(boolean b2[],int index,int tex)
     {
         cornerCount=0;
+        int cflags=0;
         for(int i=0;i<4;i++)
         {
-            //index=(index+i)%4;
             boolean b=b2[i];
             if(!b)
             {
                 tex=mappings[lowerright][i];
                 cornerCount++;
+                cflags|=1<<i;
             }
         }
+        if(cornerCount>1)
+        {
+            switch(cflags)
+            {
+                case 3:
+                    tex=mappings[lowerright][(index&1)^1];
+                    break;
+                //case 5:
+                case 5:
+                    if((index&1)==0)
+                    {
+                        tex=mappings[lowerright][index^2];
+
+                    }
+                    else
+                        tex=mappings[lowerright][index^3];
+
+                    break;
+                case 6:
+                    tex=mappings[lowerright][1];
+
+                    break;
+                //case 9:
+                case 10:
+                    if((index&1)==0)
+                    {
+                        tex=mappings[lowerright][index^3];
+
+                    }
+                    else
+                        tex=mappings[lowerright][index^2];
+                    break;
+                case 12:
+                    if(index<2)
+                    tex=mappings[lowerright][index^3];
+                    else
+                    tex=mappings[lowerright][index];
+                    break;
+
+                default:
+                tex=mappings[lowerright][index^3];
+            }
+        }
+
 
 
 
