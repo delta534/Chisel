@@ -49,7 +49,7 @@ public class GuiAutoChisel extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int j, int i) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		String line="Carve blocks";
+		String line="Auto Chisel";
 		//		this.drawCenteredString(fontRenderer, isExtended()?"Carve":"Carve blocks",  88, 13, 0x888888);
 		fontRenderer.drawString(line, 88-fontRenderer.getStringWidth(line) / 2, 13, 0x404040);
 	}

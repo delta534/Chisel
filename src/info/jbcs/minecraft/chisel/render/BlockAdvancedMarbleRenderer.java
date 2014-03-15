@@ -4,6 +4,7 @@ import codechicken.lib.render.*;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import info.jbcs.minecraft.chisel.Chisel;
+import info.jbcs.minecraft.chisel.blocks.BlockMarbleSlab;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
@@ -33,13 +34,9 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
     VariationCTMX test;
     LazyLightMatrix lightmatrix=new LazyLightMatrix();
     CCModel model;
-    Cuboid6 blockBounds;
     Vertex5 verts[]=new Vertex5[4];
     Vector3 pos=new Vector3();
     public BlockAdvancedMarbleRenderer() {
-        blockBounds=new Cuboid6(
-                0,0,0,
-                1,1,1);
         if(Chisel.RenderCTMId==0){
             Chisel.RenderCTMId = RenderingRegistry.getNextAvailableRenderId();
         }
@@ -47,7 +44,6 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
         test.temp=rendererCTM;
         test.temp.resetVertices();
         model=CCModel.quadModel(24);
-        model.generateBlock(0,blockBounds);
 
     }
 
@@ -55,6 +51,16 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
     public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
     {
         //GL11.glPushMatrix();
+        block.setBlockBoundsForItemRender();
+        Cuboid6 blockBounds=new Cuboid6(
+                block.getBlockBoundsMinX(),
+                block.getBlockBoundsMinY(),
+                block.getBlockBoundsMinZ(),
+                block.getBlockBoundsMaxX(),
+                block.getBlockBoundsMaxY(),
+                block.getBlockBoundsMaxZ());
+        model.generateBlock(0,blockBounds);
+
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         CarvableVariation var=((Carvable) block).getVariation(metadata);
         pos.set(0,0,0);
@@ -83,7 +89,17 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
     }
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks rendererOld) {
-
+    block.setBlockBoundsBasedOnState(world,x,y,z);
+        Cuboid6 blockBounds=new Cuboid6(
+                block.getBlockBoundsMinX(),
+                block.getBlockBoundsMinY(),
+                block.getBlockBoundsMinZ(),
+                block.getBlockBoundsMaxX(),
+                block.getBlockBoundsMaxY(),
+                block.getBlockBoundsMaxZ());
+        model.generateBlock(0,blockBounds);
+        if(block instanceof BlockMarbleSlab)
+            x=x+0;
         int meta = world.getBlockMetadata(x, y, z);
         CarvableVariation var=((Carvable) block).getVariation(meta);
         pos.set(x, y, z);

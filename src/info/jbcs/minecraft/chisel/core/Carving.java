@@ -126,12 +126,11 @@ public class Carving {
 		
 		CarvingGroup blockGroup=carvingGroupsByVariation.get(key(blockId,metadata));
 		if(blockGroup!=null || blockGroup==group) return null;
-		
+
 		CarvingVariation variation=new CarvingVariation(blockId,metadata,order);
 		group.variations.add(variation);
 		Collections.sort(group.variations);
 		carvingGroupsByVariation.put(key(blockId,metadata), group);
-		
 		return variation;
 	}
 	

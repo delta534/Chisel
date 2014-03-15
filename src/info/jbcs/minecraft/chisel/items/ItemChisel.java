@@ -1,6 +1,7 @@
 package info.jbcs.minecraft.chisel.items;
 
 import info.jbcs.minecraft.chisel.Chisel;
+import info.jbcs.minecraft.chisel.blocks.BlockSnakestone;
 import info.jbcs.minecraft.chisel.modCompat.ChiselModCompatibility;
 import info.jbcs.minecraft.chisel.blocks.BlockMarbleCarpet;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
@@ -73,15 +74,17 @@ public class ItemChisel extends ItemTool {
 			if(stack.stackTagCompound!=null){
 				chiselTarget=ItemStack.loadItemStackFromNBT(stack.stackTagCompound.getCompoundTag("chiselTarget"));
 			}
-
+            int meta=blockMeta;
+            if(Block.blocksList[blockId] instanceof BlockSnakestone)
+                meta=blockMeta <=12?1:13;
 			boolean chiselHasBlockInside=true;
 
 			if(chiselTarget==null){
-				CarvingVariation[] variations=carving.getVariations(blockId, blockMeta);
+				CarvingVariation[] variations=carving.getVariations(blockId, meta);
 				if(variations==null || variations.length<2) return false;
 
 				int index=random.nextInt(variations.length-1);
-				if(variations[index].blockId==blockId && variations[index].meta==blockMeta){
+				if(variations[index].blockId==blockId && variations[index].meta==meta){
 					index++;
 					if(index>=variations.length) index=0;
 				}
@@ -94,7 +97,7 @@ public class ItemChisel extends ItemTool {
 			int targetId=chiselTarget.itemID;
 			int targetMeta=chiselTarget.getItemDamage();
 
-			boolean match=carving.isVariationOfSameClass(targetId,targetMeta,blockId,blockMeta);
+			boolean match=carving.isVariationOfSameClass(targetId,targetMeta,blockId,meta);
 			int resultId=targetId;
 
 

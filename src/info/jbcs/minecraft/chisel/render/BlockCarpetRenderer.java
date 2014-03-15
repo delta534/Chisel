@@ -14,8 +14,6 @@ public class BlockCarpetRenderer extends BlockAdvancedMarbleRenderer {
 
         rendererCTM = new RenderBlocksCTMCarpet();
 
-        blockBounds.max.y=0.0625;
-        model.generateBlock(0,blockBounds);
 
 
     }
