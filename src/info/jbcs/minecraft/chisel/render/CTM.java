@@ -321,7 +321,7 @@ public class CTM {
         {
 
 
-                int i=(index&2)+1;
+                int i=(index|1);
 
                 texture=mappings[upperright][i];
 
@@ -331,14 +331,14 @@ public class CTM {
         {
 
 
-                texture=mappings[lowerleft][index%2+2];
+                texture=mappings[lowerleft][index|2];
 
         }
 
         else if(b[left]&&b[right]&&b[below]&&!b[above])  //15
         {
 
-                texture=mappings[lowerleft][index%2];
+                texture=mappings[lowerleft][index&1];
         }
         return texture;
     }

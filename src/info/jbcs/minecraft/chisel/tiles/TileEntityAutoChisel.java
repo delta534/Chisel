@@ -9,6 +9,7 @@ import java.util.Queue;
 
 import cpw.mods.fml.common.FMLLog;
 
+import info.jbcs.minecraft.chisel.core.CarvingVariation;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -27,7 +28,7 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityAutoChisel extends TileEntity implements ISidedInventory{
 	public ItemStack[] items;
 
-	HashMap<Integer,ItemStack> patternIDs;
+	HashMap<String,ItemStack> patternIDs;
 	public boolean active;
 	public ArrayDeque<ItemStack> processed;
 	public static final int GuiInputSlot=0;
@@ -40,7 +41,7 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory{
 	public TileEntityAutoChisel()
 	{
 		items=new ItemStack[19];
-		patternIDs=new HashMap<Integer,ItemStack>();
+		patternIDs=new HashMap<String,ItemStack>();
 		processed=new ArrayDeque<ItemStack>();		
 		active=true;
 	}
@@ -60,10 +61,13 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory{
 	}
 	public boolean changeStack(ItemStack is)
 	{
-		if(this.patternIDs.containsKey(is.itemID))
+        Carving.CarvingGroup group=Carving.chisel.getGroup(is.itemID,is.getItemDamage());
+		if(this.patternIDs.containsKey(group.className))
 		{
-			is.setItemDamage(this.patternIDs.get(is.itemID).getItemDamage());
-			return true; 
+            ItemStack pattern=patternIDs.get(group.className);
+            is.itemID=pattern.itemID;
+            is.setItemDamage(pattern.getItemDamage());
+   			return true;
 		}
 		return false;
 	}
@@ -73,7 +77,7 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory{
 		is2.stackSize=0;
 		if(is1.stackSize>is1.getMaxStackSize())
 		{
-			int diff=is1.stackSize%is1.getMaxStackSize();
+			int diff=is1.stackSize-is1.getMaxStackSize();
 			is1.stackSize=is1.getMaxStackSize();
 			is2.stackSize=diff;
 		}
@@ -117,10 +121,6 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory{
 	public void setActive(boolean flag)
 	{
 		active=flag;
-		if(flag)
-			FMLLog.info("has power");
-		else
-			FMLLog.info("no power");
 	}
 	public void onAutoInventoryChanged()
 	{
@@ -128,11 +128,26 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory{
 		{
 			for(int i:inputslots)
 			{
-				ItemStack input=items[i];
-				if(input!=null&&changeStack(input))
+				if(items[i]!=null)
 				{
-					items[0]=null;
-					SetOutput(input);
+                    ItemStack input=items[i].copy();
+
+                    if(i!=0||items[OutputSlot]==null)
+                    {
+                        changeStack(input);
+					    items[i]=null;
+					    SetOutput(input);
+                    }
+                    else
+                    {
+                       if(Carving.chisel.isVariationOfSameClass(input.itemID,input.getItemDamage(),
+                               items[OutputSlot].itemID,items[OutputSlot].getItemDamage()))
+                       {
+                           mergeStacks(items[OutputSlot],input);
+                           items[0].stackSize=input.stackSize;
+
+                       }
+                    }
 				}
 			}
 		}
@@ -163,11 +178,14 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory{
 		}
 		if(isCopySlot(i))
 		{
-			patternIDs.remove(items[i].itemID);
+            Carving.CarvingGroup group=Carving.chisel.getGroup(items[i].itemID,items[i].getItemDamage());
+
+            patternIDs.remove(group.className);
 			outstack=items[i];
-			outstack.stackSize=0;
+			outstack.stackSize=-1;
 			items[i]=null;
-		}			
+		}
+        onAutoInventoryChanged();
 		return outstack;
 	}
 
@@ -181,13 +199,17 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory{
 
 		if(isCopySlot(i))
 		{
+            if(items[i]!=null)
+            {
+                Carving.CarvingGroup group=Carving.chisel.getGroup(items[i].itemID,items[i].getItemDamage());
+                patternIDs.remove(group.className);
+            }
 			if(itemstack!=null)
 			{
-				patternIDs.put(itemstack.itemID, itemstack);
+                Carving.CarvingGroup group=Carving.chisel.getGroup(itemstack.itemID,itemstack.getItemDamage());
+				patternIDs.put(group.className, itemstack);
 				itemstack.stackSize=1;
 			}
-			if(items[i]!=null)
-				patternIDs.remove(items[i].itemID);
 		}
 		items[i]=itemstack;
 		onAutoInventoryChanged();
@@ -221,7 +243,9 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory{
 	}
 	public boolean hasPattern(ItemStack i)
 	{
-		return patternIDs.containsKey(i.itemID);
+        Carving.CarvingGroup group=Carving.chisel.getGroup(i.itemID,i.getItemDamage());
+
+        return patternIDs.containsKey(group.className);
 	}
 	public boolean canCarve(ItemStack i)
 	{

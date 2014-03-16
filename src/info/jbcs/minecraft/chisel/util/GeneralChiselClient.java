@@ -26,6 +26,7 @@ public class GeneralChiselClient {
 	public static int tick=0;
 	
 	public static void spawnLavastoneFX(World world, BlockLavastone block, int x, int y, int z) {
+        if(Chisel.particlesTickrate==-1) return;
 		if(Chisel.particlesTickrate!=0 && tick++%Chisel.particlesTickrate!=0) return;
 	
 		float f = 0.15F;
@@ -75,6 +76,7 @@ public class GeneralChiselClient {
 	}
 	
 	public static void spawnHolystoneFX(World world, BlockHolystone block, int x, int y, int z) {
+        if(Chisel.particlesTickrate==-1) return;
 		if(Chisel.particlesTickrate!=0 && tick++%Chisel.particlesTickrate!=0) return;
 		
 		float f = 0.15F;
@@ -116,6 +118,7 @@ public class GeneralChiselClient {
 	}
 
 	public static void spawnSnakestoneObsidianFX(World world, BlockSnakestoneObsidian block, int x, int y, int z) {
+        if(Chisel.particlesTickrate==-1) return;
 		if(Chisel.particlesTickrate==0 || tick++%Chisel.particlesTickrate==0){
 			EntitySnakestoneObsidianFX res = new EntitySnakestoneObsidianFX(world, block, x, y, z);
 			Minecraft.getMinecraft().effectRenderer.addEffect(res);
@@ -123,6 +126,7 @@ public class GeneralChiselClient {
 	}
 	
 	public static void spawnBallOMossFX(World world, double x, double y, double z) {
+        if(Chisel.particlesTickrate==-1) return;
 		if(Chisel.particlesTickrate==0 || tick++%Chisel.particlesTickrate==0){
 			EntityBallOMossFX res = new EntityBallOMossFX(world, x, y, z);
 			Minecraft.getMinecraft().effectRenderer.addEffect(res);

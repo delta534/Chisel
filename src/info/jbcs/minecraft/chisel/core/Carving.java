@@ -9,17 +9,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class Carving {
-	class CarvingGroup{
+	public class CarvingGroup{
 		public CarvingGroup(String n) {
 			name=n;
 		}
 
-		String name;
-		String className;
-		String sound;
-		String oreName;
-		
-		ArrayList<CarvingVariation> variations=new ArrayList<CarvingVariation>();
+        public String name;
+		public String className;
+        public String sound;
+        public String oreName;
+
+        public ArrayList<CarvingVariation> variations=new ArrayList<CarvingVariation>();
 	};
 	
 	HashMap<String,CarvingGroup> carvingGroupsByName=new HashMap<String,CarvingGroup>();

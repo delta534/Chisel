@@ -1,5 +1,6 @@
 package info.jbcs.minecraft.chisel.core;
 
+import codechicken.lib.lang.LangUtil;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.variation.*;
 import info.jbcs.minecraft.chisel.blocks.BlockChiselGrass;
@@ -122,6 +123,7 @@ public class CarvableHelper {
                                 + description + "' (" + texture + ")");
             }
             variation.texture = texture;
+            LangUtil.instance.translate("chisel."+texture+"name");
         } else {
             variation =new VariationTopBottom();
             variation.block = block;

@@ -37,11 +37,6 @@ public class GuiAutoChisel extends GuiContainer {
 		px -= this.guiLeft;
 		py -= this.guiTop;
 
-		if(! isExtended() && y>=7 && y<=62){
-			if(px >= 43 && px <= 60) return false;
-			if(px >= 115 && px <= 132) return false;
-		}
-
 		return px >= x - 1 && px < x + w + 1 && py >= y - 1 && py < y + h + 1;
 	}
 
@@ -51,8 +46,18 @@ public class GuiAutoChisel extends GuiContainer {
 
 		String line="Auto Chisel";
 		//		this.drawCenteredString(fontRenderer, isExtended()?"Carve":"Carve blocks",  88, 13, 0x888888);
-		fontRenderer.drawString(line, 88-fontRenderer.getStringWidth(line) / 2, 13, 0x404040);
-	}
+		fontRenderer.drawString(line, (xSize-fontRenderer.getStringWidth(line))/2, -6, 0x404040);
+        line="input";
+
+        line="Patterns";
+        fontRenderer.drawString(line,25,34,0x404040);
+        line="input";
+        fontRenderer.drawString(line,48-fontRenderer.getStringWidth(line),14,0x404040);
+        line="output";
+        fontRenderer.drawString(line,129,14,0x404040);
+        //fontRenderer.drawString(line, 5-fontRenderer.getStringWidth(line) / 2, 13, 0x404040);
+
+    }
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int mx, int my) {
@@ -65,7 +70,7 @@ public class GuiAutoChisel extends GuiContainer {
 		String texture=	"chisel:textures/autochisel-gui.png";
 
 		GeneralClient.bind(texture);
-		drawTexturedModalRect(i, j, 0, 0, xSize, ySize);
+		drawTexturedModalRect(i, j-10, 0, 0, xSize+10, ySize+20);
 	}
 
 	@Override

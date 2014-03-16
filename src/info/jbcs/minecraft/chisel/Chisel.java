@@ -88,7 +88,6 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class Chisel {
 	public static ChiselModCompatibility modcompat;
 	public static ItemChisel chisel;
-	// public static ItemChisel needle;
 	public static Item itemIceshard;
 	public static ItemCloudInABottle itemCloudInABottle;
 	public static ItemBallOMoss itemBallOMoss;
@@ -171,8 +170,7 @@ public class Chisel {
 	public static int RenderEldritchId=0;
 	public static int RenderCTMId=0;
 	public static int RenderCarpetId=0;
-	public static int RenderGrassID=0;
-	@Instance("Chisel")
+	@Instance("chisel")
 	public static Chisel instance;
 
 	@SidedProxy(clientSide = "info.jbcs.minecraft.chisel.proxy.ProxyClient", serverSide = "info.jbcs.minecraft.chisel.proxy.Proxy")
@@ -205,9 +203,8 @@ public class Chisel {
 		configExists = configFile.exists();
 		config = new Configuration(configFile);
 		config.load();
-        Property hmProp = config.get("General", "Hardmode", false);
-        hmProp.comment="If true,chisels now have limited uses and no longer instantly break chisel blocks";
-        hardMode=hmProp.getBoolean(false);
+        hardMode= config.get("General", "Hardmode", false,
+                "If true,chisels now have limited uses and no longer instantly break chisel blocks").getBoolean(false);
         chisel = (ItemChisel) new ItemChisel(config.getItem("chisel", 7811)
                 .getInt(), Carving.chisel).setTextureName("chisel:chisel")
                 .setUnlocalizedName("chisel")
@@ -234,7 +231,7 @@ public class Chisel {
                         "Traversing concrete roads, players will acceleration to this velocity. For reference, normal running speed is about 0.28. Set to 0 to disable acceleration.")
                 .getDouble(0.45);
         particlesTickrate = config.get("general", "particle tickrate", 1,
-                "Particle tick rate. Greater value = less particles.")
+                "Particle tick rate. Greater value = less particles. A value of -1 will turn off particles.")
                 .getInt(1);
         oldPillars = config.get("general", "old pillar graphics", false,
                 "Use old pillar textures").getBoolean(false);
@@ -283,8 +280,6 @@ public class Chisel {
                     .setCreativeTab(CreativeTabs.tabMaterials)
                     .setUnlocalizedName("Chisel:iceshard")
                     .setTextureName("Chisel:iceshard");
-            // itemIceshard=new
-            // Item(2582).setCreativeTab(CreativeTabs.tabMaterials).setUnlocalizedName("Chisel:iceshard").func_111206_d("Chisel:iceshard");
         }
 
             blockMarblePillar = (BlockMarble) new BlockMarble(
