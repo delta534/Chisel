@@ -28,6 +28,8 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
     public static BlockGrass grass=Block.grass;
     public BlockChiselGrass(int i) {
 		super(i);
+        setCreativeTab(Chisel.tabChisel);
+
         carverHelper=new GrassCarvableHelper();
 	}
 

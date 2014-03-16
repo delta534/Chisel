@@ -403,4 +403,14 @@ public class BlockSnakestone extends Block {
 		iconCross = register.registerIcon(iconPrefix + "crosssection");
 		iconSide = register.registerIcon(iconPrefix + "side");
 	}
+
+    @Override
+    public String getUnlocalizedName() {
+        return super.getUnlocalizedName();
+    }
+
+    @Override
+    public String getLocalizedName() {
+        return super.getLocalizedName();
+    }
 }
