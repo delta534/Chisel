@@ -1,8 +1,10 @@
 package info.jbcs.minecraft.chisel.items;
 
+import codechicken.lib.lang.LangUtil;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.util.IMetaDataName;
 import info.jbcs.minecraft.utilities.General;
 
 import java.util.List;
@@ -31,7 +33,18 @@ public class ItemCarvable extends ItemBlock {
 
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return "item." + Block.blocksList[blockId].getUnlocalizedName() + "." + itemstack.getItemDamage();
+        Block bl=Block.blocksList[blockId];
+        if(bl instanceof IMetaDataName)
+            return ((IMetaDataName)bl).getUnlocalizedName(itemstack.getItemDamage());
+        if(bl instanceof Carvable)
+        {
+            Carvable cv=(Carvable)bl;
+            CarvableVariation var=cv.getVariation(itemstack.getItemDamage());
+            if(var!=null&&!Chisel.blockDescriptions)
+                return var.description;
+
+        }
+		return bl.getUnlocalizedName();
 	}
 	
     @Override
@@ -48,12 +61,12 @@ public class ItemCarvable extends ItemBlock {
     	
     	Block block=General.getBlock(item.itemID);
     	if(! (block instanceof Carvable)) return;
+
+        Carvable carvable=(Carvable) block;
+        CarvableVariation var=carvable.getVariation(stack.getItemDamage());
+        if(var==null) return;
     	
-    	Carvable carvable=(Carvable) block;
-    	CarvableVariation var=carvable.getVariation(stack.getItemDamage());
-    	if(var==null) return;
-    	
-    	lines.add(var.description);
+    	lines.add(LangUtil.translateG(var.description));
     }
 
 }

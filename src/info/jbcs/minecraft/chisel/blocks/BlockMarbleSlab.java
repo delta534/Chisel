@@ -102,5 +102,9 @@ public class BlockMarbleSlab extends BlockMarble {
 	public void getSubBlocks(int blockId, CreativeTabs tabs, List list){
 		if(isBottom) super.getSubBlocks(blockId,tabs,list);
     }
-	
+
+    @Override
+    public String getUnlocalizedName() {
+        return super.getUnlocalizedName();
+    }
 }

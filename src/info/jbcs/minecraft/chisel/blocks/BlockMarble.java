@@ -72,14 +72,5 @@ public class BlockMarble extends Block implements Carvable {
 		
 		return carverHelper.getVariation(metadata);
 	}
-	@Override
-	public String getUnlocalizedName()
-	{
-		return "Chisel"+carverHelper.blockName;
-	}
 
-    @Override
-    public String getLocalizedName() {
-        return carverHelper.blockName;
-    }
 }

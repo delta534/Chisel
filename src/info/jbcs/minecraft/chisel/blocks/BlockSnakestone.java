@@ -6,6 +6,7 @@ import info.jbcs.minecraft.chisel.render.BlockSnakeStoneRenderer;
 
 import java.util.List;
 
+import info.jbcs.minecraft.chisel.util.IMetaDataName;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -16,7 +17,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class BlockSnakestone extends Block {
+public class BlockSnakestone extends Block implements IMetaDataName {
 	static final int SEC_HEAD = 0;
 	static final int SEC_DOWN = 4;
 	static final int SEC_UP = 8;
@@ -404,13 +405,12 @@ public class BlockSnakestone extends Block {
 		iconSide = register.registerIcon(iconPrefix + "side");
 	}
 
-    @Override
-    public String getUnlocalizedName() {
-        return super.getUnlocalizedName();
+    public String getUnlocalizedName(int metadata) {
+        String type=(metadata<4)?"head":"body";
+        return getUnlocalizedName() + "." + type;
     }
 
-    @Override
-    public String getLocalizedName() {
-        return super.getLocalizedName();
+    public String getUnlocalizedDescription(int metadata) {
+        return null;
     }
 }

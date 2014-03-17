@@ -9,6 +9,7 @@ import info.jbcs.minecraft.chisel.render.BlockMarbleStairsRenderer;
 
 import java.util.List;
 
+import info.jbcs.minecraft.chisel.util.IMetaDataName;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -19,17 +20,18 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class BlockMarbleStairs extends BlockStairs implements Carvable {
+public class BlockMarbleStairs extends BlockStairs implements Carvable,IMetaDataName {
 	CarvableHelper carverHelper;
 	int blockMeta;
-
-	public BlockMarbleStairs(String name,int i, Block block,int meta, CarvableHelper helper) {
+    int index;
+	public BlockMarbleStairs(String name,int i, Block block,int meta, CarvableHelper helper,int ind) {
 		super(name==null?i:Chisel.config.getBlock(name, i).getInt(i), block, meta);
 		
 		useNeighborBrightness[blockID]=true;
 		setCreativeTab(Chisel.tabChisel);
 		carverHelper=helper;
 		blockMeta=meta;
+        index=ind;
 	}
 
 	@Override
@@ -95,12 +97,16 @@ public class BlockMarbleStairs extends BlockStairs implements Carvable {
 
 	@Override
 	public CarvableVariation getVariation(int metadata) {
-		return carverHelper.getVariation(metadata);
+		return carverHelper.getVariation(index+metadata);
 	}
-	@Override
-	public String getUnlocalizedName()
-	{
-		return "Chisel"+carverHelper.blockName;
-	}
-	
+
+    @Override
+    public String getUnlocalizedName(int metadata) {
+        return this.getUnlocalizedName();
+    }
+
+
+    public String getUnlocalizedDescription(int metadata) {
+        return carverHelper.getVariation(metadata+index).description;
+    }
 }

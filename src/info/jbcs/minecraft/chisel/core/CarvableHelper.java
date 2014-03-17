@@ -8,6 +8,8 @@ import info.jbcs.minecraft.chisel.blocks.BlockMarbleSlab;
 import info.jbcs.minecraft.chisel.items.ItemCarvable;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -61,9 +63,12 @@ public class CarvableHelper {
             return;
 
         if (blockName == null && block != null)
-            blockName = block.getLocalizedName();
+        {
+            String [] str= block.getUnlocalizedName().split("\\.");
+            blockName = str[str.length-1];//getLocalizedName().replaceAll("\\s","");
+        }
         else if (blockName == null && description != null)
-            blockName = description;
+            blockName = "tile.chisel."+description.toLowerCase().replaceAll("\\s","");
 
         CarvableVariation variation;
 
@@ -84,7 +89,6 @@ public class CarvableHelper {
             boolean v9 = Chisel.class.getResource(path + "-v9.png") != null;
             boolean v4 = Chisel.class.getResource(path + "-v4.png") != null;
             boolean ctmx = Chisel.class.getResource(path + "-ctm.png") != null;
-            boolean grass = Chisel.class.getResource(path + "-side_snow.png") != null;
             if (ctm3) {
                 variation=new VariationCTM3();
                 variation.kind = 3;
@@ -123,15 +127,17 @@ public class CarvableHelper {
                                 + description + "' (" + texture + ")");
             }
             variation.texture = texture;
-            LangUtil.instance.translate("chisel."+texture+"name");
+            variation.description = ("tile.chisel."+blockName+"."+metadata+".description");
+
         } else {
             variation =new VariationTopBottom();
             variation.block = block;
             variation.kind = 2;
             variation.blockMeta = blockMeta;
+            variation.description = description;
+
         }
 
-        variation.description = description;
         variation.metadata = metadata;
         variation.blockName = blockName;
         variations.add(variation);
@@ -154,13 +160,14 @@ public class CarvableHelper {
     }
 
     public void register(Block block, String name, Class cl) {
-        block.setUnlocalizedName(name);
+        block.setUnlocalizedName("chisel."+name);
 
         Item.itemsList[block.blockID] = null;
         GameRegistry.registerBlock(block, cl, name);
 
         if (block instanceof BlockMarbleSlab) {
             BlockMarbleSlab slab = (BlockMarbleSlab) block;
+            slab.top.setUnlocalizedName("chisel."+slab.carverHelper.blockName);
             GameRegistry.registerBlock(slab.top, cl, name + ".top");
         }
 
@@ -187,12 +194,10 @@ public class CarvableHelper {
         chiselBlocks.add(block);
     }
 
+
     public void registerVariation(String name, CarvableVariation variation,
             Block block, int blockMeta) {
 
-        LanguageRegistry.addName(new ItemStack(block.blockID, 1, blockMeta),
-                Chisel.blockDescriptions ? variation.blockName
-                        : variation.description);
 
         if (forbidChiseling)
             return;

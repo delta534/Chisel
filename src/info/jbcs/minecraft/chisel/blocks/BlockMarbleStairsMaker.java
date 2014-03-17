@@ -34,15 +34,15 @@ public class BlockMarbleStairsMaker {
 		for(int i=0;i<blocks.length;i++){
 			String n=blockName+"."+i;
 			blocks[i]=creator==null?
-				new BlockMarbleStairs(n, idStart+i, blockBase, i*2, carverHelper):
-				creator.create(n, idStart+i, blockBase, i*2, carverHelper);
+				new BlockMarbleStairs(n, idStart+i, blockBase, i*2, carverHelper,i):
+				creator.create(n, idStart+i, blockBase, i*2, carverHelper,i);
 			
 			blocks[i].setUnlocalizedName(n);
 			GameRegistry.registerBlock(blocks[i], ItemCarvable.class, n);
 			
 			for(int meta=0;meta<2 && i*2+meta<carverHelper.variations.size();meta++){
 				CarvableVariation variation=carverHelper.variations.get(i*2+meta);
-				
+				variation.description="tile.chisel."+carverHelper.blockName+"."+(i*2+meta)+".description";
 				for(int j=0;j<8;j++)
 					carverHelper.registerVariation(blockName+".orientation."+j,variation,blocks[i],j+meta*8);
 

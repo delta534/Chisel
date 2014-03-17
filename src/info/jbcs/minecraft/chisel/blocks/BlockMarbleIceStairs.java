@@ -10,8 +10,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 public class BlockMarbleIceStairs extends BlockMarbleStairs {
-	public BlockMarbleIceStairs(String name,int i, Block block,int meta, CarvableHelper helper) {
-		super(name,i,block,meta,helper);
+	public BlockMarbleIceStairs(String name,int i, Block block,int meta, CarvableHelper helper,int ind) {
+		super(name,i,block,meta,helper,ind);
 	
 		slipperiness = 0.98F;
 		setTickRandomly(true);

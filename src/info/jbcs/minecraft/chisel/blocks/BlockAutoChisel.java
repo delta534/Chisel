@@ -27,7 +27,7 @@ public class BlockAutoChisel extends BlockContainer {
 	Icon icon;
 	public BlockAutoChisel(int i) {
 		super(Chisel.config.getBlock("autoChisel", i).getInt(i), Material.wood);
-		this.setUnlocalizedName("autoChisel");
+		this.setUnlocalizedName("chisel.autoChisel");
 
 	}
 	@Override

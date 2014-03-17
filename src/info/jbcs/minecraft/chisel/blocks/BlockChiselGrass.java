@@ -46,15 +46,8 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
 
 		return carverHelper.getVariation(metadata);
 	}
-	@Override
-	public String getUnlocalizedName()
-	{
-		return "Chisel"+carverHelper.blockName;
-	}
-	public String getLocalizedName()
-	{
-		return "Chisel"+carverHelper.blockName;
-	}
+
+
 
 	@Override
 	public Icon getIcon(int side, int metadata) {

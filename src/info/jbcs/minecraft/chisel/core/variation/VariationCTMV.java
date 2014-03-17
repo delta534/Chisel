@@ -5,6 +5,7 @@ import codechicken.lib.render.UV;
 import codechicken.lib.render.Vertex5;
 import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Vector3;
+import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.render.Util;
 import info.jbcs.minecraft.chisel.render.Util.RotationData;
 import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
@@ -155,99 +156,104 @@ public class VariationCTMV extends VariationCTMH {
 
                     Icons[3] = Icons[4] = Icons[5] = Icons[2];
                 }
-                else if (xaxis) {
-                    rotations.rotateZNeg=2;
-                    rotations.rotateZPos=1;
-                    rotations.rotateYNeg=1;
-                    rotations.rotateYPos=1;
-                    Icons[4] = getIndexedIcon(4);
-                    Icons[5] = getIndexedIcon(4);
-                    bottomIndex=4;
-                    topIndex=5;
-                    if (xp && xn)
+                else if (xaxis ) {
+                    if(Chisel.rotateVCTM)
                     {
-                        Icons[0] = getIndexedIcon(2);
-                        ucorr=0;
-                    }
-                    else if (xp)
-                    {
-                        Icons[0] = getIndexedIcon(3);
-                        if(midpoint.x>.5)
+                        rotations.rotateZNeg=2;
+                        rotations.rotateZPos=1;
+                        rotations.rotateYNeg=1;
+                        rotations.rotateYPos=1;
+                        Icons[4] = getIndexedIcon(4);
+                        Icons[5] = getIndexedIcon(4);
+                        bottomIndex=4;
+                        topIndex=5;
+                        if (xp && xn)
                         {
+                            Icons[0] = getIndexedIcon(2);
                             ucorr=0;
-                            ucorr=-0.5;
                         }
-                    }
-                    else
-                    {
-                        Icons[0] = getIndexedIcon(1);
-                        if(midpoint.x<.5)
+                        else if (xp)
                         {
-                            ucorr=0;
-                            ucorr=0.5;
+                            Icons[0] = getIndexedIcon(3);
+                            if(midpoint.x>.5)
+                            {
+                                ucorr=0;
+                                ucorr=-0.5;
+                            }
                         }
-                    }
+                        else
+                        {
+                            Icons[0] = getIndexedIcon(1);
+                            if(midpoint.x<.5)
+                            {
+                                ucorr=0;
+                                ucorr=0.5;
+                            }
+                        }
 
-                    Icons[1] = Icons[2] = Icons[3] = Icons[0];
+                        Icons[1] = Icons[2] = Icons[3] = Icons[0];
+                    }
                 }
                 else
                 {
 
 
+                    if(Chisel.rotateVCTM)
+                    {
+                        if (zp  && (ConnectionCheckManager.checkConnection(world, x, y +ypos, z + zpos, id, metadata)
+                                || ConnectionCheckManager.checkConnection(world, x, y +yneg, z + zpos, id, metadata)))
+                            zp = false;
+                        if (zp  && (ConnectionCheckManager.checkConnection(world, x + xpos, y, z + zpos, id, metadata)
+                                ||ConnectionCheckManager.checkConnection(world, x + xneg, y, z + zpos, id, metadata)))
+                            zp = false;
+                        if (zn  && (ConnectionCheckManager.checkConnection(world, x, y + xpos, z + zneg, id, metadata)
+                                || ConnectionCheckManager.checkConnection(world, x, y +yneg, z + zneg, id, metadata)))
+                            zn = false;
+                        if (zn  && (ConnectionCheckManager.checkConnection(world, x + xpos, y, z + zneg, id, metadata)
+                                || ConnectionCheckManager.checkConnection(world, x +xneg, y, z + zneg, id, metadata)))
+                            zn = false;
 
-                    if (zp  && (ConnectionCheckManager.checkConnection(world, x, y +ypos, z + zpos, id, metadata)
-                            || ConnectionCheckManager.checkConnection(world, x, y +yneg, z + zpos, id, metadata)))
-                        zp = false;
-                    if (zp  && (ConnectionCheckManager.checkConnection(world, x + xpos, y, z + zpos, id, metadata)
-                            ||ConnectionCheckManager.checkConnection(world, x + xneg, y, z + zpos, id, metadata)))
-                        zp = false;
-                    if (zn  && (ConnectionCheckManager.checkConnection(world, x, y + xpos, z + zneg, id, metadata)
-                            || ConnectionCheckManager.checkConnection(world, x, y +yneg, z + zneg, id, metadata)))
-                        zn = false;
-                    if (zn  && (ConnectionCheckManager.checkConnection(world, x + xpos, y, z + zneg, id, metadata)
-                            || ConnectionCheckManager.checkConnection(world, x +xneg, y, z + zneg, id, metadata)))
-                        zn = false;
-
-                    if (zp || zn) {
-                        rotations.rotateXPos = 1;
-                        rotations.rotateXNeg = 2;
-                        Icons[2] = getIndexedIcon(4);
-                        Icons[3] = getIndexedIcon(4);
-                        bottomIndex=3;
-                        topIndex=2;
-                        if (zp && zn)
-                        {
-                            Icons[0] = getIndexedIcon(2);
-
-
-                        }
-                        else if (zp)
-                        {
-                            Icons[0] = getIndexedIcon(1);
-                            if(midpoint.z>.5)
+                        if (zp || zn) {
+                            rotations.rotateXPos = 1;
+                            rotations.rotateXNeg = 2;
+                            Icons[2] = getIndexedIcon(4);
+                            Icons[3] = getIndexedIcon(4);
+                            bottomIndex=3;
+                            topIndex=2;
+                            if (zp && zn)
                             {
-                                vcorr=-0.5;
-                                //vcorr=0;
-                            }
-                        }
-                        else
-                        {
-                            Icons[0] = getIndexedIcon(3);
-                            if(midpoint.z<.5)
-                            {
-                                vcorr=0.5;
-                                //vcorr=0;
-                            }
-                        }
+                                Icons[0] = getIndexedIcon(2);
 
-                        Icons[1] = Icons[4] = Icons[5] = Icons[0];
-                    } else {
-                        bottomIndex=0;
-                        topIndex=1;
-                        Icons[0] = Icons[1] = getIndexedIcon(4);
-                        Icons[2] = Icons[3] = Icons[4] = Icons[5] = getIndexedIcon(0);
+
+                            }
+                            else if (zp)
+                            {
+                                Icons[0] = getIndexedIcon(1);
+                                if(midpoint.z>.5)
+                                {
+                                    vcorr=-0.5;
+                                    //vcorr=0;
+                                }
+                            }
+                            else
+                            {
+                                Icons[0] = getIndexedIcon(3);
+                                if(midpoint.z<.5)
+                                {
+                                    vcorr=0.5;
+                                    //vcorr=0;
+                                }
+                            }
+
+                            Icons[1] = Icons[4] = Icons[5] = Icons[0];
+                        } else {
+
+                            bottomIndex=0;
+                            topIndex=1;
+                            Icons[0] = Icons[1] = getIndexedIcon(4);
+                            Icons[2] = Icons[3] = Icons[4] = Icons[5] = getIndexedIcon(0);
+                        }
                     }
-
                 }
 
             }

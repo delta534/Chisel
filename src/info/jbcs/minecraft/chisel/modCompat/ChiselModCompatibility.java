@@ -177,7 +177,8 @@ public class ChiselModCompatibility {
 						bl.getSubBlocks(0, null, list);
 						for(ItemStack is:list)
 						{
-							String s=bl.getUnlocalizedName()+Integer.toString(is.getItemDamage());
+							String s=bl.getUnlocalizedName()+"_"+Integer.toString(is.getItemDamage());
+
 //							if(bl instanceof BlockMarblePillar)
 //								m.invoke(null,new ChiselPillarMicroMaterial(bl, is.getItemDamage()),s);
 //							else
