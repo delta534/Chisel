@@ -1,5 +1,6 @@
 package info.jbcs.minecraft.chisel.gui;
 
+import codechicken.lib.lang.LangUtil;
 import info.jbcs.minecraft.utilities.GeneralClient;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -47,8 +48,9 @@ public class GuiChisel extends GuiContainer {
 	public void drawGuiContainerForegroundLayer(int j, int i) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
-		String line=isExtended()?"Carve":"Carve blocks";
-//		this.drawCenteredString(fontRenderer, isExtended()?"Carve":"Carve blocks",  88, 13, 0x888888);
+		String line=isExtended()?
+                LangUtil.translateG("gui.chisel.name.extended"):
+                LangUtil.translateG("gui.chisel.name");
 		fontRenderer.drawString(line, 88-fontRenderer.getStringWidth(line) / 2, 13, 0x404040);
 	}
 

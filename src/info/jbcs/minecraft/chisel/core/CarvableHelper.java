@@ -160,7 +160,7 @@ public class CarvableHelper {
     }
 
     public void register(Block block, String name, Class cl) {
-        block.setUnlocalizedName("chisel."+name);
+        block.setUnlocalizedName("chisel."+blockName);
 
         Item.itemsList[block.blockID] = null;
         GameRegistry.registerBlock(block, cl, name);

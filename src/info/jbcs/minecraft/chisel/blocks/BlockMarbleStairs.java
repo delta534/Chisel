@@ -105,8 +105,4 @@ public class BlockMarbleStairs extends BlockStairs implements Carvable,IMetaData
         return this.getUnlocalizedName();
     }
 
-
-    public String getUnlocalizedDescription(int metadata) {
-        return carverHelper.getVariation(metadata+index).description;
-    }
 }

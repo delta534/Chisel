@@ -37,7 +37,7 @@ public class BlockMarbleStairsMaker {
 				new BlockMarbleStairs(n, idStart+i, blockBase, i*2, carverHelper,i):
 				creator.create(n, idStart+i, blockBase, i*2, carverHelper,i);
 			
-			blocks[i].setUnlocalizedName(n);
+			blocks[i].setUnlocalizedName("chisel."+blockName);
 			GameRegistry.registerBlock(blocks[i], ItemCarvable.class, n);
 			
 			for(int meta=0;meta<2 && i*2+meta<carverHelper.variations.size();meta++){

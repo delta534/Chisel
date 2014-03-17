@@ -153,6 +153,7 @@ public class Chisel {
 	public static boolean oldPillars;
 	public static boolean disableCTM;
 	public static double concreteVelocity;
+    public static boolean oreDic;
 	public static int particlesTickrate;
 	public static boolean blockDescriptions;
      public static  boolean rotateVCTM;
@@ -179,7 +180,7 @@ public class Chisel {
 			return false;
 		return config.get("Allow CTM", name, true).getBoolean(true);
 
-	}
+	}                                                                                                                       ;
 
 	public void walk(File root, ArrayList<File> fl) {
 		File[] list = root.listFiles();
@@ -201,6 +202,8 @@ public class Chisel {
 		configExists = configFile.exists();
 		config = new Configuration(configFile);
 		config.load();
+        oreDic=config.get("General","Add to ore dictionary",true,
+                "Adds the variations of vanilla blocks to the ore dictionary if possible").getBoolean(true);
         hardMode= config.get("General", "Hardmode", false,
                 "If true,chisels now have limited uses and no longer instantly break chisel blocks").getBoolean(false);
         rotateVCTM= config.get("General", "Rotate vertical connected textures", true,
@@ -294,10 +297,10 @@ public class Chisel {
                     "blockMarblePillar", 2765).setHardness(2.0F)
                     .setResistance(10F).setStepSound(Block.soundStoneFootstep);
 
-        blockMarble = (BlockMarble) new BlockMarble("chisel.blockMarble", 2761)
+        blockMarble = (BlockMarble) new BlockMarble("blockMarble", 2761)
                 .setHardness(2.0F).setResistance(10F)
                 .setStepSound(Block.soundStoneFootstep);
-        blockLimestone = (BlockMarble) new BlockMarble("chisel.blockLimestone", 2762)
+        blockLimestone = (BlockMarble) new BlockMarble("blockLimestone", 2762)
                 .setHardness(2.0F).setResistance(10F)
                 .setStepSound(Block.soundStoneFootstep);
         blockCobblestone = (BlockMarble) new BlockMarble(getBlock(
@@ -313,7 +316,7 @@ public class Chisel {
                 "sandSnakestone", 2784), "Chisel:snakestone/sandsnake/")
                 .setUnlocalizedName("chisel.sandSnakestone");
         blockSandstoneScribbles = (BlockMarble) new BlockMarble(
-                "chisel.sandstoneScribbles", 2780).setStepSound(
+                "sandstoneScribbles", 2780).setStepSound(
                 Block.soundStoneFootstep).setHardness(0.8F);
         blockConcrete = (BlockConcrete) new BlockConcrete("chisel.concrete", 2781)
                 .setStepSound(Block.soundStoneFootstep).setHardness(0.5F);
@@ -387,16 +390,16 @@ public class Chisel {
         blockFft = (BlockMarble) new BlockMarble("chisel.fft", 2835, Material.rock)
                 .setHardness(2.0F).setResistance(10F);
 
-        blockCarpet = (BlockMarble) new BlockMarble("chisel.carpet", 2836,
+        blockCarpet = (BlockMarble) new BlockMarble("carpet", 2836,
                 Material.cloth).setHardness(2.0F).setResistance(10F)
                 .setStepSound(Block.soundClothFootstep);
         blockCarpetFloor = (BlockMarbleCarpet) new BlockMarbleCarpet(
-                "chisel.carpetFloor", 2844, Material.cloth).setHardness(2.0F)
+                "carpetFloor", 2844, Material.cloth).setHardness(2.0F)
                 .setResistance(10F).setStepSound(Block.soundClothFootstep);
         blockBookshelf = (BlockMarble) new BlockMarbleBookshelf(getBlock(
                 Block.bookShelf, 2837)).setHardness(1.5F).setStepSound(
                 Block.soundWoodFootstep);
-        blockTyrian = (BlockMarble) new BlockMarble("chisel.tyrian", 2838,
+        blockTyrian = (BlockMarble) new BlockMarble("tyrian", 2838,
                 Material.iron).setHardness(5.0F).setResistance(10.0F)
                 .setStepSound(Block.soundMetalFootstep);
         blockDirt = (BlockMarble) new BlockMarble(getBlock(Block.dirt, 2839),
@@ -404,16 +407,16 @@ public class Chisel {
                 Block.soundGravelFootstep);
         blockGrass = (BlockChiselGrass) new BlockChiselGrass(getBlock(Block.grass, 2850)).setHardness(0.5F).setStepSound(
                 Block.soundGravelFootstep);
-        blockTemple = (BlockMarble) new BlockEldritch("chisel.temple", 2840)
+        blockTemple = (BlockMarble) new BlockEldritch("temple", 2840)
                 .setHardness(2.0F).setResistance(10F)
                 .setStepSound(soundTempleFootstep);
-        blockTempleMossy = (BlockMarble) new BlockEldritch("chisel.templeMossy", 2841)
+        blockTempleMossy = (BlockMarble) new BlockEldritch("templeMossy", 2841)
                 .setHardness(2.0F).setResistance(10F)
                 .setStepSound(soundTempleFootstep);
-        blockCloud = (BlockCloud) new BlockCloud("chisel.cloud", 2842)
+        blockCloud = (BlockCloud) new BlockCloud("cloud", 2842)
                 .setHardness(0.2F).setLightOpacity(3)
                 .setStepSound(Block.soundClothFootstep);
-        blockFactory = (BlockMarble) new BlockMarble("chisel.factory", 2843)
+        blockFactory = (BlockMarble) new BlockMarble("factory", 2843)
                 .setHardness(2.0F).setResistance(10F)
                 .setStepSound(soundMetalFootstep);
         addPanes= config.get("general", "Add panes", true,
@@ -428,29 +431,53 @@ public class Chisel {
                     0.3F).setStepSound(Block.soundGlassFootstep);
         }
         makerIceStairs = new BlockMarbleStairsMaker(
-                "chisel.iceStairs", 2824, Block.ice);
+                "iceStairs", 2824, Block.ice);
 
         blockLimestoneSlab = (BlockMarbleSlab) new BlockMarbleSlab(
-                "chisel.blockLimestoneSlab", 2764, 2807, blockLimestone).setHardness(
+                "blockLimestoneSlab", 2764, 2807, blockLimestone).setHardness(
                 2.0F).setResistance(10F);
         makerLimestoneStairs = new BlockMarbleStairsMaker(
-                "chisel.blockLimestoneStairs", 2816, blockLimestone);
+                "blockLimestoneStairs", 2816, blockLimestone);
         blockMarblePillarSlab = (BlockMarbleSlab) new BlockMarbleSlab(
-                "chisel.blockMarblePillarSlab", 2766, 2806, blockMarblePillar)
+                "blockMarblePillarSlab", 2766, 2806, blockMarblePillar)
                 .setHardness(2.0F).setResistance(10F)
                 .setStepSound(Block.soundStoneFootstep);
         makerMarbleStairs = new BlockMarbleStairsMaker(
-                "chisel.blockMarbleStairs", 2808, blockMarble);
+                "blockMarbleStairs", 2808, blockMarble);
         blockMarbleSlab = (BlockMarbleSlab) new BlockMarbleSlab(
-                "chisel.blockMarbleSlab", 2763, 2805, blockMarble).setHardness(2.0F)
+                "blockMarbleSlab", 2763, 2805, blockMarble).setHardness(2.0F)
                 .setResistance(10F);
         blockAutoChisel = (BlockAutoChisel) new BlockAutoChisel(2844)
                 .setHardness(2.0F).setResistance(10F);
+        if(!overrideVanillaBlocks&&oreDic)
+        {
 
+        }
         //paste
         config.save();
         proxy.preInit();
 	}
+
+    static void initOreDict()
+    {
+        //this is all I know of so far that has ore dictionary names from various mods
+        OreDictionary.registerOre("blockCobble",blockCobblestone);
+        OreDictionary.registerOre("glass",blockGlass);
+        OreDictionary.registerOre("sandstone",blockSandstone);
+        OreDictionary.registerOre("blockIron",blockIron);
+        OreDictionary.registerOre("blockGold",blockGold);
+        OreDictionary.registerOre("blockDiamond",blockDiamond);
+        OreDictionary.registerOre("blockGlowstone",blockLightstone);
+        OreDictionary.registerOre("blockLapis",blockLapis);
+        OreDictionary.registerOre("blockEmerald",blockEmerald);
+        OreDictionary.registerOre("stoneMossy",blockCobblestoneMossy);
+        OreDictionary.registerOre("blockIce",blockIce);
+        for(int i=0;i<4;i++)
+            OreDictionary.registerOre("woodPlank",blockPlanks[i]);
+        OreDictionary.registerOre("blockRedstone",blockRedstone);
+    }
+
+
     static BlockMarbleStairsMaker makerMarbleStairs;
     static BlockMarbleStairsMaker makerLimestoneStairs;
     static BlockMarbleStairsMaker makerIceStairs;
@@ -1551,7 +1578,7 @@ public class Chisel {
 		OreDictionary.registerOre("blockCarpet", blockCarpet);
 		Carving.chisel.registerOre("blockCarpet", "blockCarpet");
 
-		blockCarpetFloor.carverHelper.setBlockName("carpetBlock");
+		blockCarpetFloor.carverHelper.setBlockName("blockCarpetFloor");
 		blockCarpetFloor.carverHelper.addVariation("White carpet", 0,
 				"carpet/white");
 		blockCarpetFloor.carverHelper.addVariation("Orange carpet", 1,
@@ -1685,11 +1712,10 @@ public class Chisel {
 		blockDirt.carverHelper.addVariation("Vertical dirt", 11, "dirt/vert");
 		blockDirt.carverHelper.addVariation("Dirt layers", 12, "dirt/layers");
 		blockDirt.carverHelper.addVariation("Crumbling dirt", 13,
-				"dirt/vertical");
+                "dirt/vertical");
 		blockDirt.carverHelper.register(blockDirt, "blockDirt");
 		MinecraftForge.setBlockHarvestLevel(blockDirt, "shovel", 0);
-		OreDictionary.registerOre("blockDirt", blockDirt);
-		Carving.chisel.registerOre("blockDirt", "blockDirt");
+        Carving.chisel.registerOre("blockDirt", "blockDirt");
 		
 
 		blockGrass.carverHelper.addVariation("Grassy Dirt", 0, Block.grass);
@@ -1713,10 +1739,9 @@ public class Chisel {
 		blockGrass.carverHelper.addVariation("Grassy Vertical dirt", 11, "Grass/vert");
 		blockGrass.carverHelper.addVariation("Grassy Dirt layers", 12, "Grass/layers");
 		blockGrass.carverHelper.addVariation("Grassy Crumbling dirt", 13,
-				"Grass/vertical");
+                "Grass/vertical");
 		blockGrass.carverHelper.register(blockGrass, "blockGrass");
 		MinecraftForge.setBlockHarvestLevel(blockGrass, "shovel", 0);
-		OreDictionary.registerOre("blockGrass", blockGrass);
 		Carving.chisel.registerOre("blockGrass", "blockDirt");
 
 		blockTemple.carverHelper.setBlockName("blockTemple");

@@ -50,10 +50,6 @@ public class BlockMarbleTexturedOre extends BlockTexturedOre implements Carvable
 	public CarvableVariation getVariation(int metadata) {
 		return carverHelper.getVariation(metadata);
 	}
-	@Override
-	public String getUnlocalizedName()
-	{
-		return "Chisel"+carverHelper.blockName;
-	}
+
 	
 }

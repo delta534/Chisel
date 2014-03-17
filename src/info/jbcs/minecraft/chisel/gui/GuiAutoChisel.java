@@ -1,5 +1,6 @@
 package info.jbcs.minecraft.chisel.gui;
 
+import codechicken.lib.lang.LangUtil;
 import info.jbcs.minecraft.chisel.tiles.TileEntityAutoChisel;
 import info.jbcs.minecraft.utilities.GeneralClient;
 
@@ -44,16 +45,16 @@ public class GuiAutoChisel extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int j, int i) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		String line="Auto Chisel";
+		String line= LangUtil.translateG("gui.autochisel.name");
 		//		this.drawCenteredString(fontRenderer, isExtended()?"Carve":"Carve blocks",  88, 13, 0x888888);
 		fontRenderer.drawString(line, (xSize-fontRenderer.getStringWidth(line))/2, -6, 0x404040);
-        line="input";
 
-        line="Patterns";
+
+        line=LangUtil.translateG("gui.autochisel.patterns");
         fontRenderer.drawString(line,25,34,0x404040);
-        line="input";
+        line=LangUtil.translateG("gui.autochisel.input");
         fontRenderer.drawString(line,48-fontRenderer.getStringWidth(line),14,0x404040);
-        line="output";
+        line=LangUtil.translateG("gui.autochisel.output");;
         fontRenderer.drawString(line,129,14,0x404040);
         //fontRenderer.drawString(line, 5-fontRenderer.getStringWidth(line) / 2, 13, 0x404040);
 

@@ -1,5 +1,6 @@
 package info.jbcs.minecraft.chisel.modCompat;
 
+import codechicken.lib.lang.LangUtil;
 import codechicken.lib.math.MathHelper;
 import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Rotation;
@@ -62,7 +63,7 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
     @Override
     public String getLocalizedName()
     {
-        return ((Carvable)block()).getVariation(meta()).description;
+        return LangUtil.translateG(((Carvable)block()).getVariation(meta()).description);
     }
 
     @Override

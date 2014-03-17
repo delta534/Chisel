@@ -1,0 +1,24 @@
+1.6.0
+-New Config options
+ -Hardmode had the chisel item takes damage through use and cannot easly destroy chisel blocks.
+ -Options to turn of Connected Textures on a per texture basis.
+ -An option to add the variations to the ore dictionary
+ -An option to turn of vertical connected textures from rotating when placed in a line along the ground.
+ -An option to flip the recipie of the chisel for mod compatiblity
+-Beavior changes to the chisel Item.
+ -Left click will attempt to harvest the block.
+ -Sneak+right click will bring up the Chisel GUI.
+ -Right Clicking on a block that has variations will change the block,
+  based on what was left in the input slot of the chisel gui.
+  If nothing was left in then a varition will be chosen at random.
+  If a block was left in the input slot then it will change to the input slot
+-Native support for Forge MultiPart, with connected textures working with microblocks.
+ Things are not perfect but it does work.
+-New Block: The auto chisel. Place a chisel block in a pattern slot,it will, if a matching block exists in
+ the input slot it will be placed in the output slot changed. It fully supports ISidedInventory and has an
+ internal buffer for input and output. All sides are valid input sides and output sides.
+-New Variation Type- A Grass Variation based on the dirt textures. It only spreads to dirt blocks with the
+ same variation ID for now. It should fully support biome coloring as well.
+-Things I likely forgot.
+-A large number of bug fixes.
+-New bugs.
