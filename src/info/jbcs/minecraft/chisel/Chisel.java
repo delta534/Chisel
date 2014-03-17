@@ -157,6 +157,7 @@ public class Chisel {
 	public static int particlesTickrate;
 	public static boolean blockDescriptions;
      public static  boolean rotateVCTM;
+    public static boolean flipRecipe;
     public static final StepSound soundHolystoneFootstep = new StepSoundEx(
 			"chisel:holystone", "chisel:holystone", "chisel:holystone", 1.0f);
 	public static final StepSound soundTempleFootstep = new StepSoundEx(
@@ -202,6 +203,7 @@ public class Chisel {
 		configExists = configFile.exists();
 		config = new Configuration(configFile);
 		config.load();
+        flipRecipe=config.get("general","Flip Chisel Recipe",false,"Flips the Recipie for mod compatiblity").getBoolean(false);
         oreDic=config.get("General","Add to ore dictionary",true,
                 "Adds the variations of vanilla blocks to the ore dictionary if possible").getBoolean(true);
         hardMode= config.get("General", "Hardmode", false,
@@ -449,10 +451,16 @@ public class Chisel {
                 .setResistance(10F);
         blockAutoChisel = (BlockAutoChisel) new BlockAutoChisel(2844)
                 .setHardness(2.0F).setResistance(10F);
-        if(!overrideVanillaBlocks&&oreDic)
+        if(oreDic)
         {
-
+            initOreDict();
         }
+
+        GameRegistry.registerItem(itemCloudInABottle,"CloudInABottle","chisel");
+        GameRegistry.registerItem(chisel,"ItemChisel","chisel");
+        GameRegistry.registerItem(itemBallOMoss,"BallOMoss","chisel");
+        if(dropIceShards)
+            GameRegistry.registerItem(itemIceshard,"IceShard","chisel");
         //paste
         config.save();
         proxy.preInit();
@@ -461,20 +469,20 @@ public class Chisel {
     static void initOreDict()
     {
         //this is all I know of so far that has ore dictionary names from various mods
-        OreDictionary.registerOre("blockCobble",blockCobblestone);
-        OreDictionary.registerOre("glass",blockGlass);
-        OreDictionary.registerOre("sandstone",blockSandstone);
-        OreDictionary.registerOre("blockIron",blockIron);
-        OreDictionary.registerOre("blockGold",blockGold);
-        OreDictionary.registerOre("blockDiamond",blockDiamond);
-        OreDictionary.registerOre("blockGlowstone",blockLightstone);
-        OreDictionary.registerOre("blockLapis",blockLapis);
-        OreDictionary.registerOre("blockEmerald",blockEmerald);
-        OreDictionary.registerOre("stoneMossy",blockCobblestoneMossy);
-        OreDictionary.registerOre("blockIce",blockIce);
+        OreDictionary.registerOre("cobblestone",new ItemStack(blockCobblestone,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("glass",new ItemStack(blockGlass,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("sandstone",new ItemStack(blockSandstone,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("blockIron",new ItemStack(blockIron,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("blockGold",new ItemStack(blockGold,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("blockDiamond",new ItemStack(blockDiamond,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("blockGlowstone",new ItemStack(blockLightstone,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("blockLapis",new ItemStack(blockLapis,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("blockEmerald",new ItemStack(blockEmerald,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("stoneMossy",new ItemStack(blockCobblestoneMossy,0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("blockIce",new ItemStack(blockIce,0,OreDictionary.WILDCARD_VALUE));
         for(int i=0;i<4;i++)
-            OreDictionary.registerOre("woodPlank",blockPlanks[i]);
-        OreDictionary.registerOre("blockRedstone",blockRedstone);
+            OreDictionary.registerOre("plankWood",new ItemStack(blockPlanks[i],0,OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("blockRedstone",new ItemStack(blockRedstone,0,OreDictionary.WILDCARD_VALUE));
     }
 
 
@@ -527,11 +535,6 @@ public class Chisel {
 
 
 
-        GameRegistry.registerItem(itemCloudInABottle,"CloudInABottle","chisel");
-        GameRegistry.registerItem(chisel,"ItemChisel","chisel");
-        GameRegistry.registerItem(itemBallOMoss,"BallOMoss","chisel");
-        if(dropIceShards)
-            GameRegistry.registerItem(itemIceshard,"IceShard","chisel");
 
         if (dropIceShards) {
 
@@ -2246,95 +2249,95 @@ public class Chisel {
 								.getString(), Block.gravel).blockID,
 								new ItemStack(blockConcrete), 0.1F);
 
-		CraftingManager.getInstance()
-		.addRecipe(
-				new ItemStack(blockSandstoneScribbles, 1),
-				new Object[] { "X", 'X',
-					new ItemStack(blockSandstone, 1, 8), });
+		GameRegistry.addRecipe(new ShapedOreRecipe(blockSandstoneScribbles, "X", 'X',
+                Block.sandStone));
+
+
 		for (int meta = 0; meta < 16; meta++) {
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockMarbleSlab, 6, 0),
-					new Object[] { "***", '*',
-						new ItemStack(blockMarble, 1, meta) });
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockLimestoneSlab, 6, 0),
-					new Object[] { "***", '*',
-						new ItemStack(blockLimestone, 1, meta) });
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockMarblePillarSlab, 6, 0),
-					new Object[] { "***", '*',
-						new ItemStack(blockMarblePillar, 1, meta) });
+            GameRegistry.addRecipe(
+                    new ItemStack(blockMarbleSlab, 6, 0),
+                    new Object[]{"***", '*',
+                            new ItemStack(blockMarble, 1, meta)});
+            GameRegistry.addRecipe(
+                    new ItemStack(blockLimestoneSlab, 6, 0),
+                    new Object[]{"***", '*',
+                            new ItemStack(blockLimestone, 1, meta)});
+            GameRegistry.addRecipe(
+                    new ItemStack(blockMarblePillarSlab, 6, 0),
+                    new Object[]{"***", '*',
+                            new ItemStack(blockMarblePillar, 1, meta)});
 
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockMarblePillar, 6),
-					new Object[] { "XX", "XX", "XX", 'X',
-						new ItemStack(blockMarble, 1, meta), });
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockMarble, 4),
-					new Object[] { "XX", "XX", 'X',
-						new ItemStack(blockMarblePillar, 1, meta), });
+            GameRegistry.addRecipe(
+                    new ItemStack(blockMarblePillar, 6),
+                    new Object[]{"XX", "XX", "XX", 'X',
+                            new ItemStack(blockMarble, 1, meta),});
+            GameRegistry.addRecipe(
+                    new ItemStack(blockMarble, 4),
+                    new Object[]{"XX", "XX", 'X',
+                            new ItemStack(blockMarblePillar, 1, meta),});
 
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockIcePillar, 6),
-					new Object[] { "XX", "XX", "XX", 'X',
-						new ItemStack(blockIce, 1, meta), });
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockIce, 4),
-					new Object[] { "XX", "XX", 'X',
-						new ItemStack(blockIcePillar, 1, meta), });
+            GameRegistry.addRecipe(
+                    new ItemStack(blockIcePillar, 6),
+                    new Object[]{"XX", "XX", "XX", 'X',
+                            new ItemStack(blockIce, 1, meta),});
+            GameRegistry.addRecipe(
+                    new ItemStack(blockIce, 4),
+                    new Object[]{"XX", "XX", 'X',
+                            new ItemStack(blockIcePillar, 1, meta),});
 
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockSandstone, 1),
-					new Object[] { "X", 'X',
-						new ItemStack(blockSandstoneScribbles, 1, meta), });
+            GameRegistry.addRecipe(
+                    new ItemStack(blockSandstone, 1),
+                    new Object[]{"X", 'X',
+                            new ItemStack(blockSandstoneScribbles, 1, meta),});
 
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockCarpet, 8, meta),
-					new Object[] { "YYY", "YXY", "YYY", 'X',
-						new ItemStack(Item.silk, 1), 'Y',
-						new ItemStack(Block.cloth, 1, meta), });
-			CraftingManager.getInstance().addRecipe(
-					new ItemStack(blockCarpetFloor, 3, meta),
-					new Object[] { "XX", 'X',
-						new ItemStack(blockCarpet, 1, meta), });
+            GameRegistry.addRecipe(
+                    new ItemStack(blockCarpet, 8, meta),
+                    new Object[]{"YYY", "YXY", "YYY", 'X',
+                            new ItemStack(Item.silk, 1), 'Y',
+                            new ItemStack(Block.cloth, 1, meta),});
+            GameRegistry.addRecipe(
+                    new ItemStack(blockCarpetFloor, 3, meta),
+                    new Object[]{"XX", 'X',
+                            new ItemStack(blockCarpet, 1, meta),});
 		}
 
-		CraftingManager.getInstance().addRecipe(
-				new ItemStack(blockHolystone, 8, 0),
-				new Object[] { "***", "*X*", "***", '*',
-					new ItemStack(Block.stone, 1), 'X',
-					new ItemStack(Item.feather, 1) });
-		CraftingManager.getInstance().addRecipe(
-				new ItemStack(blockLavastone, 8, 0),
-				new Object[] { "***", "*X*", "***", '*',
-					new ItemStack(Block.stone, 1), 'X',
-					new ItemStack(Item.bucketLava, 1) });
-		CraftingManager.getInstance().addRecipe(
-				new ItemStack(blockFft, 8, 0),
-				new Object[] { "***", "*X*", "***", '*',
-					new ItemStack(Block.stone, 1), 'X',
-					new ItemStack(Item.goldNugget, 1) });
-		CraftingManager.getInstance().addRecipe(
-				new ItemStack(blockTyrian, 8, 0),
-				new Object[] { "***", "*X*", "***", '*',
-					new ItemStack(Block.stone, 1), 'X',
-					new ItemStack(Item.ingotIron, 1) });
-		CraftingManager.getInstance().addRecipe(
-				new ItemStack(blockTemple, 8, 0),
-				new Object[] { "***", "*X*", "***", '*',
-					new ItemStack(Block.stone, 1), 'X',
-					new ItemStack(Item.dyePowder, 1, 4) });
-		CraftingManager.getInstance().addRecipe(
-				new ItemStack(blockFactory, 32, 0),
-				new Object[] { "*X*", "X X", "*X*", '*',
-					new ItemStack(Block.stone, 1), 'X',
-					new ItemStack(Item.ingotIron, 1) });
+        GameRegistry.addRecipe(  new ShapedOreRecipe(
+                new ItemStack(blockHolystone, 8, 0),
+                "***", "*X*", "***", '*',
+                new ItemStack(Block.stone, 1), 'X',
+                        new ItemStack(Item.feather, 1)));
+        GameRegistry.addRecipe( new ShapedOreRecipe(
+                new ItemStack(blockLavastone, 8, 0),
+                "***", "*X*", "***", '*',
+                new ItemStack(Block.stone, 1), 'X',
+                        new ItemStack(Item.bucketLava, 1)));
+        GameRegistry.addRecipe( new ShapedOreRecipe(
+                new ItemStack(blockFft, 8, 0),
+                "***", "*X*", "***", '*',
+                new ItemStack(Block.stone, 1), 'X',
+                        new ItemStack(Item.goldNugget, 1)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(
+                new ItemStack(blockTyrian, 8, 0),
+                "***", "*X*", "***", '*',
+                new ItemStack(Block.stone, 1), 'X',
+                new ItemStack(Item.ingotIron, 1)));
+        GameRegistry.addRecipe( new ShapedOreRecipe(
+                new ItemStack(blockTemple, 8, 0),
+                "***", "*X*", "***", '*',
+                        new ItemStack(Block.stone, 1), 'X',
+                        new ItemStack(Item.dyePowder, 1, 4)));
+        GameRegistry.addRecipe(    new ShapedOreRecipe(
+                new ItemStack(blockFactory, 32, 0),
+                "*X*", "X X", "*X*", '*',
+                new ItemStack(Block.stone, 1), 'X',
+                        new ItemStack(Item.ingotIron, 1)));
 
 		GameRegistry.addRecipe(new ShapedOreRecipe(blockAutoChisel, false,
 				new Object[] { "XXX", "X*X", "XrX", '*',
 				new ItemStack(chisel, 1), 'X', "plankWood", 'r',
 				Item.redstone }));
-
+        if(!flipRecipe)
+        {
 		if (config.get("general", "Alternative recipe", false,
 				"Use alternative crafting recipe for the chisel").getBoolean(
 						false)) {
@@ -2347,46 +2350,65 @@ public class Chisel {
 						new Object[] { " Y", "X ", 'X', "stickWood", 'Y',
 						Item.ingotIron }));
 		}
+        }
+        else
+        {
+            if (config.get("general", "Alternative recipe", false,
+                    "Use alternative crafting recipe for the chisel").getBoolean(
+                    false)) {
+                GameRegistry.addRecipe(new ShapedOreRecipe(chisel, true,
+                        new Object[] { "YY ", "YY ", "  X", 'X', "stickWood", 'Y',
+                                Item.ingotIron }));
 
-		CraftingManager.getInstance().addRecipe(
-				new ItemStack(itemBallOMoss, 1),
-				new Object[] { "XYX", "YXY", "XYX", 'X', Block.vine, 'Y',
-					Item.stick });
-		CraftingManager.getInstance().addRecipe(
-				new ItemStack(itemCloudInABottle, 1),
-				new Object[] { "X X", "XYX", " X ", 'X', Block.glass, 'Y',
-					Item.netherQuartz });
+            } else {
+                GameRegistry.addRecipe(new ShapedOreRecipe(chisel, true,
+                        new Object[] { "Y  ", "  X", 'X', "stickWood", 'Y',
+                                Item.ingotIron }));
+            }
+        }
+
+        GameRegistry.addRecipe(
+                new ItemStack(itemBallOMoss, 1),
+                new Object[]{"XYX", "YXY", "XYX", 'X', Block.vine, 'Y',
+                        Item.stick});
+        GameRegistry.addRecipe(
+                new ItemStack(itemCloudInABottle, 1),
+                new Object[]{"X X", "XYX", " X ", 'X', Block.glass, 'Y',
+                        Item.netherQuartz});
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockRoadLine, 16, 0),
+                "XY ", "   ", "   ", 'X', "blockConcrete", 'Y',
+                Item.netherQuartz));
 
 		NetworkRegistry.instance().registerGuiHandler(this, new IGuiHandler() {
-			@Override
-			public Object getServerGuiElement(int ID, EntityPlayer player,
-					World world, int x, int y, int z) {
-				if (ID == 1) {
-					TileEntity te = world.getBlockTileEntity(x, y, z);
-					if (te instanceof TileEntityAutoChisel)
-						return new ContainerAutoChisel(
-								(TileEntityAutoChisel) te, player.inventory);
+            @Override
+            public Object getServerGuiElement(int ID, EntityPlayer player,
+                                              World world, int x, int y, int z) {
+                if (ID == 1) {
+                    TileEntity te = world.getBlockTileEntity(x, y, z);
+                    if (te instanceof TileEntityAutoChisel)
+                        return new ContainerAutoChisel(
+                                (TileEntityAutoChisel) te, player.inventory);
 
-				}
-				return new ContainerChisel(player.inventory,
-						new InventoryChiselSelection(null));
-			}
+                }
+                return new ContainerChisel(player.inventory,
+                        new InventoryChiselSelection(null));
+            }
 
-			@Override
-			public Object getClientGuiElement(int ID, EntityPlayer player,
-					World world, int x, int y, int z) {
-				if (ID == 1) {
-					TileEntity te = world.getBlockTileEntity(x, y, z);
-					if (te instanceof TileEntityAutoChisel)
-						;
-					return new GuiAutoChisel(player.inventory,
-							(TileEntityAutoChisel) te);
+            @Override
+            public Object getClientGuiElement(int ID, EntityPlayer player,
+                                              World world, int x, int y, int z) {
+                if (ID == 1) {
+                    TileEntity te = world.getBlockTileEntity(x, y, z);
+                    if (te instanceof TileEntityAutoChisel)
+                        ;
+                    return new GuiAutoChisel(player.inventory,
+                            (TileEntityAutoChisel) te);
 
-				}
-				return new GuiChisel(player.inventory,
-						new InventoryChiselSelection(null));
-			}
-		});
+                }
+                return new GuiChisel(player.inventory,
+                        new InventoryChiselSelection(null));
+            }
+        });
 
 		GameRegistry
 		.registerWorldGenerator(new MarbleWorldGenerator(
@@ -2397,11 +2419,11 @@ public class Chisel {
 						.getInt(8)));
 		GameRegistry
 		.registerWorldGenerator(new MarbleWorldGenerator(
-				blockLimestone.blockID,
-				32,
-				config.get("general", "Worldgen limestone amount", 4,
-						"Amount of limestone to generate in the world; use 0 for none")
-						.getInt(4)));
+                blockLimestone.blockID,
+                32,
+                config.get("general", "Worldgen limestone amount", 4,
+                        "Amount of limestone to generate in the world; use 0 for none")
+                        .getInt(4)));
 
 		Packets.chiseled.create();
 		PacketHandler.register(this);

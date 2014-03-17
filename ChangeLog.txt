@@ -19,6 +19,7 @@
  internal buffer for input and output. All sides are valid input sides and output sides.
 -New Variation Type- A Grass Variation based on the dirt textures. It only spreads to dirt blocks with the
  same variation ID for now. It should fully support biome coloring as well.
+-Localization support.
 -Things I likely forgot.
 -A large number of bug fixes.
 -New bugs.
