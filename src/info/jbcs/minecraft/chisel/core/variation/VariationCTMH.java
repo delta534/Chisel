@@ -5,6 +5,8 @@ import codechicken.lib.render.Vertex5;
 import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Vector3;
 import com.sun.swing.internal.plaf.metal.resources.metal_it;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
 import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
@@ -22,14 +24,14 @@ public class VariationCTMH extends CarvableVariation {
         extention="-ctmh";
 
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public Icon getIcon(int side) {
         if (side<2)
             return super.getIcon(side);
         return seamsCtmVert.icons[0];
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public void setup(Vertex5[] verts, int side, Vector3 pos, IBlockAccess world, Cuboid6 bounds) {
         super.setup(verts, side, pos, world, bounds);
@@ -37,6 +39,7 @@ public class VariationCTMH extends CarvableVariation {
 
     }
     double ucoor=0;
+    @SideOnly(Side.CLIENT)
     @Override
     public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
         ucoor=0;
@@ -103,7 +106,7 @@ public class VariationCTMH extends CarvableVariation {
         }
         return seamsCtmVert.icons[0];
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerIcon(String modName, Block block, IconRegister register) {
         seamsCtmVert = new TextureSubmap(
@@ -112,6 +115,7 @@ public class VariationCTMH extends CarvableVariation {
         icon = getIconResource(modName + ":"
                 + texture + "-top",register);
     }
+    @SideOnly(Side.CLIENT)
     @Override
     public Icon getIndexedIcon(int index) {
         if(index>=4) return icon;

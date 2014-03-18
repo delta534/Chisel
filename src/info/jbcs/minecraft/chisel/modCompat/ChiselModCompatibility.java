@@ -174,7 +174,7 @@ public class ChiselModCompatibility {
 					{
 						Carvable pl=(Carvable)bl;
 						List<ItemStack> list=new LinkedList<ItemStack>();
-						bl.getSubBlocks(0, null, list);
+                        pl.getHelper().registerSubBlocks(bl,null,list);
 						for(ItemStack is:list)
 						{
 							String s=bl.getUnlocalizedName()+"_"+Integer.toString(is.getItemDamage());

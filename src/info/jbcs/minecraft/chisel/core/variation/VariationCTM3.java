@@ -1,5 +1,7 @@
 package info.jbcs.minecraft.chisel.core.variation;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
 import info.jbcs.minecraft.chisel.render.CTM;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
@@ -14,7 +16,7 @@ public class VariationCTM3 extends CarvableVariation {
     {
         seams= new TextureSubmap[3];
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
         int tex = CTM.getTexture(world, x, y, z, side);
@@ -24,12 +26,12 @@ public class VariationCTM3 extends CarvableVariation {
 
         return seams[col].icons[row];
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public Icon getIcon(int side) {
         return seams[0].icons[0];
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerIcon(String modName, Block block, IconRegister register) {
         seams[0] = new TextureSubmap(getIconResource(modName

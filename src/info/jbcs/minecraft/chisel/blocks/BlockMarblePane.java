@@ -58,5 +58,8 @@ public class BlockMarblePane extends BlockPane implements Carvable {
 		return carverHelper.getVariation(metadata);
 	}
 
-	
+    @Override
+    public CarvableHelper getHelper() {
+        return carverHelper;
+    }
 }

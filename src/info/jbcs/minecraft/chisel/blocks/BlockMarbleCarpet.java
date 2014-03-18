@@ -62,6 +62,9 @@ public class BlockMarbleCarpet extends BlockCarpet implements Carvable {
 		return carverHelper.getVariation(metadata);
 	}
 
-	
+    @Override
+    public CarvableHelper getHelper() {
+        return carverHelper;
+    }
 
 }

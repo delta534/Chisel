@@ -1723,26 +1723,26 @@ public class Chisel {
 
 		blockGrass.carverHelper.addVariation("Grassy Dirt", 0, Block.grass);
 		blockGrass.carverHelper.addVariation("Grassy Dirt bricks in disarray", 1,
-				"Grass/bricks");
+				"grass/bricks");
 		blockGrass.carverHelper.addVariation(
 				"Grassy Dirt bricks imitating nether brick design", 2,
-				"Grass/netherbricks");
-		blockGrass.carverHelper.addVariation("Grassy Dirt bricks", 3, "Grass/bricks3");
-		blockGrass.carverHelper.addVariation("Grassy Cobbledirt", 4, "Grass/cobble");
+				"grass/netherbricks");
+		blockGrass.carverHelper.addVariation("Grassy Dirt bricks", 3, "grass/bricks3");
+		blockGrass.carverHelper.addVariation("Grassy Cobbledirt", 4, "grass/cobble");
 		blockGrass.carverHelper.addVariation("Grassy Reinforced cobbledirt", 5,
-				"Grass/reinforced");
+				"grass/reinforced");
 		blockGrass.carverHelper.addVariation("Grassy Reinforced dirt", 6,
-				"Grass/dirt-reinforced");
-		blockGrass.carverHelper.addVariation("Grassy Happy dirt", 7, "Grass/happy");
+				"grass/dirt-reinforced");
+		blockGrass.carverHelper.addVariation("Grassy Happy dirt", 7, "grass/happy");
 		blockGrass.carverHelper.addVariation("Grassy Large dirt bricks", 8,
-				"Grass/bricks2");
+				"grass/bricks2");
 		blockGrass.carverHelper.addVariation("Grassy Large dirt bricks on top of dirt",
-				9, "Grass/bricks+dirt2");
-		blockGrass.carverHelper.addVariation("Grassy Horizontal dirt", 10, "Grass/hor");
-		blockGrass.carverHelper.addVariation("Grassy Vertical dirt", 11, "Grass/vert");
-		blockGrass.carverHelper.addVariation("Grassy Dirt layers", 12, "Grass/layers");
+				9, "grass/bricks+dirt2");
+		blockGrass.carverHelper.addVariation("Grassy Horizontal dirt", 10, "grass/hor");
+		blockGrass.carverHelper.addVariation("Grassy Vertical dirt", 11, "grass/vert");
+		blockGrass.carverHelper.addVariation("Grassy Dirt layers", 12, "grass/layers");
 		blockGrass.carverHelper.addVariation("Grassy Crumbling dirt", 13,
-                "Grass/vertical");
+                "grass/vertical");
 		blockGrass.carverHelper.register(blockGrass, "blockGrass");
 		MinecraftForge.setBlockHarvestLevel(blockGrass, "shovel", 0);
 		Carving.chisel.registerOre("blockGrass", "blockDirt");

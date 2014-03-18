@@ -71,6 +71,9 @@ public class BlockGlassCarvable extends BlockGlass implements Carvable {
     {
         return true;
     }
-
+    @Override
+    public CarvableHelper getHelper() {
+        return carverHelper;
+    }
 
 }

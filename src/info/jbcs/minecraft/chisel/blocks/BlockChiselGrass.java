@@ -125,4 +125,8 @@ public class BlockChiselGrass extends BlockGrass implements Carvable{
     public int getRenderColor(int par1) {
         return grass.getRenderColor(par1);
     }
+    @Override
+    public CarvableHelper getHelper() {
+        return carverHelper;
+    }
 }

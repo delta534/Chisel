@@ -4,11 +4,12 @@ package info.jbcs.minecraft.chisel.core.variation;
 import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Rotation;
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
 import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
 import info.jbcs.minecraft.chisel.util.Subdivider;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
@@ -21,20 +22,14 @@ import codechicken.lib.render.Vertex5;
 import codechicken.lib.vec.Vector3;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
 import info.jbcs.minecraft.chisel.render.CTM;
-import info.jbcs.minecraft.chisel.render.RenderBlocksCTM;
-
-import java.util.Vector;
 
 public class VariationCTMX extends CarvableVariation {
-
-    public RenderBlocksCTM temp = new RenderBlocksCTM();
-
-
     public TextureSubmap submap;
     public TextureSubmap submapSmall;
     private Vector3 loc;
     private IBlockAccess w;    private int side;
     int region;
+    @SideOnly(Side.CLIENT)
     void bindIcon(int side, int index) {
 
         if(useCTM&&w!=null)
@@ -50,6 +45,7 @@ public class VariationCTMX extends CarvableVariation {
     }
     final static Vector3[] filters={new Vector3(1,0,1),new Vector3(1,1,0),new Vector3(0,1,1)};
     final static Vector3[] filters2={new Vector3(0,1,0),new Vector3(0,0,1),new Vector3(1,0,0)};
+    @SideOnly(Side.CLIENT)
     @Override
     public boolean renderSide(Vertex5[] verts, int side, Vector3 pos,
                               LightMatrix lightMatrix,int color,Cuboid6 bounds) {
@@ -84,7 +80,7 @@ public class VariationCTMX extends CarvableVariation {
 
     }
 
-
+    @SideOnly(Side.CLIENT)
     @Override
     public void setup(Vertex5[] verts, int side, Vector3 pos,
                       IBlockAccess world,Cuboid6 bounds) {
@@ -94,7 +90,7 @@ public class VariationCTMX extends CarvableVariation {
         this.side=side;
 
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public void transform(UV uv) {
         bindIcon(side,region);
@@ -109,7 +105,7 @@ public class VariationCTMX extends CarvableVariation {
     public String toString() {
         return this.blockName+":"+Integer.toString(this.blockMeta);
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerIcon(String modName, Block block, IconRegister register) {
         icon = getIconResource(modName + ":"

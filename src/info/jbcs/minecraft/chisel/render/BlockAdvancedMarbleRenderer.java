@@ -40,9 +40,6 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
         if(Chisel.RenderCTMId==0){
             Chisel.RenderCTMId = RenderingRegistry.getNextAvailableRenderId();
         }
-        test=new VariationCTMX();
-        test.temp=rendererCTM;
-        test.temp.resetVertices();
         model=CCModel.quadModel(24);
 
     }

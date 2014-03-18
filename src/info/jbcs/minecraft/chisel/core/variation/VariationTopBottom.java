@@ -1,6 +1,8 @@
 package info.jbcs.minecraft.chisel.core.variation;
 
 import codechicken.lib.render.UV;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPane;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -14,7 +16,7 @@ public class VariationTopBottom extends  VariationTop {
             return iconBot;
         return super.getIcon(side);
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerIcon(String modName, Block block_, IconRegister register) {
 

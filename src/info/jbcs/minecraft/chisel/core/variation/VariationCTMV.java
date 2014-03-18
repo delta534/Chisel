@@ -5,6 +5,8 @@ import codechicken.lib.render.UV;
 import codechicken.lib.render.Vertex5;
 import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Vector3;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.render.Util;
 import info.jbcs.minecraft.chisel.render.Util.RotationData;
@@ -28,7 +30,7 @@ public class VariationCTMV extends VariationCTMH {
         extention="-ctmv";
         boundIcon=icon;
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public Icon getIcon(int side) {
         if(side%6 <2)
@@ -44,11 +46,12 @@ public class VariationCTMV extends VariationCTMH {
     public boolean isBottom(int side) {
         return side==bottomIndex;
     }
+
     @Override
     public boolean isSide(int side) {
         return side!=topIndex&&side!=bottomIndex;
     }
-
+    @SideOnly(Side.CLIENT)
     @Override
     public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
         if (side < 2)
@@ -68,6 +71,7 @@ public class VariationCTMV extends VariationCTMH {
     }
     double ucorr=0;
     double vcorr=0;
+    @SideOnly(Side.CLIENT)
     @Override
     public void setup(Vertex5[] verts, int side, Vector3 pos,
                       IBlockAccess world,Cuboid6 bounds)

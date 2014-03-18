@@ -10,6 +10,8 @@ import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Rotation;
 import codechicken.lib.vec.Translation;
 import codechicken.lib.vec.Vector3;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
 import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
 import info.jbcs.minecraft.chisel.util.proxyWorld;
@@ -49,6 +51,7 @@ public class CarvableVariation implements IUVTransformation {
     boolean []adj=new boolean[6];
     final public Vector3 axis=new Vector3();
     final public Vector3 midpoint=new Vector3();
+    @SideOnly(Side.CLIENT)
 	public void setup(Vertex5[] verts, int side, Vector3 pos,IBlockAccess world,Cuboid6 bounds)
 	{
         if(world!=null)
@@ -73,16 +76,18 @@ public class CarvableVariation implements IUVTransformation {
         return side==0;
     }
 
-
+    @SideOnly(Side.CLIENT)
 	public Icon getIcon(int side)
 	{
 		return icon;
 	}
+    @SideOnly(Side.CLIENT)
 	public void transform(UV uv)
 	{
 		uv.u=boundIcon.getInterpolatedU(uv.u%2*16);
 		uv.v=boundIcon.getInterpolatedV(uv.v%2*16);
 	}
+    @SideOnly(Side.CLIENT)
 	public boolean renderSide(Vertex5[] verts, int side, Vector3 pos,
 			LightMatrix lightMatrix,int color,Cuboid6 bounds)
 	{
@@ -114,12 +119,13 @@ public class CarvableVariation implements IUVTransformation {
 		}
 		return true;
 	}
+    @SideOnly(Side.CLIENT)
 	public Icon getBlockTexture(IBlockAccess world,int x,int y,int z, int side)
     {
         return  getIcon(side);
     }
 
-
+    @SideOnly(Side.CLIENT)
      public void registerIcon(String modName, Block block_,
                               IconRegister register)
      {
@@ -131,10 +137,12 @@ public class CarvableVariation implements IUVTransformation {
          icon = getIconResource(modName + ":"
                  + texture,register);
      }
+    @SideOnly(Side.CLIENT)
     public Icon getIconResource(String resource,IconRegister registry)
     {
         return registry.registerIcon(resource);
     }
+    @SideOnly(Side.CLIENT)
     public Icon getIndexedIcon(int index)
     {
          return  icon;
