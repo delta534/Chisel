@@ -1,23 +1,15 @@
 package info.jbcs.minecraft.chisel.modCompat;
 
+import codechicken.lib.render.UV;
 import info.jbcs.minecraft.chisel.blocks.BlockMarblePillar;
 import info.jbcs.minecraft.chisel.render.BlockMarblePillarRenderer;
 import info.jbcs.minecraft.chisel.render.Util;
-
-import java.util.HashMap;
-
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.Icon;
-import codechicken.lib.render.IUVTransformation;
-import codechicken.lib.render.UV;
-import codechicken.lib.render.Vertex5;
-import codechicken.microblock.IMicroMaterialRender;
 
 public class BlockPillarUVTransform extends DelayedIcons {
 
-    Icon []icons;
+    Icon[] icons;
     int side;
     int rotation;
     static Util.RotationData dummy = new Util.RotationData();
@@ -44,24 +36,24 @@ public class BlockPillarUVTransform extends DelayedIcons {
                     (BlockMarblePillar) block, block.blockID, metadata,
                     part.world(), part.x(), part.y(), part.z());
             switch (side % 6) {
-            case 0:
-                rotation =dummy.rotateYNeg;// good
-                break;
-            case 1:
-                rotation =dummy.rotateYPos;// good
-                break;
-            case 2:
-                rotation =dummy.rotateZNeg;// good
-                break;
-            case 3:
-                rotation =dummy.rotateZPos;// good
-                break;
-            case 4:
-                rotation =dummy.rotateXNeg;// good
-                break;
-            case 5:
-                rotation =dummy.rotateXPos;// good
-                break;
+                case 0:
+                    rotation = dummy.rotateYNeg;// good
+                    break;
+                case 1:
+                    rotation = dummy.rotateYPos;// good
+                    break;
+                case 2:
+                    rotation = dummy.rotateZNeg;// good
+                    break;
+                case 3:
+                    rotation = dummy.rotateZPos;// good
+                    break;
+                case 4:
+                    rotation = dummy.rotateXNeg;// good
+                    break;
+                case 5:
+                    rotation = dummy.rotateXPos;// good
+                    break;
 
             }
         }

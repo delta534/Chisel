@@ -1,43 +1,41 @@
 package info.jbcs.minecraft.chisel.render;
 
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.utilities.Drawing;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
-
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-
 public class BlockEldritchRenderer implements ISimpleBlockRenderingHandler {
-	public BlockEldritchRenderer() {
-		Chisel.RenderEldritchId = RenderingRegistry.getNextAvailableRenderId();
-	}
-	
-	@Override
-	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		Drawing.drawBlock(block, metadata, renderer);	
-        GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-	}
+    public BlockEldritchRenderer() {
+        Chisel.RenderEldritchId = RenderingRegistry.getNextAvailableRenderId();
+    }
 
-    
-    RenderBlocksEldritch renderer=new RenderBlocksEldritch();
-  	
-	@Override
-	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks rendererOld) {
+    @Override
+    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+        Drawing.drawBlock(block, metadata, renderer);
+        GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+    }
+
+
+    RenderBlocksEldritch renderer = new RenderBlocksEldritch();
+
+    @Override
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks rendererOld) {
         int meta = world.getBlockMetadata(x, y, z);
-        
+
 //        tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
 /*
         double d0 = 0.4000000059604645D;
         double d1 = 0.5D - d0;
         double d2 = 0.20000000298023224D;
 
- */       
- //       renderer.renderTorchAtAngle(Block.torchWood, x - d1, y + d2, z, -d0, 0.0D, 0);
+ */
+        //       renderer.renderTorchAtAngle(Block.torchWood, x - d1, y + d2, z, -d0, 0.0D, 0);
 /*
         Icon icon = block.getIcon(2, meta);
         double u0 = icon.getMinU();
@@ -82,28 +80,28 @@ public class BlockEldritchRenderer implements ISimpleBlockRenderingHandler {
         
         */
 
-        renderer.blockAccess=world;
-        renderer.renderMaxX=1.0;
-        renderer.renderMaxY=1.0;
-        renderer.renderMaxZ=1.0;
-        renderer.renderStandardBlock(block,x,y,z);
-        
+        renderer.blockAccess = world;
+        renderer.renderMaxX = 1.0;
+        renderer.renderMaxY = 1.0;
+        renderer.renderMaxZ = 1.0;
+        renderer.renderStandardBlock(block, x, y, z);
+
         return true;
 /*
-		
+
 		boolean flag = renderer.renderStandardBlock(block, x, y, z);
 
         return flag;*/
-	}
+    }
 
-	@Override
-	public boolean shouldRender3DInInventory() {
-		return true;
-	}
+    @Override
+    public boolean shouldRender3DInInventory() {
+        return true;
+    }
 
-	@Override
-	public int getRenderId() {
-		return Chisel.RenderEldritchId;
-	}
+    @Override
+    public int getRenderId() {
+        return Chisel.RenderEldritchId;
+    }
 
 }

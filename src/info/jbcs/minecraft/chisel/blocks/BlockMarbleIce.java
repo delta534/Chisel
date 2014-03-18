@@ -4,11 +4,6 @@ import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
-
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockIce;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,7 +14,10 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
-public class BlockMarbleIce extends BlockIce implements Carvable  {
+import java.util.List;
+import java.util.Random;
+
+public class BlockMarbleIce extends BlockIce implements Carvable {
     public CarvableHelper carverHelper;
 
     public BlockMarbleIce(int i) {
@@ -47,7 +45,7 @@ public class BlockMarbleIce extends BlockIce implements Carvable  {
 
     @Override
     public void getSubBlocks(int blockId, CreativeTabs tabs, List list) {
-        carverHelper.registerSubBlocks(this, tabs, list,Chisel.disableOverriding);
+        carverHelper.registerSubBlocks(this, tabs, list, Chisel.disableOverriding);
     }
 
     /**
@@ -57,7 +55,7 @@ public class BlockMarbleIce extends BlockIce implements Carvable  {
      */
     @Override
     public void harvestBlock(World par1World, EntityPlayer par2EntityPlayer, int par3, int par4, int par5, int par6) {
-        if (!Chisel.dropIceShards){
+        if (!Chisel.dropIceShards) {
             super.harvestBlock(par1World, par2EntityPlayer, par3, par4, par5, par6);
             return;
         }
@@ -65,7 +63,7 @@ public class BlockMarbleIce extends BlockIce implements Carvable  {
         par2EntityPlayer.addStat(StatList.mineBlockStatArray[this.blockID], 1);
         par2EntityPlayer.addExhaustion(0.025F);
 
-        if(par1World.isRemote)
+        if (par1World.isRemote)
             return;
 
         if (this.canSilkHarvest(par1World, par2EntityPlayer, par3, par4, par5, par6) && EnchantmentHelper.getSilkTouchModifier(par2EntityPlayer)) {

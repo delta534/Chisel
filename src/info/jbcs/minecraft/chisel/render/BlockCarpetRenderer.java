@@ -1,8 +1,7 @@
 package info.jbcs.minecraft.chisel.render;
 
-import codechicken.lib.vec.Vector3;
-import info.jbcs.minecraft.chisel.Chisel;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import info.jbcs.minecraft.chisel.Chisel;
 
 
 public class BlockCarpetRenderer extends BlockAdvancedMarbleRenderer {
@@ -13,7 +12,6 @@ public class BlockCarpetRenderer extends BlockAdvancedMarbleRenderer {
         Chisel.RenderCarpetId = RenderingRegistry.getNextAvailableRenderId();
 
         rendererCTM = new RenderBlocksCTMCarpet();
-
 
 
     }

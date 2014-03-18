@@ -15,27 +15,29 @@ public class VariationV9 extends CarvableVariation {
     int len;
     String ext;
     int defIndex;
-    public TextureSubmap			variations9;
+    public TextureSubmap variations9;
 
-    public VariationV9(int size_,int defaultIndex)
-    {
-        size=size_;
-        len= MathHelper.floor_double(Math.sqrt(size_));
-        ext=String.format("-v%d",size);
-        defIndex=defaultIndex;
+    public VariationV9(int size_, int defaultIndex) {
+        size = size_;
+        len = MathHelper.floor_double(Math.sqrt(size_));
+        ext = String.format("-v%d", size);
+        defIndex = defaultIndex;
     }
+
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcon(String modName, Block block, IconRegister register) {
         variations9 = new TextureSubmap(
                 getIconResource(modName + ":" + texture
-                        + ext,register), len, len);
+                        + ext, register), len, len);
     }
+
     @SideOnly(Side.CLIENT)
     @Override
     public Icon getIcon(int side) {
         return variations9.icons[defIndex];
     }
+
     @SideOnly(Side.CLIENT)
     @Override
     public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {

@@ -1,8 +1,8 @@
 package info.jbcs.minecraft.chisel.render;
 
-import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.util.Icon;
 
 public class TextureVirtual implements Icon {
     private final int ox;
@@ -13,18 +13,18 @@ public class TextureVirtual implements Icon {
     private final float v1;
     private final String name;
 
-    TextureVirtual(Icon parent, int w, int h, int x, int y){
+    TextureVirtual(Icon parent, int w, int h, int x, int y) {
         Icon icon = parent;
 
-        u0= icon.getInterpolatedU(16.0 * (x) / w);
-        u1= icon.getInterpolatedU(16.0 * (x + 1) / w);
-        v0= icon.getInterpolatedV(16.0 * (y) / h);
-        v1= icon.getInterpolatedV(16.0 * (y + 1) / h);
+        u0 = icon.getInterpolatedU(16.0 * (x) / w);
+        u1 = icon.getInterpolatedU(16.0 * (x + 1) / w);
+        v0 = icon.getInterpolatedV(16.0 * (y) / h);
+        v1 = icon.getInterpolatedV(16.0 * (y + 1) / h);
 
-        name= icon.getIconName()+"|"+x+"."+y;
+        name = icon.getIconName() + "|" + x + "." + y;
 
-        ox= icon.getIconWidth();
-        oy= icon.getIconHeight();
+        ox = icon.getIconWidth();
+        oy = icon.getIconHeight();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class TextureVirtual implements Icon {
     @Override
     @SideOnly(Side.CLIENT)
     public float getInterpolatedU(double d0) {
-        return (float) (u0+(u1-u0)*d0/16.0);
+        return (float) (u0 + (u1 - u0) * d0 / 16.0);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TextureVirtual implements Icon {
     @Override
     @SideOnly(Side.CLIENT)
     public float getInterpolatedV(double d0) {
-        return (float) (v0+(v1-v0)*d0/16.0);
+        return (float) (v0 + (v1 - v0) * d0 / 16.0);
     }
 
     @Override

@@ -1,27 +1,19 @@
 package info.jbcs.minecraft.chisel.core;
 
-import codechicken.lib.lang.LangUtil;
+import cpw.mods.fml.common.registry.GameRegistry;
 import info.jbcs.minecraft.chisel.Chisel;
-import info.jbcs.minecraft.chisel.core.variation.*;
-import info.jbcs.minecraft.chisel.blocks.BlockChiselGrass;
 import info.jbcs.minecraft.chisel.blocks.BlockMarbleSlab;
+import info.jbcs.minecraft.chisel.core.variation.*;
 import info.jbcs.minecraft.chisel.items.ItemCarvable;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarvableHelper {
     static final String modName = "chisel";
@@ -50,25 +42,24 @@ public class CarvableHelper {
     }
 
     public void addVariation(String description, int metadata, Block bb,
-            int blockMeta) {
+                             int blockMeta) {
         addVariation(description, metadata, null, bb, blockMeta);
     }
 
     public void addVariation(String description, int metadata, String texture) {
         addVariation(description, metadata, texture, null, 0);
     }
+
     public void addVariation(String description, int metadata, String texture,
-            Block block, int blockMeta) {
+                             Block block, int blockMeta) {
         if (variations.size() > 15)
             return;
 
-        if (blockName == null && block != null)
-        {
-            String [] str= block.getUnlocalizedName().split("\\.");
-            blockName = str[str.length-1];//getLocalizedName().replaceAll("\\s","");
-        }
-        else if (blockName == null && description != null)
-            blockName = "tile.chisel."+description.toLowerCase().replaceAll("\\s","");
+        if (blockName == null && block != null) {
+            String[] str = block.getUnlocalizedName().split("\\.");
+            blockName = str[str.length - 1];//getLocalizedName().replaceAll("\\s","");
+        } else if (blockName == null && description != null)
+            blockName = "tile.chisel." + description.toLowerCase().replaceAll("\\s", "");
 
         CarvableVariation variation;
 
@@ -90,36 +81,36 @@ public class CarvableHelper {
             boolean v4 = Chisel.class.getResource(path + "-v4.png") != null;
             boolean ctmx = Chisel.class.getResource(path + "-ctm.png") != null;
             if (ctm3) {
-                variation=new VariationCTM3();
+                variation = new VariationCTM3();
                 variation.kind = 3;
                 variation.useCTM = Chisel.getCTMOption(description);
             } else if (ctmh && top) {
-                variation=new VariationCTMH();
+                variation = new VariationCTMH();
                 variation.kind = 5;
                 variation.useCTM = Chisel.getCTMOption(description);
             } else if (ctmv && top) {
-                variation=new VariationCTMV();
+                variation = new VariationCTMV();
                 variation.kind = CTMV;
                 variation.useCTM = Chisel.getCTMOption(description);
 
             } else if (bot && top && side) {
-                variation=new VariationTopBottom();
+                variation = new VariationTopBottom();
                 variation.kind = 2;
             } else if (top && side) {
-                variation=new VariationTop();
+                variation = new VariationTop();
                 variation.kind = 1;
             } else if (v9) {
-                variation=new VariationV9(9,4);
+                variation = new VariationV9(9, 4);
                 variation.kind = V9;
             } else if (v4) {
-                variation=new VariationV9(4,0);
+                variation = new VariationV9(4, 0);
                 variation.kind = V4;
             } else if (any && ctmx) {
-                variation=new VariationCTMX();
+                variation = new VariationCTMX();
                 variation.kind = CTMX;
                 variation.useCTM = Chisel.getCTMOption(description);
             } else if (any) {
-                variation=new CarvableVariation();
+                variation = new CarvableVariation();
                 variation.kind = 0;
             } else {
                 throw new RuntimeException(
@@ -127,10 +118,10 @@ public class CarvableHelper {
                                 + description + "' (" + texture + ")");
             }
             variation.texture = texture;
-            variation.description = ("tile.chisel."+blockName+"."+metadata+".description");
+            variation.description = ("tile.chisel." + blockName + "." + metadata + ".description");
 
         } else {
-            variation =new VariationTopBottom();
+            variation = new VariationTopBottom();
             variation.block = block;
             variation.kind = 2;
             variation.blockMeta = blockMeta;
@@ -160,14 +151,14 @@ public class CarvableHelper {
     }
 
     public void register(Block block, String name, Class cl) {
-        block.setUnlocalizedName("chisel."+blockName);
+        block.setUnlocalizedName("chisel." + blockName);
 
         Item.itemsList[block.blockID] = null;
         GameRegistry.registerBlock(block, cl, name);
 
         if (block instanceof BlockMarbleSlab) {
             BlockMarbleSlab slab = (BlockMarbleSlab) block;
-            slab.top.setUnlocalizedName("chisel."+slab.carverHelper.blockName);
+            slab.top.setUnlocalizedName("chisel." + slab.carverHelper.blockName);
             GameRegistry.registerBlock(slab.top, cl, name + ".top");
         }
 
@@ -196,7 +187,7 @@ public class CarvableHelper {
 
 
     public void registerVariation(String name, CarvableVariation variation,
-            Block block, int blockMeta) {
+                                  Block block, int blockMeta) {
 
 
         if (forbidChiseling)
@@ -216,22 +207,21 @@ public class CarvableHelper {
 
     public void registerIcons(String modName, Block block, IconRegister register) {
         for (CarvableVariation variation : variations) {
-            if(variation.block!=null)
+            if (variation.block != null)
                 variation.block.registerIcons(register);
             variation.registerIcon(modName, block, register);
         }
     }
 
     public void registerSubBlocks(Block block, CreativeTabs tabs, List list) {
-        registerSubBlocks(block, tabs, list,!Chisel.overrideVanillaBlocks);
+        registerSubBlocks(block, tabs, list, !Chisel.overrideVanillaBlocks);
     }
-    public void registerSubBlocks(Block block, CreativeTabs tabs, List list,boolean override)
-    {
-        for (CarvableVariation var:variations)
-        {
-            if(var.block!=null&&override)
+
+    public void registerSubBlocks(Block block, CreativeTabs tabs, List list, boolean override) {
+        for (CarvableVariation var : variations) {
+            if (var.block != null && override)
                 continue;
-            list.add(new ItemStack(block.blockID,1,var.metadata));
+            list.add(new ItemStack(block.blockID, 1, var.metadata));
         }
     }
 
@@ -241,7 +231,6 @@ public class CarvableHelper {
                     tool, level);
         }
     }
-
 
 
     public void setBlockName(String name) {
