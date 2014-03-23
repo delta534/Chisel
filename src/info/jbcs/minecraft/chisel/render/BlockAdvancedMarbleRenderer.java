@@ -103,7 +103,7 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
                 rendererCTM.renderMaxZ = 1.0;
 
 
-                Tessellator.instance.setColorOpaque(255, 255, 255);
+                //Tessellator.instance.setColorOpaque(255, 255, 255);
 
                 for (int i = 0; i < 6; i++) {
 

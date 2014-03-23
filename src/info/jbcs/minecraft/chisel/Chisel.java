@@ -126,6 +126,7 @@ public class Chisel {
     public static boolean blockDescriptions;
     public static boolean rotateVCTM;
     public static boolean flipRecipe;
+    public static boolean grassSpread;
     public static final StepSound soundHolystoneFootstep = new StepSoundEx(
             "chisel:holystone", "chisel:holystone", "chisel:holystone", 1.0f);
     public static final StepSound soundTempleFootstep = new StepSoundEx(
@@ -180,7 +181,8 @@ public class Chisel {
                 "If true,chisels now have limited uses and no longer instantly break chisel blocks").getBoolean(false);
         rotateVCTM = config.get("General", "Rotate vertical connected textures", true,
                 "Set to true to allow vertically connected textures to rotate and connect on the horizonal if connected on the horizontal").getBoolean(true);
-
+        grassSpread = config.get("General", "Chisel Grass Spread", true,
+                "Should Chisel Grass spread to Chisel Dirt").getBoolean(true);
         chisel = (ItemChisel) new ItemChisel(config.getItem("chisel", 7811)
                 .getInt(), Carving.chisel).setTextureName("chisel:chisel")
                 .setUnlocalizedName("chisel.chisel")
@@ -337,7 +339,7 @@ public class Chisel {
             String n = plank_names[i];
             String u = plank_ucnames[i];
 
-            blockPlanks[i] = (BlockMarble) (new BlockMarble("wood." + n,
+            blockPlanks[i] = (BlockMarble) (new BlockMarble(".wood" + n,
                     2777 + i)).setHardness(2.0F).setResistance(5.0F)
                     .setStepSound(Block.soundWoodFootstep).setUnlocalizedName("chisel.wood." + u);
         }
@@ -485,7 +487,7 @@ public class Chisel {
     public void init(FMLInitializationEvent event) {
 
 
-		/* LanguageRegistry.addName(dchisel, "Diamond Chisel"); */
+        /* LanguageRegistry.addName(dchisel, "Diamond Chisel"); */
 
         // needle = (ItemChisel) new
         // ItemChisel(config.getItem("needle",7816).getInt(),Carving.needle).setTextureName("chisel:needle").setUnlocalizedName("needle").setCreativeTab(CreativeTabs.tabTools);
@@ -1334,11 +1336,11 @@ public class Chisel {
                     "axe", 0);
             blockPlanks[i].carverHelper.register(blockPlanks[i], "wood." + n);
             Carving.chisel
-                    .addVariation("wood-" + n, Block.planks.blockID, i, 0);
+                    .addVariation("wood." + n, Block.planks.blockID, i, 0);
             MinecraftForge.setBlockHarvestLevel(Block.planks, i, "chisel", 0);
             MinecraftForge.setBlockHarvestLevel(blockPlanks[i], "axe", 0);
 
-            Carving.chisel.setVariationSound("wood-" + n, "chisel:chisel-wood");
+            Carving.chisel.setVariationSound("wood." + n, "chisel:chisel-wood");
         }
 
         blockObsidian.carverHelper.addVariation("Obsidian", 0, Block.obsidian);

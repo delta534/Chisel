@@ -60,11 +60,11 @@ public class BlockChiselGrass extends BlockGrass implements Carvable {
 
     public void updateTick(World world, int x, int y, int z, Random rand) {
 
-        if (chiselDirt.blockID == Block.dirt.blockID) {
+        if (chiselDirt.blockID == Block.dirt.blockID&&world.getBlockMetadata(x, y, z)==0 ) {
             grass.updateTick(world, x, y, z, rand);
             return;
         }
-        if (!world.isRemote) {
+        if (!world.isRemote&&Chisel.grassSpread) {
             if (world.getBlockLightValue(x, y + 1, z) < 4 && world.getBlockLightOpacity(x, y + 1, z) > 2) {
                 int meta = world.getBlockMetadata(x, y, z);
 
