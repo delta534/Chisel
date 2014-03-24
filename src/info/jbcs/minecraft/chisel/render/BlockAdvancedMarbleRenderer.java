@@ -90,11 +90,10 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
             x = x + 0;
         int meta = world.getBlockMetadata(x, y, z);
         CarvableVariation var = ((Carvable) block).getVariation(meta);
+        CCRenderState.reset();
+        CCRenderState.useModelColours(true);
         pos.set(x, y, z);
         lightmatrix.setPos(world, x, y, z);
-        CCRenderState.reset();
-        Tessellator.instance.setColorOpaque(240,240,240);
-        CCRenderState.pullLightmap();
 
         switch (var == null ? -1 : var.kind) {
             case -1:
@@ -104,10 +103,6 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
                 rendererCTM.renderMaxX = 1.0;
                 rendererCTM.renderMaxY = 1.0;
                 rendererCTM.renderMaxZ = 1.0;
-
-
-                //Tessellator.instance.setColorOpaque(255, 255, 255);
-
                 for (int i = 0; i < 6; i++) {
 
 
