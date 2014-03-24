@@ -92,6 +92,9 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
         CarvableVariation var = ((Carvable) block).getVariation(meta);
         pos.set(x, y, z);
         lightmatrix.setPos(world, x, y, z);
+        CCRenderState.reset();
+        Tessellator.instance.setColorOpaque(240,240,240);
+        CCRenderState.pullLightmap();
 
         switch (var == null ? -1 : var.kind) {
             case -1:
