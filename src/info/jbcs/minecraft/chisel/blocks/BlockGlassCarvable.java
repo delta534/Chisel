@@ -1,9 +1,11 @@
 package info.jbcs.minecraft.chisel.blocks;
 
+import carpentersblocks.proxy.ClientProxy;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.proxy.ProxyClient;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -75,4 +77,9 @@ public class BlockGlassCarvable extends BlockGlass implements Carvable {
         return carverHelper;
     }
 
+    @Override
+    public boolean canRenderInPass(int pass) {
+        ProxyClient.pass=pass;
+        return pass==0;
+    }
 }

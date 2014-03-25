@@ -63,8 +63,10 @@ public class VariationCTMX extends CarvableVariation {
                 axis.add(pos);
                 int meta = w.getBlockMetadata((int) pos.x, (int) pos.y, (int) pos.z);
                 int id = w.getBlockId((int) pos.x, (int) pos.y, (int) pos.z);
+
                 if (data != null) {
                     boolean x = !ConnectionCheckManager.checkConnection(w, axis.x, axis.y, axis.z, id, meta);
+                    if(x)
                     super.renderSide(data, side % 6, pos, lightMatrix, color, bounds);
                 }
             }

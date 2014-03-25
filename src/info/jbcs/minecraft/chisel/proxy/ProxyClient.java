@@ -13,7 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class ProxyClient extends Proxy {
     ItemChiselRenderer renderer = new ItemChiselRenderer();
-
+    public static int pass;
     @Override
     public void preInit() {
         MinecraftForge.EVENT_BUS.register(new Sounds() {

@@ -10,14 +10,18 @@ import codechicken.lib.vec.Vector3;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import info.jbcs.minecraft.chisel.Chisel;
+import info.jbcs.minecraft.chisel.blocks.BlockGlassCarvable;
 import info.jbcs.minecraft.chisel.blocks.BlockMarbleSlab;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableVariation;
 import info.jbcs.minecraft.chisel.core.variation.VariationCTMX;
+import info.jbcs.minecraft.chisel.proxy.Proxy;
+import info.jbcs.minecraft.chisel.proxy.ProxyClient;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
 
 public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler {
@@ -77,45 +81,47 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks rendererOld) {
-        block.setBlockBoundsBasedOnState(world, x, y, z);
-        Cuboid6 blockBounds = new Cuboid6(
-                block.getBlockBoundsMinX(),
-                block.getBlockBoundsMinY(),
-                block.getBlockBoundsMinZ(),
-                block.getBlockBoundsMaxX(),
-                block.getBlockBoundsMaxY(),
-                block.getBlockBoundsMaxZ());
-        model.generateBlock(0, blockBounds);
-        if (block instanceof BlockMarbleSlab)
-            x = x + 0;
-        int meta = world.getBlockMetadata(x, y, z);
-        CarvableVariation var = ((Carvable) block).getVariation(meta);
-        CCRenderState.reset();
-        CCRenderState.useModelColours(true);
-        pos.set(x, y, z);
-        lightmatrix.setPos(world, x, y, z);
 
-        switch (var == null ? -1 : var.kind) {
-            case -1:
-                return rendererOld.renderStandardBlock(block, x, y, z);
-            default:
-                rendererCTM.blockAccess = world;
-                rendererCTM.renderMaxX = 1.0;
-                rendererCTM.renderMaxY = 1.0;
-                rendererCTM.renderMaxZ = 1.0;
-                for (int i = 0; i < 6; i++) {
+            block.setBlockBoundsBasedOnState(world, x, y, z);
+            Cuboid6 blockBounds = new Cuboid6(
+                    block.getBlockBoundsMinX(),
+                    block.getBlockBoundsMinY(),
+                    block.getBlockBoundsMinZ(),
+                    block.getBlockBoundsMaxX(),
+                    block.getBlockBoundsMaxY(),
+                    block.getBlockBoundsMaxZ());
+            model.generateBlock(0, blockBounds);
+            if (block instanceof BlockMarbleSlab)
+                x = x + 0;
+            int meta = world.getBlockMetadata(x, y, z);
+            CarvableVariation var = ((Carvable) block).getVariation(meta);
+            CCRenderState.reset();
+            CCRenderState.useModelColours(true);
+            pos.set(x, y, z);
+            lightmatrix.setPos(world, x, y, z);
+
+            switch (var == null ? -1 : var.kind) {
+                case -1:
+                    return rendererOld.renderStandardBlock(block, x, y, z);
+                default:
+                    rendererCTM.blockAccess = world;
+                    rendererCTM.renderMaxX = 1.0;
+                    rendererCTM.renderMaxY = 1.0;
+                    rendererCTM.renderMaxZ = 1.0;
+                    for (int i = 0; i < 6; i++) {
 
 
-                    for (int j = 0; j < 4; j++) {
-                        verts[j] = model.verts[j + i * 4];
+                        for (int j = 3; j > -1 ; j--) {
+                            verts[j] = model.verts[j + i * 4];
+                        }
+                        var.setup(verts, i, pos, world, blockBounds);
+                        var.renderSide(verts, i, pos, lightmatrix.lightMatrix(), block.colorMultiplier(world, x, y, z) << 8 | 0xFF, blockBounds);
+
+
                     }
-                    var.setup(verts, i, pos, world, blockBounds);
-                    var.renderSide(verts, i, pos, lightmatrix.lightMatrix(), block.colorMultiplier(world, x, y, z) << 8 | 0xFF, blockBounds);
+            }
 
-
-                }
-                return true;
-        }
+        return true;
     }
 
     @Override

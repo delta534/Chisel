@@ -82,7 +82,10 @@ public class CarvableVariation implements IUVTransformation {
                               LightMatrix lightMatrix, int color, Cuboid6 bounds) {
         UV uv = new UV();
         Tessellator t = Tessellator.instance;
-        for (int i = 0; i < 4; i++) {
+        int lim=4;
+        int start=0;
+        int change=1;
+        for (int i = start; i != lim; i+=change) {
             if (CCRenderState.useNormals()) {
                 Vector3 n = Rotation.axes[side % 6];
                 t.setNormal((float) n.x, (float) n.y, (float) n.z);
