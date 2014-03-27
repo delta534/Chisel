@@ -40,16 +40,18 @@ public class VariationCTMX extends CarvableVariation {
 
     }
 
-    final static Vector3[] filters = {new Vector3(1, 0, 1), new Vector3(1, 1, 0), new Vector3(0, 1, 1)};
-    final static Vector3[] filters2 = {new Vector3(0, 1, 0), new Vector3(0, 0, 1), new Vector3(1, 0, 0)};
-
+    final static Vector3[] filters = {new Vector3(1, 0, 1),new Vector3(1, 0, 1),  new Vector3(1, 1, 0), new Vector3(1, 1, 0), new Vector3(0, 1, 1), new Vector3(0, 1, 1)};
+    final static Vector3[] offsets = {new Vector3(0, -1, 0),new Vector3(0, 1, 0), new Vector3(0, 0, -1),new Vector3(0, 0, 1), new Vector3(-1, 0, 0), new Vector3(1, 0, 0)};
+    final Vector3 store=new Vector3();
     @SideOnly(Side.CLIENT)
     @Override
     public boolean renderSide(Vertex5[] verts, int side, Vector3 pos,
                               LightMatrix lightMatrix, int color, Cuboid6 bounds) {
 
         Vertex5[] data = null;
-        Vector3 vec = bounds.center();
+        Vector3 vec = bounds.max.copy();
+        vec.sub(bounds.min).multiply(offsets[side%6]).multiply(0.5);
+
         if (useCTM && w != null) {
             for (int j = 0; j < Subdivider.numResults; j++) {
 
@@ -58,16 +60,18 @@ public class VariationCTMX extends CarvableVariation {
                 midpoint.set(res.offset);
                 region = res.iconIndex;
                 data = res.verts_;
-                axis.set(Rotation.axes[side % 6]).multiply(vec).multiply(2);
-                axis.add(vec);
+                axis.set(vec);
                 axis.add(pos);
+                axis.add(midpoint);
                 int meta = w.getBlockMetadata((int) pos.x, (int) pos.y, (int) pos.z);
                 int id = w.getBlockId((int) pos.x, (int) pos.y, (int) pos.z);
 
                 if (data != null) {
                     boolean x = !ConnectionCheckManager.checkConnection(w, axis.x, axis.y, axis.z, id, meta);
                     if(x)
+                    {
                     super.renderSide(data, side % 6, pos, lightMatrix, color, bounds);
+                    }
                 }
             }
         } else {
