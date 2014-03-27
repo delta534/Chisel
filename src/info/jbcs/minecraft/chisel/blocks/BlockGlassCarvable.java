@@ -18,7 +18,7 @@ import java.util.List;
 
 public class BlockGlassCarvable extends BlockGlass implements Carvable {
     public CarvableHelper carverHelper;
-
+    public static int pass;
     public BlockGlassCarvable(int i) {
         super(i, Material.glass, false);
 
@@ -79,7 +79,13 @@ public class BlockGlassCarvable extends BlockGlass implements Carvable {
 
     @Override
     public boolean canRenderInPass(int pass) {
-        ProxyClient.pass=pass;
-        return pass==0;
+        BlockGlassCarvable.pass=pass;
+        return true;
     }
+    @Override
+    public int getRenderBlockPass()
+    {
+        return 1;
+    }
+
 }

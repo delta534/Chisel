@@ -38,7 +38,10 @@ public class BlockMarble extends Block implements Carvable {
 
     @Override
     public Icon getIcon(int side, int metadata) {
-        return carverHelper.getVariation(metadata).getIcon(side);
+        if(carverHelper!=null)
+            if(carverHelper.getVariation(metadata)!=null)
+                return carverHelper.getVariation(metadata).getIcon(side);
+        return null;
     }
 
     @Override
@@ -76,5 +79,17 @@ public class BlockMarble extends Block implements Carvable {
     @Override
     public CarvableHelper getHelper() {
         return carverHelper;
+    }
+
+    @Override
+    public boolean canRenderInPass(int pass) {
+        BlockGlassCarvable.pass=pass;
+        return true;
+    }
+
+    @Override
+    public int getRenderBlockPass()
+    {
+        return 0;
     }
 }

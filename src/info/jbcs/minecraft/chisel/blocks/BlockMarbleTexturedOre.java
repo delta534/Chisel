@@ -55,4 +55,15 @@ public class BlockMarbleTexturedOre extends BlockTexturedOre implements Carvable
         return carverHelper;
     }
 
+    @Override
+    public boolean canRenderInPass(int pass) {
+        BlockGlassCarvable.pass=pass;
+        return true;
+    }
+    @Override
+    public int getRenderBlockPass()
+    {
+        return 0;
+    }
+
 }

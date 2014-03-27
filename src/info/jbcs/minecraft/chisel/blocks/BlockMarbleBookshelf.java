@@ -4,10 +4,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockMarbleBookshelf extends BlockMarble {
@@ -45,6 +47,11 @@ public class BlockMarbleBookshelf extends BlockMarble {
     @Override
     public float getEnchantPowerBonus(World world, int x, int y, int z) {
         return 1;
+    }
+
+    @Override
+    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
+        return Block.bookShelf.getBlockDropped(world, x, y, z, metadata, fortune);
     }
 
     @Override

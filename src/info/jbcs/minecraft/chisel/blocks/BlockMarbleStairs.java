@@ -106,4 +106,15 @@ public class BlockMarbleStairs extends BlockStairs implements Carvable, IMetaDat
         return carverHelper;
     }
 
+    @Override
+    public boolean canRenderInPass(int pass) {
+        BlockGlassCarvable.pass=pass;
+        return true;
+    }
+    @Override
+    public int getRenderBlockPass()
+    {
+        return 0;
+    }
+
 }

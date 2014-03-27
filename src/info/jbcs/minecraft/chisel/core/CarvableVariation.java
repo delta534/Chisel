@@ -11,11 +11,13 @@ import codechicken.lib.vec.Rotation;
 import codechicken.lib.vec.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import info.jbcs.minecraft.chisel.blocks.BlockGlassCarvable;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 public class CarvableVariation implements IUVTransformation {
     public String blockName;
@@ -45,7 +47,9 @@ public class CarvableVariation implements IUVTransformation {
     boolean[] adj = new boolean[6];
     final public Vector3 axis = new Vector3();
     final public Vector3 midpoint = new Vector3();
-
+    final static Vector3[] microAdjust=
+            {new Vector3(0,0.001,0),new Vector3(0,-0.001,0),new Vector3(0,0,0.001)
+                    ,new Vector3(0,0,0.001),new Vector3(0.001,0,0),new Vector3(-0.001,0,0)};
     @SideOnly(Side.CLIENT)
     public void setup(Vertex5[] verts, int side, Vector3 pos, IBlockAccess world, Cuboid6 bounds) {
         if (world != null) {
@@ -85,13 +89,15 @@ public class CarvableVariation implements IUVTransformation {
         int lim=4;
         int start=0;
         int change=1;
+        int p=BlockGlassCarvable.pass;
+
         for (int i = start; i != lim; i+=change) {
             if (CCRenderState.useNormals()) {
                 Vector3 n = Rotation.axes[side % 6];
                 t.setNormal((float) n.x, (float) n.y, (float) n.z);
             }
             Vertex5 vert = verts[i];
-            if (lightMatrix != null) {
+            if (lightMatrix != null &&  p!=1) {
                 LC lc = LC.computeO(vert.vec, side);
                 if (CCRenderState.useModelColours())
                     lightMatrix.setColour(t, lc, color);
@@ -102,8 +108,14 @@ public class CarvableVariation implements IUVTransformation {
             }
 
             transform(uv.set(vert.uv));
-            t.addVertexWithUV(vert.vec.x + pos.x, vert.vec.y + pos.y, vert.vec.z + pos.z, uv.u, uv.v);
+            if(p==1)
+                t.addVertexWithUV(vert.vec.x + pos.x+microAdjust[side % 6].x,
+                        vert.vec.y + pos.y+microAdjust[side % 6].y,
+                        vert.vec.z + pos.z+microAdjust[side % 6].z, uv.u, uv.v);
+            else
+                t.addVertexWithUV(vert.vec.x + pos.x, vert.vec.y + pos.y, vert.vec.z + pos.z, uv.u, uv.v);
         }
+
         return true;
     }
 

@@ -46,4 +46,15 @@ public class BlockMarbleWall extends BlockWall {
         return "Chisel" + carverHelper.blockName;
     }
 
+    @Override
+    public boolean canRenderInPass(int pass) {
+        BlockGlassCarvable.pass=pass;
+        return true;
+    }
+    @Override
+    public int getRenderBlockPass()
+    {
+        return 0;
+    }
+
 }

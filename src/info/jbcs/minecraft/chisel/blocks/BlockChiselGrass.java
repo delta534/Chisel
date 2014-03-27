@@ -118,4 +118,15 @@ public class BlockChiselGrass extends BlockGrass implements Carvable {
     public CarvableHelper getHelper() {
         return carverHelper;
     }
+
+    @Override
+    public boolean canRenderInPass(int pass) {
+        BlockGlassCarvable.pass=pass;
+        return true;
+    }
+    @Override
+    public int getRenderBlockPass()
+    {
+        return 0;
+    }
 }
