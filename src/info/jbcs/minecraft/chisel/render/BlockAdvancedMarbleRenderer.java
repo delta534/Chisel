@@ -10,18 +10,13 @@ import codechicken.lib.vec.Vector3;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import info.jbcs.minecraft.chisel.Chisel;
-import info.jbcs.minecraft.chisel.blocks.BlockGlassCarvable;
 import info.jbcs.minecraft.chisel.blocks.BlockMarbleSlab;
 import info.jbcs.minecraft.chisel.core.Carvable;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.core.variation.VariationCTMX;
-import info.jbcs.minecraft.chisel.proxy.Proxy;
-import info.jbcs.minecraft.chisel.proxy.ProxyClient;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.client.MinecraftForgeClient;
 import org.lwjgl.opengl.GL11;
 
 public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler {
@@ -55,7 +50,7 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
         model.generateBlock(0, blockBounds);
 
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-        CarvableVariation var = ((Carvable) block).getVariation(metadata);
+        RenderVariation var = ((Carvable) block).getVariation(metadata);
         pos.set(0, 0, 0);
         CCRenderState.reset();
         TextureUtils.bindAtlas(0);
@@ -94,7 +89,7 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
             if (block instanceof BlockMarbleSlab)
                 x = x + 0;
             int meta = world.getBlockMetadata(x, y, z);
-            CarvableVariation var = ((Carvable) block).getVariation(meta);
+            RenderVariation var = ((Carvable) block).getVariation(meta);
             CCRenderState.reset();
             CCRenderState.useModelColours(true);
             pos.set(x, y, z);
@@ -114,6 +109,9 @@ public class BlockAdvancedMarbleRenderer implements ISimpleBlockRenderingHandler
                         for (int j = 3; j > -1 ; j--) {
                             verts[j] = model.verts[j + i * 4];
                         }
+                        //Tessellator.instance.setBrightness(world.getLightBrightnessForSkyBlocks(x,y,z,15));
+                        //CCRenderState.pullLightmap();
+
                         var.setup(verts, i, pos, world, blockBounds);
                         var.renderSide(verts, i, pos, lightmatrix.lightMatrix(), block.colorMultiplier(world, x, y, z) << 8 | 0xFF, blockBounds);
 

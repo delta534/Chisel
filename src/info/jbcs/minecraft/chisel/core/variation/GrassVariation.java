@@ -6,17 +6,17 @@ import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 
-public class GrassVariation extends CarvableVariation {
-    CarvableVariation grass;
-    CarvableVariation dirt;
+public class GrassVariation extends RenderVariation {
+    RenderVariation grass;
+    RenderVariation dirt;
 
-    GrassVariation(CarvableVariation vgrass, CarvableVariation vdirt) {
+    GrassVariation(RenderVariation vgrass, RenderVariation vdirt) {
         grass = vgrass;
         dirt = vdirt;
         this.texture = grass.texture;

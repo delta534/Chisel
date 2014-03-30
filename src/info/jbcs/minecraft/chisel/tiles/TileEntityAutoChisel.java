@@ -1,6 +1,6 @@
 package info.jbcs.minecraft.chisel.tiles;
 
-import info.jbcs.minecraft.chisel.core.Carving;
+import info.jbcs.minecraft.chisel.core.CarvingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -51,7 +51,7 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory 
     }
 
     public boolean changeStack(ItemStack is) {
-        Carving.CarvingGroup group = Carving.chisel.getGroup(is.itemID, is.getItemDamage());
+        CarvingRegistry.CarvingGroup group = CarvingRegistry.chisel.getGroup(is.itemID, is.getItemDamage());
         if (this.patternIDs.containsKey(group.className)) {
             ItemStack pattern = patternIDs.get(group.className);
             is.itemID = pattern.itemID;
@@ -115,7 +115,7 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory 
                         items[i] = null;
                         SetOutput(input);
                     } else {
-                        if (Carving.chisel.isVariationOfSameClass(input.itemID, input.getItemDamage(),
+                        if (CarvingRegistry.chisel.isVariationOfSameClass(input.itemID, input.getItemDamage(),
                                 items[OutputSlot].itemID, items[OutputSlot].getItemDamage())) {
                             mergeStacks(items[OutputSlot], input);
                             items[0].stackSize = input.stackSize;
@@ -148,7 +148,7 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory 
             }
         }
         if (isCopySlot(i)) {
-            Carving.CarvingGroup group = Carving.chisel.getGroup(items[i].itemID, items[i].getItemDamage());
+            CarvingRegistry.CarvingGroup group = CarvingRegistry.chisel.getGroup(items[i].itemID, items[i].getItemDamage());
 
             patternIDs.remove(group.className);
             outstack = items[i];
@@ -169,11 +169,11 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory 
 
         if (isCopySlot(i)) {
             if (items[i] != null) {
-                Carving.CarvingGroup group = Carving.chisel.getGroup(items[i].itemID, items[i].getItemDamage());
+                CarvingRegistry.CarvingGroup group = CarvingRegistry.chisel.getGroup(items[i].itemID, items[i].getItemDamage());
                 patternIDs.remove(group.className);
             }
             if (itemstack != null) {
-                Carving.CarvingGroup group = Carving.chisel.getGroup(itemstack.itemID, itemstack.getItemDamage());
+                CarvingRegistry.CarvingGroup group = CarvingRegistry.chisel.getGroup(itemstack.itemID, itemstack.getItemDamage());
                 patternIDs.put(group.className, itemstack);
                 itemstack.stackSize = 1;
             }
@@ -211,13 +211,13 @@ public class TileEntityAutoChisel extends TileEntity implements ISidedInventory 
     }
 
     public boolean hasPattern(ItemStack i) {
-        Carving.CarvingGroup group = Carving.chisel.getGroup(i.itemID, i.getItemDamage());
+        CarvingRegistry.CarvingGroup group = CarvingRegistry.chisel.getGroup(i.itemID, i.getItemDamage());
 
         return patternIDs.containsKey(group.className);
     }
 
     public boolean canCarve(ItemStack i) {
-        return Carving.chisel.getGroup(i.itemID, i.getItemDamage()) != null;
+        return CarvingRegistry.chisel.getGroup(i.itemID, i.getItemDamage()) != null;
     }
 
     public boolean validBlock(ItemStack itemstack) {

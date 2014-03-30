@@ -1,11 +1,11 @@
 package info.jbcs.minecraft.chisel.core.variation;
 
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 
-public class VariationTop extends CarvableVariation {
+public class VariationTop extends RenderVariation {
     public Icon iconTop;
 
     @Override

@@ -3,7 +3,7 @@ package info.jbcs.minecraft.chisel.blocks;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import net.minecraft.block.BlockCarpet;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -57,7 +57,7 @@ public class BlockMarbleCarpet extends BlockCarpet implements Carvable {
     }
 
     @Override
-    public CarvableVariation getVariation(int metadata) {
+    public RenderVariation getVariation(int metadata) {
         return carverHelper.getVariation(metadata);
     }
 
@@ -65,5 +65,15 @@ public class BlockMarbleCarpet extends BlockCarpet implements Carvable {
     public CarvableHelper getHelper() {
         return carverHelper;
     }
+    @Override
+    public boolean canRenderInPass(int pass) {
+        BlockGlassCarvable.pass=pass;
+        return true;
+    }
 
+    @Override
+    public int getRenderBlockPass()
+    {
+        return 0;
+    }
 }

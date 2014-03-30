@@ -3,7 +3,7 @@ package info.jbcs.minecraft.chisel.items;
 import codechicken.lib.lang.LangUtil;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.util.IMetaDataName;
 import info.jbcs.minecraft.utilities.General;
 import net.minecraft.block.Block;
@@ -37,7 +37,7 @@ public class ItemCarvable extends ItemBlock {
             return ((IMetaDataName) bl).getUnlocalizedName(itemstack.getItemDamage());
         if (bl instanceof Carvable) {
             Carvable cv = (Carvable) bl;
-            CarvableVariation var = cv.getVariation(itemstack.getItemDamage());
+            RenderVariation var = cv.getVariation(itemstack.getItemDamage());
             if (var != null && !Chisel.blockDescriptions)
                 return var.description;
 
@@ -61,7 +61,7 @@ public class ItemCarvable extends ItemBlock {
         if (!(block instanceof Carvable)) return;
 
         Carvable carvable = (Carvable) block;
-        CarvableVariation var = carvable.getVariation(stack.getItemDamage());
+        RenderVariation var = carvable.getVariation(stack.getItemDamage());
         if (var == null) return;
 
         lines.add(LangUtil.translateG(var.description));

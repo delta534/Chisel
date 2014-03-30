@@ -2,7 +2,7 @@ package info.jbcs.minecraft.chisel.core.variation;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.render.CTM;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
 import net.minecraft.block.Block;
@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 
-public class VariationCTM3 extends CarvableVariation {
+public class VariationCTM3 extends RenderVariation {
     TextureSubmap seams[];
 
     public VariationCTM3() {

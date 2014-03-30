@@ -6,7 +6,7 @@ import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
 import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
 import net.minecraft.block.Block;
@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 
-public class VariationCTMH extends CarvableVariation {
+public class VariationCTMH extends RenderVariation {
     public TextureSubmap seamsCtmVert;
 
     protected String extention;

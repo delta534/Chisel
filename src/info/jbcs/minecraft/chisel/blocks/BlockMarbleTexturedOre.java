@@ -3,7 +3,7 @@ package info.jbcs.minecraft.chisel.blocks;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.utilities.BlockTexturedOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -46,7 +46,7 @@ public class BlockMarbleTexturedOre extends BlockTexturedOre implements Carvable
     }
 
     @Override
-    public CarvableVariation getVariation(int metadata) {
+    public RenderVariation getVariation(int metadata) {
         return carverHelper.getVariation(metadata);
     }
 

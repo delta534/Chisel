@@ -1,11 +1,9 @@
 package info.jbcs.minecraft.chisel.blocks;
 
-import carpentersblocks.proxy.ClientProxy;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
-import info.jbcs.minecraft.chisel.proxy.ProxyClient;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -58,7 +56,7 @@ public class BlockGlassCarvable extends BlockGlass implements Carvable {
     }
 
     @Override
-    public CarvableVariation getVariation(int metadata) {
+    public RenderVariation getVariation(int metadata) {
         return carverHelper.getVariation(metadata);
     }
 
@@ -88,4 +86,8 @@ public class BlockGlassCarvable extends BlockGlass implements Carvable {
         return 1;
     }
 
+    @Override
+    public boolean isBlockNormalCube(World world, int x, int y, int z) {
+        return false;
+    }
 }

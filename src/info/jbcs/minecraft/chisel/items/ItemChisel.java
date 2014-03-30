@@ -5,7 +5,7 @@ import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.blocks.BlockMarbleCarpet;
 import info.jbcs.minecraft.chisel.blocks.BlockSnakestone;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
-import info.jbcs.minecraft.chisel.core.Carving;
+import info.jbcs.minecraft.chisel.core.CarvingRegistry;
 import info.jbcs.minecraft.chisel.core.CarvingVariation;
 import info.jbcs.minecraft.chisel.modCompat.ChiselModCompatibility;
 import info.jbcs.minecraft.chisel.util.GeneralChiselClient;
@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class ItemChisel extends ItemTool {
     Random random = new Random();
-    public Carving carving;
+    public CarvingRegistry carvingRegistry;
     static HashSet<Integer> chisels = new HashSet<Integer>(16);
 
     public static boolean isChiselItem(int id) {
@@ -32,7 +32,7 @@ public class ItemChisel extends ItemTool {
         return bl;
     }
 
-    public ItemChisel(int id, Carving c) {
+    public ItemChisel(int id, CarvingRegistry c) {
         super(id, 1, EnumToolMaterial.IRON, CarvableHelper.chiselBlocks.toArray(new Block[CarvableHelper.chiselBlocks.size()]));
 
         maxStackSize = 1;
@@ -45,7 +45,7 @@ public class ItemChisel extends ItemTool {
         }
 
 
-        carving = c;
+        carvingRegistry = c;
         MinecraftForge.setToolClass(this, "chisel", 1);
         ItemChisel.chisels.add(id + 256);
     }
@@ -74,7 +74,7 @@ public class ItemChisel extends ItemTool {
             boolean chiselHasBlockInside = true;
 
             if (chiselTarget == null) {
-                CarvingVariation[] variations = carving.getVariations(blockId, meta);
+                CarvingVariation[] variations = carvingRegistry.getVariations(blockId, meta);
                 if (variations == null || variations.length < 2) return false;
 
                 int index = random.nextInt(variations.length - 1);
@@ -91,7 +91,7 @@ public class ItemChisel extends ItemTool {
             int targetId = chiselTarget.itemID;
             int targetMeta = chiselTarget.getItemDamage();
 
-            boolean match = carving.isVariationOfSameClass(targetId, targetMeta, blockId, meta);
+            boolean match = carvingRegistry.isVariationOfSameClass(targetId, targetMeta, blockId, meta);
             int resultId = targetId;
 
 
@@ -114,7 +114,7 @@ public class ItemChisel extends ItemTool {
 
                 case CLIENT:
 
-                    String sound = carving.getVariationSound(resultId, chiselTarget.getItemDamage());
+                    String sound = carvingRegistry.getVariationSound(resultId, chiselTarget.getItemDamage());
                     GeneralChiselClient.spawnChiselEffect(x, y, z, sound);
                     break;
 
@@ -190,7 +190,7 @@ public class ItemChisel extends ItemTool {
 
 			}
 
-			CarvingVariation[] variations=carving.getVariations(blockId, blockMeta);
+			CarvingVariation[] variations=carvingRegistry.getVariations(blockId, blockMeta);
 			if(variations==null || variations.length<2) return true;
 
 			int index=random.nextInt(variations.length-1);
@@ -207,7 +207,7 @@ public class ItemChisel extends ItemTool {
 		int targetId=chiselTarget.itemID;
 		int targetMeta=chiselTarget.getItemDamage();
 
-		boolean match=carving.isVariationOfSameClass(targetId,targetMeta,blockId,blockMeta);
+		boolean match=carvingRegistry.isVariationOfSameClass(targetId,targetMeta,blockId,blockMeta);
 		int resultId=targetId;
 
 
@@ -249,7 +249,7 @@ public class ItemChisel extends ItemTool {
 
 		case CLIENT:
 			if(chiselHasBlockInside){
-				String sound=carving.getVariationSound(resultId, chiselTarget.getItemDamage());
+				String sound=carvingRegistry.getVariationSound(resultId, chiselTarget.getItemDamage());
 				GeneralChiselClient.spawnChiselEffect(x, y, z, sound);
 			}
 			break;

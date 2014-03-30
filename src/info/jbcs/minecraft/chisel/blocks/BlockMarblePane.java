@@ -4,7 +4,7 @@ package info.jbcs.minecraft.chisel.blocks;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.render.BlockMarblePaneRenderer;
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.material.Material;
@@ -52,7 +52,7 @@ public class BlockMarblePane extends BlockPane implements Carvable {
     }
 
     @Override
-    public CarvableVariation getVariation(int metadata) {
+    public RenderVariation getVariation(int metadata) {
         return carverHelper.getVariation(metadata);
     }
 

@@ -4,7 +4,7 @@ package info.jbcs.minecraft.chisel.blocks;
 import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.render.BlockMarbleStairsRenderer;
 import info.jbcs.minecraft.chisel.util.IMetaDataName;
 import net.minecraft.block.Block;
@@ -92,7 +92,7 @@ public class BlockMarbleStairs extends BlockStairs implements Carvable, IMetaDat
     }
 
     @Override
-    public CarvableVariation getVariation(int metadata) {
+    public RenderVariation getVariation(int metadata) {
         return carverHelper.getVariation(index + metadata);
     }
 

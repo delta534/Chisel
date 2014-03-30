@@ -32,8 +32,8 @@ public class CarvableHelper {
     public CarvableHelper() {
     }
 
-    public ArrayList<CarvableVariation> variations = new ArrayList<CarvableVariation>();
-    CarvableVariation[] map = new CarvableVariation[16];
+    public ArrayList<RenderVariation> variations = new ArrayList<RenderVariation>();
+    RenderVariation[] map = new RenderVariation[16];
     public boolean forbidChiseling = false;
     public String blockName;
 
@@ -61,7 +61,7 @@ public class CarvableHelper {
         } else if (blockName == null && description != null)
             blockName = "tile.chisel." + description.toLowerCase().replaceAll("\\s", "");
 
-        CarvableVariation variation;
+        RenderVariation variation;
 
         if (texture != null) {
 
@@ -110,7 +110,7 @@ public class CarvableHelper {
                 variation.kind = CTMX;
                 variation.useCTM = Chisel.getCTMOption(description);
             } else if (any) {
-                variation = new CarvableVariation();
+                variation = new RenderVariation();
                 variation.kind = 0;
             } else {
                 throw new RuntimeException(
@@ -135,11 +135,11 @@ public class CarvableHelper {
         map[metadata] = variation;
     }
 
-    public CarvableVariation getVariation(int metadata) {
+    public RenderVariation getVariation(int metadata) {
         if (metadata < 0 || metadata > 15)
             metadata = 0;
 
-        CarvableVariation variation = map[metadata];
+        RenderVariation variation = map[metadata];
         if (variation == null)
             return null;
 
@@ -162,7 +162,7 @@ public class CarvableHelper {
             GameRegistry.registerBlock(slab.top, cl, name + ".top");
         }
 
-        for (CarvableVariation variation : variations) {
+        for (RenderVariation variation : variations) {
             registerVariation(name, variation, block, variation.metadata);
 
             if (block instanceof BlockMarbleSlab
@@ -175,9 +175,9 @@ public class CarvableHelper {
                         slab.blockResistance);
 
                 if (!forbidChiseling) {
-                    Carving.chisel.addVariation(name + ".top",
+                    CarvingRegistry.chisel.addVariation(name + ".top",
                             slab.top.blockID, variation.metadata, 0);
-                    Carving.chisel.setGroupClass(name + ".top", name);
+                    CarvingRegistry.chisel.setGroupClass(name + ".top", name);
                 }
             }
         }
@@ -186,7 +186,7 @@ public class CarvableHelper {
     }
 
 
-    public void registerVariation(String name, CarvableVariation variation,
+    public void registerVariation(String name, RenderVariation variation,
                                   Block block, int blockMeta) {
 
 
@@ -194,11 +194,11 @@ public class CarvableHelper {
             return;
 
         if (variation.block == null) {
-            Carving.chisel.addVariation(name, block.blockID, blockMeta,
+            CarvingRegistry.chisel.addVariation(name, block.blockID, blockMeta,
                     variation.metadata);
             MinecraftForge.setBlockHarvestLevel(block, blockMeta, "chisel", 0);
         } else {
-            Carving.chisel.addVariation(name, variation.block.blockID,
+            CarvingRegistry.chisel.addVariation(name, variation.block.blockID,
                     variation.blockMeta, variation.metadata);
             MinecraftForge.setBlockHarvestLevel(variation.block,
                     variation.blockMeta, "chisel", 0);
@@ -206,7 +206,7 @@ public class CarvableHelper {
     }
 
     public void registerIcons(String modName, Block block, IconRegister register) {
-        for (CarvableVariation variation : variations) {
+        for (RenderVariation variation : variations) {
             if (variation.block != null)
                 variation.block.registerIcons(register);
             variation.registerIcon(modName, block, register);
@@ -218,7 +218,7 @@ public class CarvableHelper {
     }
 
     public void registerSubBlocks(Block block, CreativeTabs tabs, List list, boolean override) {
-        for (CarvableVariation var : variations) {
+        for (RenderVariation var : variations) {
             if (var.block != null && override)
                 continue;
             list.add(new ItemStack(block.blockID, 1, var.metadata));
@@ -226,7 +226,7 @@ public class CarvableHelper {
     }
 
     public void setBlockHarvestLevel(Block block, String tool, int level) {
-        for (CarvableVariation variation : variations) {
+        for (RenderVariation variation : variations) {
             MinecraftForge.setBlockHarvestLevel(block, variation.metadata,
                     tool, level);
         }

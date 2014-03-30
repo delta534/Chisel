@@ -16,7 +16,7 @@ import codechicken.multipart.TMultiPart;
 import codechicken.multipart.TileMultipart;
 import codechicken.multipart.minecraft.IPartMeta;
 import info.jbcs.minecraft.chisel.core.Carvable;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.core.variation.VariationCTMX;
 import info.jbcs.minecraft.chisel.util.IConnectionCheck;
 import info.jbcs.minecraft.chisel.util.proxyWorld;
@@ -47,7 +47,7 @@ public class ChiselMicroMaterial extends BlockMicroMaterial implements IPartMeta
     public void renderMicroFace(Vertex5[] verts, int side, Vector3 pos,
                                 LightMatrix lightMatrix, IMicroMaterialRender part) {
         icontr.bindPart(part);
-        CarvableVariation var = ((Carvable) block()).getVariation(meta());
+        RenderVariation var = ((Carvable) block()).getVariation(meta());
         // test.submap=var.submap;
         //test.submapSmall=var.submapSmall;
         proxyWorld world = null;

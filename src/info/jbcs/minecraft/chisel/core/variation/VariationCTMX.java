@@ -6,11 +6,10 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.UV;
 import codechicken.lib.render.Vertex5;
 import codechicken.lib.vec.Cuboid6;
-import codechicken.lib.vec.Rotation;
 import codechicken.lib.vec.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.render.CTM;
 import info.jbcs.minecraft.chisel.render.TextureSubmap;
 import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
@@ -20,7 +19,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 
-public class VariationCTMX extends CarvableVariation {
+public class VariationCTMX extends RenderVariation {
     public TextureSubmap submap;
     public TextureSubmap submapSmall;
     private Vector3 loc;
@@ -50,7 +49,7 @@ public class VariationCTMX extends CarvableVariation {
 
         Vertex5[] data = null;
         Vector3 vec = bounds.max.copy();
-        vec.sub(bounds.min).multiply(offsets[side%6]).multiply(0.5);
+        vec.sub(bounds.min).add(0.0001).multiply(offsets[side%6]).multiply(0.5);
 
         if (useCTM && w != null) {
             for (int j = 0; j < Subdivider.numResults; j++) {

@@ -14,7 +14,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import info.jbcs.minecraft.chisel.blocks.*;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
-import info.jbcs.minecraft.chisel.core.Carving;
+import info.jbcs.minecraft.chisel.core.CarvingRegistry;
 import info.jbcs.minecraft.chisel.entity.EntityBallOMoss;
 import info.jbcs.minecraft.chisel.entity.EntityCloudInABottle;
 import info.jbcs.minecraft.chisel.gui.*;
@@ -184,12 +184,12 @@ public class Chisel {
         grassSpread = config.get("General", "Chisel Grass Spread", true,
                 "Should Chisel Grass spread to Chisel Dirt").getBoolean(true);
         chisel = (ItemChisel) new ItemChisel(config.getItem("chisel", 7811)
-                .getInt(), Carving.chisel).setTextureName("chisel:chisel")
+                .getInt(), CarvingRegistry.chisel).setTextureName("chisel:chisel")
                 .setUnlocalizedName("chisel.chisel")
                 .setCreativeTab(CreativeTabs.tabTools);
         if (hardMode) {
             diamondChisel = (ItemChisel) new ItemChiselDiamond(config.getItem(
-                    "diamond_chisel", 7812).getInt(), Carving.chisel)
+                    "diamond_chisel", 7812).getInt(), CarvingRegistry.chisel)
                     .setTextureName("chisel:Diamond_chisel")
                     .setUnlocalizedName("chisel.diamondchisel")
                     .setCreativeTab(CreativeTabs.tabTools);
@@ -577,7 +577,7 @@ public class Chisel {
         /* LanguageRegistry.addName(dchisel, "Diamond Chisel"); */
 
         // needle = (ItemChisel) new
-        // ItemChisel(config.getItem("needle",7816).getInt(),Carving.needle).setTextureName("chisel:needle").setUnlocalizedName("needle").setCreativeTab(CreativeTabs.tabTools);
+        // ItemChisel(config.getItem("needle",7816).getInt(),CarvingRegistry.needle).setTextureName("chisel:needle").setUnlocalizedName("needle").setCreativeTab(CreativeTabs.tabTools);
         // LanguageRegistry.addName(needle, "Needle");
 
 
@@ -633,7 +633,7 @@ public class Chisel {
                 "marble/marble-blocks");
         blockMarble.carverHelper.register(blockMarble, "marble");
         OreDictionary.registerOre("blockMarble", blockMarble);
-        Carving.chisel.registerOre("marble", "blockMarble");
+        CarvingRegistry.chisel.registerOre("marble", "blockMarble");
 
         if (oldPillars) {
             blockMarblePillar.carverHelper.setBlockName("marblePillar");
@@ -723,7 +723,7 @@ public class Chisel {
         }
         blockMarblePillar.carverHelper.register(blockMarblePillar,
                 "marblePillar");
-        Carving.chisel.setGroupClass("marblePillar", "marble");
+        CarvingRegistry.chisel.setGroupClass("marblePillar", "marble");
 
 
         blockLimestone.carverHelper.setBlockName("limestone");
@@ -761,7 +761,7 @@ public class Chisel {
                 15, "limestone/terrain-pistonback-lightpanel");
         blockLimestone.carverHelper.register(blockLimestone, "limestone");
         OreDictionary.registerOre("blockLimestone", blockLimestone);
-        Carving.chisel.registerOre("limestone", "blockLimestone");
+        CarvingRegistry.chisel.registerOre("limestone", "blockLimestone");
 
 
         blockCobblestone.carverHelper.addVariation("Cobblestone", 0,
@@ -802,7 +802,7 @@ public class Chisel {
                 "Cobblestone with dark panel", 15,
                 "cobblestone/terrain-pistonback-darkpanel");
         blockCobblestone.carverHelper.register(blockCobblestone, "cobblestone");
-        Carving.chisel.registerOre("cobblestone", "blockCobble");
+        CarvingRegistry.chisel.registerOre("cobblestone", "blockCobble");
 
         blockGlass.carverHelper.addVariation("Glass", 0, Block.glass);
         blockGlass.carverHelper.addVariation("Bubble glass", 1,
@@ -836,7 +836,7 @@ public class Chisel {
         blockGlass.carverHelper.addVariation("Modern Iron Fence", 15,
                 "glass/a1-glasswindow-ironfencemodern");
         blockGlass.carverHelper.register(blockGlass, "glass");
-        Carving.chisel.registerOre("glass", "blockGlass");
+        CarvingRegistry.chisel.registerOre("glass", "blockGlass");
 
 
         blockSandstone.carverHelper.addVariation("Sandstone", 0,
@@ -872,13 +872,13 @@ public class Chisel {
         blockSandstone.carverHelper.addVariation("Stacked sandstone tiles", 15,
                 "sandstone/horizontal-tiles");
         blockSandstone.carverHelper.register(blockSandstone, "sandstone");
-        Carving.chisel.registerOre("sandstone", "blockSandstone");
+        CarvingRegistry.chisel.registerOre("sandstone", "blockSandstone");
 
         GameRegistry.registerBlock(blockSandSnakestone, ItemCarvable.class,
                 blockSandSnakestone.getUnlocalizedName());
-        Carving.chisel.addVariation("sandstone", blockSandSnakestone.blockID,
+        CarvingRegistry.chisel.addVariation("sandstone", blockSandSnakestone.blockID,
                 1, 16);
-        Carving.chisel.addVariation("sandstone", blockSandSnakestone.blockID,
+        CarvingRegistry.chisel.addVariation("sandstone", blockSandSnakestone.blockID,
                 13, 17);
         MinecraftForge.setBlockHarvestLevel(blockSandSnakestone, "chisel", 0);
 
@@ -945,7 +945,7 @@ public class Chisel {
                 "concrete/asphalt");
         blockConcrete.carverHelper.register(blockConcrete, "concrete");
         OreDictionary.registerOre("blockConcrete", blockConcrete);
-        Carving.chisel.registerOre("concrete", "blockConcrete");
+        CarvingRegistry.chisel.registerOre("concrete", "blockConcrete");
 
 
         GameRegistry.registerBlock(blockRoadLine, ItemCarvable.class,
@@ -984,7 +984,7 @@ public class Chisel {
         blockIron.carverHelper.addVariation("Iron block simple", 15,
                 "iron/terrain-iron-simple");
         blockIron.carverHelper.register(blockIron, "iron");
-        Carving.chisel.registerOre("iron", "blockIron");
+        CarvingRegistry.chisel.registerOre("iron", "blockIron");
 
 
         blockGold.carverHelper.addVariation("Gold block", 0, Block.blockGold);
@@ -1017,7 +1017,7 @@ public class Chisel {
         blockGold.carverHelper.addVariation("Gold block simple", 14,
                 "gold/terrain-gold-simple");
         blockGold.carverHelper.register(blockGold, "gold");
-        Carving.chisel.registerOre("gold", "blockGold");
+        CarvingRegistry.chisel.registerOre("gold", "blockGold");
 
         blockDiamond.carverHelper.addVariation("Diamond block", 0,
                 Block.blockDiamond);
@@ -1047,7 +1047,7 @@ public class Chisel {
                 "Diamond block with ornate layer", 12,
                 "diamond/a1-blockdiamond-ornatelayer");
         blockDiamond.carverHelper.register(blockDiamond, "diamond");
-        Carving.chisel.registerOre("diamond", "blockDiamond");
+        CarvingRegistry.chisel.registerOre("diamond", "blockDiamond");
 
         blockLightstone.carverHelper.addVariation("Glowstone", 0,
                 Block.glowStone);
@@ -1084,7 +1084,7 @@ public class Chisel {
         blockLightstone.carverHelper.addVariation("Glowstone bismuth panel",
                 15, "lightstone/glowstone-bismuth-panel");
         blockLightstone.carverHelper.register(blockLightstone, "lightstone");
-        Carving.chisel.registerOre("lightstone", "blockGlowstone");
+        CarvingRegistry.chisel.registerOre("lightstone", "blockGlowstone");
 
         blockLapis.carverHelper
                 .addVariation("Lapis block", 0, Block.blockLapis);
@@ -1105,7 +1105,7 @@ public class Chisel {
         blockLapis.carverHelper.addVariation("Lapis with ornate layer", 8,
                 "lapis/a1-blocklapis-ornatelayer");
         blockLapis.carverHelper.register(blockLapis, "lapis");
-        Carving.chisel.registerOre("lapis", "blockLapis");
+        CarvingRegistry.chisel.registerOre("lapis", "blockLapis");
 
         blockEmerald.carverHelper.addVariation("Emerald block", 0,
                 Block.blockEmerald);
@@ -1132,7 +1132,7 @@ public class Chisel {
         blockEmerald.carverHelper.addVariation("Ornate emerald block", 11,
                 "emerald/a1-blockquartz-ornate");
         blockEmerald.carverHelper.register(blockEmerald, "emerald");
-        Carving.chisel.registerOre("emerald", "blockEmerald");
+        CarvingRegistry.chisel.registerOre("emerald", "blockEmerald");
 
         blockNetherBrick.carverHelper.addVariation("Nether brick", 0,
                 Block.netherBrick);
@@ -1173,7 +1173,7 @@ public class Chisel {
         blockNetherBrick.carverHelper.addVariation("Small red nether brick",
                 15, "netherbrick/a1-netherbrick-redsmall");
         blockNetherBrick.carverHelper.register(blockNetherBrick, "netherBrick");
-        Carving.chisel.registerOre("netherBrick", "netherBrick");
+        CarvingRegistry.chisel.registerOre("netherBrick", "netherBrick");
 
         blockNetherrack.carverHelper.addVariation("Netherrack", 0,
                 Block.netherrack);
@@ -1211,7 +1211,7 @@ public class Chisel {
                 "Netherrack with lava flowing", 14,
                 "netherrack/a1-netherrack-wells");
         blockNetherrack.carverHelper.register(blockNetherrack, "hellrock");
-        Carving.chisel.registerOre("hellrock", "blockNetherrack");
+        CarvingRegistry.chisel.registerOre("hellrock", "blockNetherrack");
 
 
         blockCobblestoneMossy.carverHelper.addVariation("Mossy cobblestone", 0,
@@ -1263,7 +1263,7 @@ public class Chisel {
                 "cobblestonemossy/terrain-pistonback-darkpanel");
         blockCobblestoneMossy.carverHelper.register(blockCobblestoneMossy,
                 "stoneMoss");
-        Carving.chisel.registerOre("stoneMoss", "blockCobblestoneMossy");
+        CarvingRegistry.chisel.registerOre("stoneMoss", "blockCobblestoneMossy");
 
         stoneBrick.carverHelper.addVariation("Stone bricks", 0,
                 Block.stoneBrick, 0);
@@ -1298,13 +1298,13 @@ public class Chisel {
         stoneBrick.carverHelper.addVariation("Poison stone brick", 15,
                 "stonebrick/poison");
         stoneBrick.carverHelper.register(stoneBrick, "stoneBrick");
-        Carving.chisel.registerOre("stoneBrick", "blockStoneBrick");
+        CarvingRegistry.chisel.registerOre("stoneBrick", "blockStoneBrick");
 
         GameRegistry.registerBlock(blockSnakestone, ItemCarvable.class,
                 blockSnakestone.getUnlocalizedName());
-        Carving.chisel.addVariation("stoneBrick", blockSnakestone.blockID, 1,
+        CarvingRegistry.chisel.addVariation("stoneBrick", blockSnakestone.blockID, 1,
                 16);
-        Carving.chisel.addVariation("stoneBrick", blockSnakestone.blockID, 13,
+        CarvingRegistry.chisel.addVariation("stoneBrick", blockSnakestone.blockID, 13,
                 17);
         MinecraftForge.setBlockHarvestLevel(blockSnakestone, "chisel", 0);
 
@@ -1340,7 +1340,7 @@ public class Chisel {
         blockIce.carverHelper
                 .addVariation("Ice Poison block", 15, "ice/poison");
         blockIce.carverHelper.register(blockIce, "ice");
-        Carving.chisel.registerOre("ice", "blockIce");
+        CarvingRegistry.chisel.registerOre("ice", "blockIce");
 
         blockIcePillar.carverHelper.setBlockName("icePillar");
         blockIcePillar.carverHelper.addVariation("Ice pillar", 0,
@@ -1380,7 +1380,7 @@ public class Chisel {
                 "Plain ice pillar ornate base", 15,
                 "icepillar/a1-stonepillar-plainbottomgreek");
         blockIcePillar.carverHelper.register(blockIcePillar, "icePillar");
-        Carving.chisel.setGroupClass("icePillar", "ice");
+        CarvingRegistry.chisel.setGroupClass("icePillar", "ice");
 
         for (int i = 0; i < 4; i++) {
             String n = plank_names[i];
@@ -1422,12 +1422,12 @@ public class Chisel {
             blockPlanks[i].carverHelper.setBlockHarvestLevel(blockPlanks[i],
                     "axe", 0);
             blockPlanks[i].carverHelper.register(blockPlanks[i], "wood." + n);
-            Carving.chisel
+            CarvingRegistry.chisel
                     .addVariation("wood." + n, Block.planks.blockID, i, 0);
             MinecraftForge.setBlockHarvestLevel(Block.planks, i, "chisel", 0);
             MinecraftForge.setBlockHarvestLevel(blockPlanks[i], "axe", 0);
 
-            Carving.chisel.setVariationSound("wood." + n, "chisel:chisel-wood");
+            CarvingRegistry.chisel.setVariationSound("wood." + n, "chisel:chisel-wood");
         }
 
         blockObsidian.carverHelper.addVariation("Obsidian", 0, Block.obsidian);
@@ -1465,13 +1465,13 @@ public class Chisel {
                 "Small obsidian blocks inside an oak wood crate", 15,
                 "obsidian/crate");
         blockObsidian.carverHelper.register(blockObsidian, "obsidian");
-        Carving.chisel.registerOre("obsidian", "blockObsidian");
+        CarvingRegistry.chisel.registerOre("obsidian", "blockObsidian");
 
         GameRegistry.registerBlock(blockObsidianSnakestone, ItemCarvable.class,
                 blockObsidianSnakestone.getUnlocalizedName());
-        Carving.chisel.addVariation("obsidian",
+        CarvingRegistry.chisel.addVariation("obsidian",
                 blockObsidianSnakestone.blockID, 1, 16);
-        Carving.chisel.addVariation("obsidian",
+        CarvingRegistry.chisel.addVariation("obsidian",
                 blockObsidianSnakestone.blockID, 13, 17);
         MinecraftForge.setBlockHarvestLevel(blockObsidianSnakestone, "chisel", 0);
 
@@ -1509,7 +1509,7 @@ public class Chisel {
         blockRedstone.carverHelper.addVariation("Redstone Zelda block", 15,
                 "redstone/a1-blockredstone-redstonezelda");
         blockRedstone.carverHelper.register(blockRedstone, "blockRedstone");
-        Carving.chisel.registerOre("blockRedstone", "blockRedstone");
+        CarvingRegistry.chisel.registerOre("blockRedstone", "blockRedstone");
 
         blockHolystone.carverHelper.setBlockName("holystone");
         blockHolystone.carverHelper.addVariation("Holystone", 0,
@@ -1542,7 +1542,7 @@ public class Chisel {
                 "holystone/plate-rough");
         blockHolystone.carverHelper.register(blockHolystone, "blockHolystone");
         OreDictionary.registerOre("blockHolystone", blockHolystone);
-        Carving.chisel.registerOre("blockHolystone", "blockHolystone");
+        CarvingRegistry.chisel.registerOre("blockHolystone", "blockHolystone");
         blockLavastone.carverHelper.setBlockName("lavastone");
         blockLavastone.carverHelper.addVariation("Lavastone", 0,
                 "lavastone/cobble");
@@ -1560,7 +1560,7 @@ public class Chisel {
                 "lavastone/panel-ornate");
         blockLavastone.carverHelper.register(blockLavastone, "blockLavastone");
         OreDictionary.registerOre("blockLavastone", blockLavastone);
-        Carving.chisel.registerOre("blockLavastone", "blockLavastone");
+        CarvingRegistry.chisel.registerOre("blockLavastone", "blockLavastone");
 
         blockFft.carverHelper.setBlockName("blockFantasy");
         blockFft.carverHelper.addVariation("Fantasy brick", 0, "fft/brick");
@@ -1594,7 +1594,7 @@ public class Chisel {
                 "fft/bricks-wear");
         blockFft.carverHelper.register(blockFft, "blockFft");
         OreDictionary.registerOre("blockFft", blockFft);
-        Carving.chisel.registerOre("blockFft", "blockFft");
+        CarvingRegistry.chisel.registerOre("blockFft", "blockFft");
 
         blockCarpet.carverHelper.setBlockName("blockCarpet");
         blockCarpet.carverHelper.addVariation("White carpet block", 0,
@@ -1632,7 +1632,7 @@ public class Chisel {
         blockCarpet.carverHelper.forbidChiseling = true;
         blockCarpet.carverHelper.register(blockCarpet, "blockCarpet");
         OreDictionary.registerOre("blockCarpet", blockCarpet);
-        Carving.chisel.registerOre("blockCarpet", "blockCarpet");
+        CarvingRegistry.chisel.registerOre("blockCarpet", "blockCarpet");
 
         blockCarpetFloor.carverHelper.setBlockName("blockCarpetFloor");
         blockCarpetFloor.carverHelper.addVariation("White carpet", 0,
@@ -1674,9 +1674,9 @@ public class Chisel {
         for (int i = 0; i < 16; i++) {
             String group = "carpet." + i;
 
-            Carving.needle.addVariation(group, Block.carpet.blockID, i, 0);
-            Carving.needle.addVariation(group, blockCarpetFloor.blockID, i, 2);
-            Carving.needle.addVariation(group, blockCarpet.blockID, i, 1);
+            CarvingRegistry.needle.addVariation(group, Block.carpet.blockID, i, 0);
+            CarvingRegistry.needle.addVariation(group, blockCarpetFloor.blockID, i, 2);
+            CarvingRegistry.needle.addVariation(group, blockCarpet.blockID, i, 1);
         }
         blockBookshelf.carverHelper.addVariation("Bookshelf", 0,
                 Block.bookShelf);
@@ -1700,7 +1700,7 @@ public class Chisel {
                 "bookshelf/historician");
         blockBookshelf.carverHelper.register(blockBookshelf, "blockBookshelf");
         MinecraftForge.setBlockHarvestLevel(blockBookshelf, "axe", 0);
-        Carving.chisel.registerOre("blockBookshelf", "blockBookshelf");
+        CarvingRegistry.chisel.registerOre("blockBookshelf", "blockBookshelf");
 
 
         blockTyrian.carverHelper.setBlockName("blockFuture");
@@ -1745,7 +1745,7 @@ public class Chisel {
                 "tyrian/plate");
         blockTyrian.carverHelper.register(blockTyrian, "blockTyrian");
         OreDictionary.registerOre("blockTyrian", blockTyrian);
-        Carving.chisel.registerOre("blockTyrian", "blockTyrian");
+        CarvingRegistry.chisel.registerOre("blockTyrian", "blockTyrian");
 
         blockDirt.carverHelper.addVariation("Dirt", 0, Block.dirt);
         blockDirt.carverHelper.addVariation("Dirt bricks in disarray", 1,
@@ -1771,7 +1771,7 @@ public class Chisel {
                 "dirt/vertical");
         blockDirt.carverHelper.register(blockDirt, "blockDirt");
         MinecraftForge.setBlockHarvestLevel(blockDirt, "shovel", 0);
-        Carving.chisel.registerOre("blockDirt", "blockDirt");
+        CarvingRegistry.chisel.registerOre("blockDirt", "blockDirt");
 
 
         blockGrass.carverHelper.addVariation("Grassy Dirt", 0, Block.grass);
@@ -1798,7 +1798,7 @@ public class Chisel {
                 "grass/vertical");
         blockGrass.carverHelper.register(blockGrass, "blockGrass");
         MinecraftForge.setBlockHarvestLevel(blockGrass, "shovel", 0);
-        Carving.chisel.registerOre("blockGrass", "blockDirt");
+        CarvingRegistry.chisel.registerOre("blockGrass", "blockDirt");
 
         blockTemple.carverHelper.setBlockName("blockTemple");
         blockTemple.carverHelper.addVariation("Temple cobblestone", 0,
@@ -1877,7 +1877,7 @@ public class Chisel {
         blockCloud.carverHelper.addVariation("Cloud block", 0, "cloud/cloud");
         blockCloud.carverHelper.register(blockCloud, "blockCloud");
         OreDictionary.registerOre("blockCloud", blockCloud);
-        Carving.chisel.registerOre("blockCloud", "blockCloud");
+        CarvingRegistry.chisel.registerOre("blockCloud", "blockCloud");
 
         blockFactory.carverHelper.setBlockName("blockFactory");
         blockFactory.carverHelper.addVariation(

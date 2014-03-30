@@ -1,6 +1,6 @@
 package info.jbcs.minecraft.chisel.gui;
 
-import info.jbcs.minecraft.chisel.core.Carving;
+import info.jbcs.minecraft.chisel.core.CarvingRegistry;
 import info.jbcs.minecraft.chisel.items.ItemChisel;
 import info.jbcs.minecraft.utilities.General;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +17,7 @@ public class ContainerChisel extends Container {
     int currentIndex;
     ItemStack chisel;
     public boolean finished;
-    Carving carving;
+    CarvingRegistry carvingRegistry;
 
     public ContainerChisel(InventoryPlayer inventoryplayer, InventoryChiselSelection inv) {
         inventory = inv;
@@ -65,7 +65,7 @@ public class ContainerChisel extends Container {
         }
 
         Item item = General.getItem(chisel);
-        carving = item instanceof ItemChisel ? ((ItemChisel) item).carving : Carving.chisel;
+        carvingRegistry = item instanceof ItemChisel ? ((ItemChisel) item).carvingRegistry : CarvingRegistry.chisel;
 
         inventory.updateItems();
     }

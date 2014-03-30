@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class Carving {
+public class CarvingRegistry {
     public class CarvingGroup {
         public CarvingGroup(String n) {
             name = n;
@@ -28,8 +28,8 @@ public class Carving {
     HashMap<String, CarvingGroup> carvingGroupsByOre = new HashMap<String, CarvingGroup>();
     HashMap<String, CarvingGroup> carvingGroupsByVariation = new HashMap<String, CarvingGroup>();
 
-    public static Carving chisel = new Carving();
-    public static Carving needle = new Carving();
+    public static CarvingRegistry chisel = new CarvingRegistry();
+    public static CarvingRegistry needle = new CarvingRegistry();
 
     String key(int blockId, int metadata) {
         return blockId + "|" + metadata;

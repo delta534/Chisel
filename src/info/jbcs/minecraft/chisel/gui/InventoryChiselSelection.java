@@ -63,7 +63,7 @@ public class InventoryChiselSelection extends InventoryStatic {
         Item item = General.getItem(chiseledItem);
         if (item == null) return;
 
-        ArrayList<ItemStack> list = container.carving.getItems(chiseledItem);
+        ArrayList<ItemStack> list = container.carvingRegistry.getItems(chiseledItem);
 
         activeVariations = 0;
         while (activeVariations < normalSlots && activeVariations < list.size()) {

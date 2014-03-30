@@ -1,6 +1,6 @@
 package info.jbcs.minecraft.chisel.blocks;
 
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.render.BlockMarblePillarRenderer;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.Icon;
@@ -24,7 +24,7 @@ public class BlockMarblePillar extends BlockMarble {
     }
 
     public Icon getCtmIcon(int index, int metadata) {
-        CarvableVariation var = carverHelper.variations.get(metadata);
+        RenderVariation var = carverHelper.variations.get(metadata);
         return var.getIndexedIcon(index);
     }
 

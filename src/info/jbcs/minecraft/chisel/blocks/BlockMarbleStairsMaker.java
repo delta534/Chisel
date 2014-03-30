@@ -2,7 +2,7 @@ package info.jbcs.minecraft.chisel.blocks;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
-import info.jbcs.minecraft.chisel.core.CarvableVariation;
+import info.jbcs.minecraft.chisel.core.RenderVariation;
 import info.jbcs.minecraft.chisel.items.ItemCarvable;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -41,7 +41,7 @@ public class BlockMarbleStairsMaker {
             GameRegistry.registerBlock(blocks[i], ItemCarvable.class, n);
 
             for (int meta = 0; meta < 2 && i * 2 + meta < carverHelper.variations.size(); meta++) {
-                CarvableVariation variation = carverHelper.variations.get(i * 2 + meta);
+                RenderVariation variation = carverHelper.variations.get(i * 2 + meta);
                 variation.description = "tile.chisel." + carverHelper.blockName + "." + (i * 2 + meta) + ".description";
                 for (int j = 0; j < 8; j++)
                     carverHelper.registerVariation(blockName + ".orientation." + j, variation, blocks[i], j + meta * 8);

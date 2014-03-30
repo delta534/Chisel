@@ -5,7 +5,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import info.jbcs.minecraft.chisel.blocks.BlockMarbleCarpet;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
-import info.jbcs.minecraft.chisel.core.Carving;
+import info.jbcs.minecraft.chisel.core.CarvingRegistry;
 import info.jbcs.minecraft.chisel.handlers.ChiselEventHandler;
 import info.jbcs.minecraft.chisel.util.ConnectionCheckManager;
 import net.minecraft.block.Block;
@@ -182,14 +182,14 @@ public class ChiselModCompatibility {
         new ClassBlockCompat("shukaro.artifice.ArtificeBlocks", "blockMarble") {
             @Override
             void action() {
-                Carving.chisel.addVariation("marble", block.blockID, 0, 99);
+                CarvingRegistry.chisel.addVariation("marble", block.blockID, 0, 99);
                 MinecraftForge.setBlockHarvestLevel(block, 0, "chisel", 0);
             }
         };
         new ClassBlockCompat("num.numirp.block.ModBlocks", "blockDecor") {
             @Override
             void action() {
-                Carving.chisel.addVariation("marble", block.blockID, 0, 99);
+                CarvingRegistry.chisel.addVariation("marble", block.blockID, 0, 99);
                 MinecraftForge.setBlockHarvestLevel(block, 0, "chisel", 0);
             }
         };
@@ -197,7 +197,7 @@ public class ChiselModCompatibility {
             @Override
             void action() throws Exception {
                 Block block = (Block) cl.getDeclaredMethod("blockStones").invoke(null);
-                Carving.chisel.addVariation("marble", block.blockID, 0, 99);
+                CarvingRegistry.chisel.addVariation("marble", block.blockID, 0, 99);
                 MinecraftForge.setBlockHarvestLevel(block, 0, "chisel", 0);
             }
         };
@@ -205,14 +205,14 @@ public class ChiselModCompatibility {
         new ClassBlockCompat("mariculture.core.Core", "oreBlocks") {
             @Override
             void action() {
-                Carving.chisel.addVariation("limestone", block.blockID, 3, 99);
+                CarvingRegistry.chisel.addVariation("limestone", block.blockID, 3, 99);
                 MinecraftForge.setBlockHarvestLevel(block, 3, "chisel", 0);
             }
         };
         new ClassBlockCompat("emasher.core.EmasherCore", "limestone") {
             @Override
             void action() {
-                Carving.chisel.addVariation("limestone", block.blockID, 0, 99);
+                CarvingRegistry.chisel.addVariation("limestone", block.blockID, 0, 99);
                 MinecraftForge.setBlockHarvestLevel(block, 0, "chisel", 0);
             }
         };
@@ -222,10 +222,10 @@ public class ChiselModCompatibility {
             void action() throws Exception {
                 Block[] blocks = (Block[]) cl.getField("blocks").get(null);
 
-                Carving.chisel.addVariation("marble", blocks[0].blockID, 2, 99);
+                CarvingRegistry.chisel.addVariation("marble", blocks[0].blockID, 2, 99);
                 MinecraftForge.setBlockHarvestLevel(blocks[0], 2, "chisel", 0);
 
-                Carving.chisel.addVariation("limestone", blocks[0].blockID, 3, 99);
+                CarvingRegistry.chisel.addVariation("limestone", blocks[0].blockID, 3, 99);
                 MinecraftForge.setBlockHarvestLevel(blocks[0], 3, "chisel", 0);
             }
         };

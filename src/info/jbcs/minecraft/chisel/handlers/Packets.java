@@ -1,7 +1,7 @@
 package info.jbcs.minecraft.chisel.handlers;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import info.jbcs.minecraft.chisel.core.Carving;
+import info.jbcs.minecraft.chisel.core.CarvingRegistry;
 import info.jbcs.minecraft.chisel.util.GeneralChiselClient;
 import info.jbcs.minecraft.utilities.General;
 import info.jbcs.minecraft.utilities.packets.PacketData;
@@ -47,7 +47,7 @@ public class Packets {
 
                     break;
                 case CLIENT:
-                    GeneralChiselClient.spawnChiselEffect(x, y, z, Carving.chisel.getVariationSound(blockId, blockMeta));
+                    GeneralChiselClient.spawnChiselEffect(x, y, z, CarvingRegistry.chisel.getVariationSound(blockId, blockMeta));
                     break;
                 default:
                     break;
