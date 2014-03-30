@@ -2,6 +2,7 @@ package info.jbcs.minecraft.chisel.modCompat;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import info.jbcs.minecraft.chisel.Chisel;
 import info.jbcs.minecraft.chisel.blocks.BlockMarbleCarpet;
 import info.jbcs.minecraft.chisel.core.Carvable;
 import info.jbcs.minecraft.chisel.core.CarvableHelper;
@@ -158,18 +159,20 @@ public class ChiselModCompatibility {
                 MinecraftForge.EVENT_BUS.register(eh);
                 Class out = Class.forName("codechicken.microblock.MicroMaterialRegistry$IMicroMaterial");
                 Method m = cl.getMethod("registerMaterial", out, String.class);
-                for (Block bl : CarvableHelper.chiselBlocks) {
-                    if (bl instanceof Carvable && !(bl instanceof BlockMarbleCarpet)) {
-                        Carvable pl = (Carvable) bl;
-                        List<ItemStack> list = new LinkedList<ItemStack>();
-                        pl.getHelper().registerSubBlocks(bl, null, list);
-                        for (ItemStack is : list) {
-                            String s = bl.getUnlocalizedName() + "_" + Integer.toString(is.getItemDamage());
+                if(Chisel.disableMicroBlock) {
+                    for (Block bl : CarvableHelper.chiselBlocks) {
+                        if (bl instanceof Carvable && !(bl instanceof BlockMarbleCarpet)) {
+                            Carvable pl = (Carvable) bl;
+                            List<ItemStack> list = new LinkedList<ItemStack>();
+                            pl.getHelper().registerSubBlocks(bl, null, list);
+                            for (ItemStack is : list) {
+                                String s = bl.getUnlocalizedName() + "_" + Integer.toString(is.getItemDamage());
 
 //							if(bl instanceof BlockMarblePillar)
 //								m.invoke(null,new ChiselPillarMicroMaterial(bl, is.getItemDamage()),s);
 //							else
-                            m.invoke(null, new ChiselMicroMaterial(bl, is.getItemDamage()), s);
+                                m.invoke(null, new ChiselMicroMaterial(bl, is.getItemDamage()), s);
+                            }
                         }
                     }
                 }
