@@ -6,6 +6,7 @@ import codechicken.lib.vec.Line3;
 import codechicken.lib.vec.Vector3;
 
 public class Subdivider {
+    //TODO: Add comments,cleanup and profile.
     public static class Result {
         public final Vertex5[] verts_ = {new Vertex5(), new Vertex5(), new Vertex5(), new Vertex5()};
         public int iconIndex;
